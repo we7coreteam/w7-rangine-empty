@@ -18,6 +18,3 @@ docker-compose.yml
 phpunit.xml
 public/
 .phpstorm.meta*
-runtime/
-bin/
-config/app.php
