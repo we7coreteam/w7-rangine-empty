@@ -1,0 +1,41 @@
+{
+	"name": "w7/service",
+	"type": "project",
+	"description": "基于 Swoole 的常驻内存型 PHP 高性能框架",
+	"license": "Apache-2.0",
+	"keywords": [
+		"we7",
+		"swoole"
+	],
+	"homepage": "http://www.w7.cc/",
+	"authors": [
+		{
+			"name": "RenChao",
+			"email": "donknap@gmail.com"
+		}
+	],
+	"repositories": [
+		{
+			"type" : "vcs",
+			"url" : "https://gitee.com/we7coreteam/w7swoole.git"
+		},
+		{
+			"type" : "vcs",
+			"url" : "https://gitee.com/we7coreteam/we7HttpMessage.git"
+		}
+	],
+	"autoload": {
+		"psr-4": {
+			"W7\\App\\": "app/"
+		},
+		"files": [
+			"config/define.php",
+			"app/Helper/Functions.php",
+			"app/Helper/GoldenOpenPlat/Request.php"
+		]
+	},
+	"require": {
+		"w7/swoole": "dev-master",
+		"w7/http-message": "dev-master"
+	}
+}
