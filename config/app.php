@@ -66,15 +66,6 @@ return [
 			],
 		]
 	],
-	'wchat' => [
-		'appid'=>'',
-		'redirect_uri'=>'',
-		'scope'=>'',
-	],
-	'middleware' => [
-		'before' => [],
-		'after' => [],
-	],
 	'event' => [
 		'beforeStart'=>[
 

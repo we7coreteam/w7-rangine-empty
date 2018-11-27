@@ -1,25 +1,32 @@
 <?php
 
 return [
-	'/util' => [
-		'invoice' => [
-			'blue' => [
-				'method' => 'POST',
+	//全局中间件
+	'@middleware' => [
+		'before' => [],
+		'after' => [],
+	],
+	'/home' => [
+		//控制器中的全局中间件
+		'@middleware' => [\W7\App\Middlewares\TestMiddleware::class],
+		'welcome' => [
+			'index' => [
+				'method' => 'POST,GET',
+				'middleware' => [],
 			],
-			'red' => [
-				'method' => 'POST',
+			'index1' => [
+				'method' => 'POST,GET',
+				'middleware' => [],
 			],
-			'callback' => [
-				'method' => 'POST',
+			'index2' => [
+				'method' => 'POST,GET',
+				'middleware' => [],
 			],
 		],
 	],
 	'test' => [
-		'index' => [
-			'method' => 'POST',
-			'middleware' => [
-				\W7\App\Middlewares\GatewayCheckSiteMiddleware::class
-			],
+		'task' => [
+			'method' => 'GET',
 		]
 	]
 ];

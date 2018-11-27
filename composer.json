@@ -30,12 +30,14 @@
 		},
 		"files": [
 			"config/define.php",
-			"app/Helper/Functions.php",
-			"app/Helper/GoldenOpenPlat/Request.php"
+			"app/Helper/Functions.php"
 		]
 	},
 	"require": {
 		"w7/swoole": "dev-master",
 		"w7/http-message": "dev-master"
+	},
+	"require-dev": {
+		"eaglewu/swoole-ide-helper": "dev-master"
 	}
 }

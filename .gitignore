@@ -18,3 +18,4 @@ docker-compose.yml
 phpunit.xml
 public/
 .phpstorm.meta*
+.idea/vcs.xml

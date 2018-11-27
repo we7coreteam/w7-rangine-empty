@@ -1,4 +1,7 @@
 <?php
+/**
+ * 自定义一些常量，可以项目中使用
+ */
 
 // Constants
 ! defined('DS') && define('DS', DIRECTORY_SEPARATOR);
