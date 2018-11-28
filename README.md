@@ -27,7 +27,8 @@ https://s.we7.cc/index.php?c=wiki&do=view&id=317
 - 协程、异步任务投递
 - 类 Crontab 计划任务
 - 异步任务
-- 
+- 自定义事件侦听
+
 
 
 
