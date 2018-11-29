@@ -8,7 +8,7 @@ return [
 	],
 	'/home' => [
 		//控制器中的全局中间件
-		'@middleware' => [\W7\App\Middlewares\TestMiddleware::class],
+		'@middleware' => [\W7\App\Middleware\TestMiddleware::class],
 		'welcome' => [
 			'index' => [
 				'method' => 'POST,GET',
