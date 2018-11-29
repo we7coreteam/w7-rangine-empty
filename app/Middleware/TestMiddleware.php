@@ -4,7 +4,7 @@
  * @date 18-11-6 上午9:57
  */
 
-namespace W7\App\Middlewares;
+namespace W7\App\Middleware;
 
 
 use Psr\Http\Message\ResponseInterface;
