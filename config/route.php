@@ -9,19 +9,11 @@ return [
 	'/home' => [
 		//控制器中的全局中间件
 		'@middleware' => [\W7\App\Middleware\TestMiddleware::class],
+		'@method' => \W7\Core\Route\Route::METHOD_ALL,
 		'welcome' => [
-			'index' => [
-				'method' => 'POST,GET',
-				'middleware' => [],
-			],
-			'index1' => [
-				'method' => 'POST,GET',
-				'middleware' => [],
-			],
-			'index2' => [
-				'method' => 'POST,GET',
-				'middleware' => [],
-			],
+			'index' => [],
+			'index1' => [],
+			'index2' => [],
 		],
 	],
 	'test' => [

@@ -6,7 +6,7 @@
 
 $serverSetting = [
 	'common' => [
-		'pid_file' => BASE_PATH . '/runtime/swoole.pid',
+		'pid_file' => '/tmp/swoole.pid',
 		'pname' => "w7-swoole",
 		'worker_num' => 1,
 		'max_request' => 10000,

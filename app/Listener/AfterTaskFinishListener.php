@@ -9,7 +9,7 @@ namespace W7\App\Listener;
 use W7\Core\Listener\ListenerInterface;
 
 class AfterTaskFinishListener implements ListenerInterface {
-	public function run($data) {
-
+	public function run(...$params) {
+		// TODO: Implement run() method.
 	}
 }

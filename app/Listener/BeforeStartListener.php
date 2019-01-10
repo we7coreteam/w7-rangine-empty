@@ -9,7 +9,7 @@ namespace W7\App\Listener;
 use W7\Core\Listener\ListenerInterface;
 
 class BeforeStartListener implements ListenerInterface {
-	public function run() {
-
+	public function run(...$params) {
+		// TODO: Implement run() method.
 	}
 }
