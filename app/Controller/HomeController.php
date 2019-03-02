@@ -12,6 +12,7 @@ use W7\Http\Message\Server\Request;
 
 class HomeController extends ControllerAbstract {
 	public function index(Request $request) {
+		print_r($request->post());
 		return 'helloWorld';
 	}
 
