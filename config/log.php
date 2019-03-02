@@ -29,9 +29,10 @@ return [
 			'channel' => ['single'],
 		],
 		'single' => [
-			'driver' => 'stream',
+			'driver' => 'daily',
 			'path' => RUNTIME_PATH . DS. 'logs'. DS. 'w7.log',
 			'level' => 'debug',
+			'days' => '1',
 		],
 		'database' => [
 			'driver' => 'stream',

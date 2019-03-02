@@ -10,14 +10,17 @@ return [
 		'debug' => false, //开启后，将不监控文件变化，重复reload，方便调试
 	],
 	'cache' => [
-		'memory' => [
-			'size' => 10240,
-			'name' => 'test',
+		'default' => [
+			'driver' => 'redis',
+			'host' => 'redis',
+			'port' => '6379',
+			'timeout' => 30,
 		],
-		'redis'=>[
-			"redis_url" => "39.105.18.200:6350/1?auth=%5E5JL%21%21KJ%40%40eaOcJ%29",
-			"timeout" => 10,
-			'prefix'=>'',
+		'addons' => [ //可定义多个通道
+			'driver' => 'redis',
+			'host' => 'redis',
+			'port' => '6379',
+			'timeout' => 30,
 		],
 	],
 	'database' => [
@@ -51,30 +54,20 @@ return [
 	],
 	'pool' => [
 		'database' => [
-			'172.16.1.152' => [
-				'enable' => true,
+			'default' => [
+				'enable' => false,
 				'max' => 1000,
 			],
-			'172.16.1.12' => [
-				'enable' => true,
+			'addons' => [
+				'enable' => false,
 				'max' => 20,
 			],
 		],
 		'cache' => [
 			'redis' => [
-
+				'enable' => false,
+				'max' => 20,
 			],
 		]
 	],
-	'event' => [
-		'beforeStart'=>[
-
-		],
-		'beforeRequest'=>[
-
-		],
-		'afterRequest'=>[
-
-		],
-	]
 ];

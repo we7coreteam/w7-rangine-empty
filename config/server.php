@@ -28,7 +28,10 @@ $serverSetting = [
 
 	],
 	'tcp' => [
-
+		'host'  => '0.0.0.0',
+		'port'  => 8888,
+		'mode' => SWOOLE_PROCESS,
+		'sock_type'  => SWOOLE_SOCK_TCP,
 	],
 	'http' => [
 		'host'  => '0.0.0.0',

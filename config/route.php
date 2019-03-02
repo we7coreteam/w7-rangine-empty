@@ -16,9 +16,12 @@ return [
 			'index2' => [],
 		],
 	],
-	'test' => [
-		'task' => [
-			'method' => 'GET',
+	'home' => [
+		'index' => [
+			'@method' => 'GET',
+		],
+		'user-login' => [
+			'@query' => '[/{id:\d+}]',
 		]
 	]
 ];
