@@ -1,7 +1,7 @@
 [![Php Version](https://img.shields.io/badge/php-%3E=7.1-brightgreen.svg)](https://secure.php.net/)
 [![Swoole Version](https://img.shields.io/badge/swoole-%3E=4.0.0-brightgreen.svg)](https://github.com/swoole/swoole-src)
-[![Framework Version](https://img.shields.io/badge/w7swoole-%3E=0.0.1-brightgreen.svg)](https://gitee.com/we7coreteam/w7swoole)
-
+[![Rangine Framework Version](https://img.shields.io/badge/Rangine-%3E=0.0.1-brightgreen.svg)](https://gitee.com/we7coreteam/w7swoole)
+[![Rangine Doc](https://img.shields.io/badge/docs-passing-green.svg?maxAge=2592000)](https://s.we7.cc/index.php?c=wiki&do=view&id=317)
 # w7Swoole
 
 一款基于Swoole高性能应用框架。常驻内存，不依赖传统的 PHP-FPM，全异步非阻塞、协程实现。可以用于构建高性能的Web系统、API、中间件、基础服务等等。
