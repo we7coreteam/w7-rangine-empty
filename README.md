@@ -1,6 +1,6 @@
 [![Php Version](https://img.shields.io/badge/php-%3E=7.1-brightgreen.svg)](https://secure.php.net/)
 [![Swoole Version](https://img.shields.io/badge/swoole-%3E=4.0.0-brightgreen.svg)](https://github.com/swoole/swoole-src)
-[![w7swoole Framework Version](https://img.shields.io/badge/w7swoole-%3E=0.0.1-brightgreen.svg)](https://gitee.com/we7coreteam/w7swoole)
+[![Framework Version](https://img.shields.io/badge/w7swoole-%3E=0.0.1-brightgreen.svg)](https://gitee.com/we7coreteam/w7swoole)
 
 # w7Swoole
 
