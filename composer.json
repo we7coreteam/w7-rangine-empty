@@ -10,18 +10,14 @@
 	"homepage": "http://www.w7.cc/",
 	"authors": [
 		{
-			"name": "RenChao",
+			"name": "we7team",
 			"email": "donknap@gmail.com"
 		}
 	],
 	"repositories": [
 		{
-			"type" : "vcs",
-			"url" : "https://gitee.com/we7coreteam/w7swoole.git"
-		},
-		{
-			"type" : "vcs",
-			"url" : "https://gitee.com/we7coreteam/we7HttpMessage.git"
+			"type" : "composer",
+			"url" : "https://packagist.rangine.com/"
 		}
 	],
 	"autoload": {
@@ -35,7 +31,8 @@
 	},
 	"require": {
 		"w7/swoole": "dev-master",
-		"w7/http-message": "dev-master"
+		"w7/http-message": "dev-master",
+		"w7/laravel-cache-model" : "dev-master"
 	},
 	"require-dev": {
 		"eaglewu/swoole-ide-helper": "dev-master"
