@@ -35,6 +35,6 @@
 		"w7/laravel-cache-model" : "dev-master"
 	},
 	"require-dev": {
-		"eaglewu/swoole-ide-helper": "dev-master"
+		"eaglewu/swoole-ide-helper": "dev-dev"
 	}
 }
