@@ -12,13 +12,13 @@ return [
 	'cache' => [
 		'default' => [
 			'driver' => 'redis',
-			'host' => 'redis',
+			'host' => '',
 			'port' => '6379',
 			'timeout' => 30,
 		],
 		'addons' => [ //可定义多个通道
 			'driver' => 'redis',
-			'host' => 'redis',
+			'host' => '',
 			'port' => '6379',
 			'timeout' => 30,
 		],
