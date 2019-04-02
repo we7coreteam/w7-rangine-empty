@@ -4,6 +4,10 @@ return [
 	'setting' => [
 		'development' => '1', //开启后，每次启动服务会清空日志，程序运行时会显示代码错误
 	],
+	'crontab' => [
+		'enabled' => false,
+		'interval' => 10,
+	],
 	'reload' => [
 		'enabled' => true, //是否开启自动监测文件变化重载swoole服务
 		'interval' => 5, //重复检测的间隔时长
@@ -68,6 +72,12 @@ return [
 				'enable' => false,
 				'max' => 20,
 			],
+		]
+	],
+	'process' => [
+		'encrypt' => [
+			'enable' => false,
+			'class' => \W7\App\Process\EncryptProcess::class,
 		]
 	],
 ];
