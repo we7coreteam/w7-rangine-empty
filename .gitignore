@@ -8,7 +8,6 @@ vendor/
 temp/
 *.lock
 .phpintel/
-.env
 .DS_Store
 Dockerfile
 LICENSE

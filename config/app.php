@@ -76,8 +76,9 @@ return [
 	],
 	'process' => [
 		'encrypt' => [
-			'enable' => false,
+			'enable' => ienv('PROCESS_ENCRYPT_ENABLE', false),
 			'class' => \W7\App\Process\EncryptProcess::class,
+			'number' => ienv('PROCESS_ENCRYPT_NUMBER', 1),
 		]
 	],
 ];
