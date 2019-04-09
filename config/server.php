@@ -16,6 +16,7 @@ $serverSetting = [
 		'log_level' => 0,
 		'task_worker_num' => 1,
 		'package_max_length' => 2048,
+		'buffer_output_size' => 10485760, // 10*1024*1024
 		'upload_tmp_dir' => BASE_PATH . '/runtime/upload',
 		'document_root' => BASE_PATH . '/public',
 		'enable_static_handler' => true,
