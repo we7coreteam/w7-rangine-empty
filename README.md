@@ -7,6 +7,21 @@
 
 一款基于Swoole高性能应用框架。常驻内存，不依赖传统的 PHP-FPM，全异步非阻塞、协程实现。可以用于构建高性能的Web系统、API、中间件、基础服务等等。
 
+# 安装
+
+composer install 前更改 composer 源，防止报错。
+
+```
+composer config -g repo.packagist composer https://packagist.laravel-china.org
+
+git clone https://gitee.com/we7coreteam/w7swoole_empty ./rangine-test
+
+cd rangine-test
+
+sudo composer install
+```
+
+
 # 文档
 
 https://s.we7.cc/index.php?c=wiki&do=view&id=317
