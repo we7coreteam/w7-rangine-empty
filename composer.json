@@ -1,5 +1,5 @@
 {
-	"name": "w7/service",
+	"name": "w7/rangine",
 	"type": "project",
 	"description": "基于 Swoole 的常驻内存型 PHP 高性能框架",
 	"license": "Apache-2.0",
@@ -7,7 +7,7 @@
 		"we7",
 		"swoole"
 	],
-	"homepage": "http://www.w7.cc/",
+	"homepage": "https://www.rangine.com/",
 	"authors": [
 		{
 			"name": "we7team",
