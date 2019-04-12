@@ -7,6 +7,12 @@
 
 一款基于Swoole高性能应用框架。常驻内存，不依赖传统的 PHP-FPM，全异步非阻塞、协程实现。可以用于构建高性能的Web系统、API、中间件、基础服务等等。
 
+# 代码
+
+Github : https://github.com/donknap/w7swoole_empty.git
+
+Gitee : https://gitee.com/we7coreteam/w7swoole_empty.git
+
 # 安装
 
 composer install 前更改 composer 源，防止报错。
