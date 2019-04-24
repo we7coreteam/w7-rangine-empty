@@ -9,7 +9,7 @@
 
 # 代码
 
-Github : https://github.com/donknap/w7swoole_empty.git
+Github : https://github.com/coreteam/w7swoole_empty.git
 
 Gitee : https://gitee.com/we7coreteam/w7swoole_empty.git
 
