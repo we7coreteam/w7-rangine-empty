@@ -9,7 +9,5 @@
 require_once dirname(__DIR__) . '/config/define.php';
 require_once BASE_PATH . '/vendor/autoload.php';
 
-$_SERVER['!server'] = true;
-
 $app = \W7\App::getApp();
 $app->runConsole();
