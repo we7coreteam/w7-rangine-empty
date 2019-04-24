@@ -22,7 +22,8 @@
 	],
 	"autoload": {
 		"psr-4": {
-			"W7\\App\\": "app/"
+			"W7\\App\\": "app/",
+			"W7\\Tests\\" : "tests/"
 		},
 		"files": [
 			"config/define.php",
@@ -32,7 +33,8 @@
 	"require": {
 		"w7/swoole": "dev-master",
 		"w7/http-message": "dev-master",
-		"w7/laravel-cache-model" : "dev-master"
+		"w7/laravel-cache-model" : "dev-master",
+		"phpunit/phpunit": "^8.0"
 	},
 	"require-dev": {
 		"eaglewu/swoole-ide-helper": "dev-dev"
