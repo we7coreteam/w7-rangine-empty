@@ -9,14 +9,11 @@
 require_once dirname(__DIR__) . '/config/define.php';
 require_once BASE_PATH . '/vendor/autoload.php';
 
-$tmp = array_shift($argv);
-if (!empty($argv[1])) {
-	$argv[1] = '--' . $argv[1];
-}
+
 $_SERVER['argv'] = array_merge(
 	[
-		$tmp,
-		'server',
+		array_shift($argv),
+		array_shift($argv) . ':' . array_shift($argv)
 	],
 	$argv
 );
