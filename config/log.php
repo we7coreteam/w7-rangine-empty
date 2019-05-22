@@ -45,6 +45,17 @@ return [
 			'level' => 'debug',
 			'days' => 1,
 		],
+		'test' => [
+			//日志缓存条数
+			'buffer_limit' => 10,
+			//在开发和线上都可写日志
+			'enable' => true,
+			//指定数据表名称
+			'table' => 'core_log',
+			'driver' => 'mysql',
+			'level' => ienv('LOG_CHANNEL_WX_TEMPLATE_LEVEL', 'debug'),
+			'days' => 1,
+		]
 //		'daily' => [
 //			'driver' => 'daily',
 //			'path' => RUNTIME_PATH . DS. 'logs'. DS. 'w72.log',
