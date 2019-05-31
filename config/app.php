@@ -2,7 +2,13 @@
 
 return [
 	'setting' => [
-		'development' => '1', //开启后，每次启动服务会清空日志，程序运行时会显示代码错误
+		//SETTING_DEVELOPMENT = DEVELOPMENT^CLEAR_LOG
+		//SETTING_DEVELOPMENT = DEBUG|CLEAR_LOG
+		//SETTING_DEVELOPMENT = RELEASE|CLEAR_LOG
+		'env' => ienv('SETTING_DEVELOPMENT', RELEASE),
+		'basedir' => [
+			'/home/wwwroot/we7/swoole'
+		]
 	],
 	'crontab' => [
 		'enabled' => false,
