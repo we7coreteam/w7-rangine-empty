@@ -25,7 +25,7 @@
 		]
 	},
 	"require": {
-		"w7/swoole": "~1.0.0",
+		"w7/swoole": "^1.0",
 		"phpunit/phpunit": "^8.0"
 	},
 	"require-dev": {
