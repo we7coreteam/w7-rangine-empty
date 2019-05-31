@@ -26,17 +26,16 @@
 			"W7\\Tests\\" : "tests/"
 		},
 		"files": [
-			"config/define.php",
 			"app/Helper/Functions.php"
 		]
 	},
 	"require": {
 		"w7/swoole": "dev-master",
 		"w7/http-message": "dev-master",
-		"w7/laravel-cache-model" : "dev-master",
-		"phpunit/phpunit": "^8.0"
+		"w7/laravel-cache-model" : "dev-master"
 	},
 	"require-dev": {
-		"eaglewu/swoole-ide-helper": "dev-dev"
+		"eaglewu/swoole-ide-helper": "dev-dev",
+		"phpunit/phpunit": "^8.0"
 	}
 }
