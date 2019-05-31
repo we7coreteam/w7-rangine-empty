@@ -5,10 +5,6 @@
 
 // Constants
 ! defined('DS') && define('DS', DIRECTORY_SEPARATOR);
-!defined('DEBUG') && define('DEBUG', 1);
-!defined('CLEAR_LOG') && define('CLEAR_LOG', 2);
-!defined('RELEASE') && define('RELEASE', 8);
-!defined('DEVELOPMENT') && define('DEVELOPMENT', DEBUG | CLEAR_LOG);
 
 // App name
 ! defined('APP_NAME') && define('APP_NAME', 'w7');
