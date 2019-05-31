@@ -59,7 +59,7 @@ return [
 	'pool' => [
 		'database' => [
 			'default' => [
-				'enable' => false,
+				'enable' => true,
 				'max' => 1000,
 			],
 			'addons' => [

@@ -14,12 +14,6 @@
 			"email": "donknap@gmail.com"
 		}
 	],
-	"repositories": [
-		{
-			"type" : "composer",
-			"url" : "https://packagist.rangine.com/"
-		}
-	],
 	"autoload": {
 		"psr-4": {
 			"W7\\App\\": "app/",
@@ -31,12 +25,10 @@
 		]
 	},
 	"require": {
-		"w7/swoole": "dev-master",
-		"w7/http-message": "dev-master",
-		"w7/laravel-cache-model" : "dev-master",
+		"w7/swoole": "~1.0.0",
 		"phpunit/phpunit": "^8.0"
 	},
 	"require-dev": {
-		"eaglewu/swoole-ide-helper": "dev-dev"
+		"eaglewu/swoole-ide-helper": "dev-master"
 	}
 }
