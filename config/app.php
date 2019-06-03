@@ -15,7 +15,6 @@ return [
 		'interval' => 10,
 	],
 	'reload' => [
-		'enabled' => true, //是否开启自动监测文件变化重载swoole服务
 		'interval' => 5, //重复检测的间隔时长
 		'debug' => false, //开启后，将不监控文件变化，重复reload，方便调试
 	],
