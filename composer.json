@@ -25,10 +25,10 @@
 		]
 	},
 	"require": {
-		"w7/swoole": "^1.0",
-		"phpunit/phpunit": "^7.0"
+		"w7/swoole": "^1.0"
 	},
 	"require-dev": {
-		"eaglewu/swoole-ide-helper": "dev-master"
+		"eaglewu/swoole-ide-helper": "dev-master",
+		"phpunit/phpunit": "^7.0"
 	}
 }
