@@ -6,6 +6,8 @@ return [
 		//SETTING_DEVELOPMENT = DEBUG|CLEAR_LOG
 		//SETTING_DEVELOPMENT = RELEASE|CLEAR_LOG
 		'env' => ienv('SETTING_DEVELOPMENT', RELEASE),
+		//最新版可用
+		'error_level' => E_ALL ^ E_NOTICE,
 		'basedir' => [
 			'/home/wwwroot/we7/swoole'
 		]
