@@ -13,14 +13,13 @@ use W7\Http\Message\Server\Request;
 
 class HomeController extends ControllerAbstract {
 	public function index(Request $request) {
-		print_r($request->post());
+		idd($request);
 		return [
 			'data' => [
 				'uid' => 1,
 				'username' => 'rangine'
 			]
 		];
-		return 'helloWorld';
 	}
 
 	public function userLogin(Request $request, $uid = 0) {

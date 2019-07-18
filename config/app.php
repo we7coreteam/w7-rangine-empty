@@ -37,8 +37,8 @@ return [
 	'database' => [
 		'default' => [
 			'driver' => 'mysql',
-			'database' => 'we7_api',
-			'host' => '172.16.1.13',
+			'database' => 'default',
+			'host' => '127.0.0.1',
 			'username' => 'root',
 			'password' => '123456',
 			'charset' => 'utf8',
@@ -49,12 +49,12 @@ return [
 		'addons' => [
 			'driver' => 'mysql',
 			'read' => [
-				'host' => ['172.16.1.152'],
+				'host' => ['127.0.0.1'],
 			],
 			'write' => [
-				'host' => '172.16.1.12'
+				'host' => '127.0.0.1'
 			],
-			'database' => 'we7_addons_api',
+			'database' => 'addons',
 			'username' => 'root',
 			'password' => '123456',
 			'charset' => 'utf8',
