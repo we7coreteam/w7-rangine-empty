@@ -39,6 +39,11 @@ return [
 			'path' => RUNTIME_PATH . DS. 'logs'. DS. 'db.log',
 			'level' => 'debug',
 		],
+		'cache' => [
+			'driver' => 'stream',
+			'path' => RUNTIME_PATH . DS. 'logs'. DS. 'cache.log',
+			'level' => 'debug',
+		],
 		'invoice' => [
 			'driver' => 'daily',
 			'path' => RUNTIME_PATH . DS. 'logs'. DS. 'invoice.log',
