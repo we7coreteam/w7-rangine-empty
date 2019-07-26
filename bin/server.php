@@ -18,5 +18,5 @@ $_SERVER['argv'] = array_merge(
 	$argv
 );
 
-$app = \W7\App::getApp();
+$app = new \W7\App();
 $app->runConsole();
