@@ -18,7 +18,7 @@ Gitee : https://gitee.com/we7coreteam/w7swoole_empty.git
 composer install 前更改 composer 源，防止报错。
 
 ```
-composer config -g repo.packagist composer https://packagist.laravel-china.org
+composer config -g repo.packagist composer https://mirrors.aliyun.com/composer/
 
 git clone https://gitee.com/we7coreteam/w7swoole_empty ./rangine-test
 
