@@ -53,13 +53,8 @@ return [
 		'test' => [
 			//日志缓存条数
 			'buffer_limit' => 10,
-			//在开发和线上都可写日志
-			'enable' => true,
-			//指定数据表名称
-			'table' => 'core_log',
-			'driver' => 'mysql',
-			'level' => ienv('LOG_CHANNEL_WX_TEMPLATE_LEVEL', 'debug'),
-			'days' => 1,
+			//自定义handler 在app/Handler/Log/TestHandler
+			'driver' => 'test',
 		]
 //		'daily' => [
 //			'driver' => 'daily',
