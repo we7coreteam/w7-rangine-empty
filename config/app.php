@@ -20,6 +20,18 @@ return [
 		'interval' => 5, //重复检测的间隔时长
 		'debug' => false, //开启后，将不监控文件变化，重复reload，方便调试
 	],
+	'session' => [
+		//自定义session handler, 在app/Handler/Session/TestHandler
+		'handler' => 'test'
+	],
+	//如果session channel为cookie时可添加以下配置
+	'cookie' => [
+		'path' => ienv('SESSION_PATH', '/'),
+		'http_only' => ienv('SESSION_HTTP_ONLY', false),
+		'domain' => ienv('SESSION_DOMAIN', ''),
+		'secure' => ienv('SESSION_SECURE', false),
+		'expires' => ienv('SESSION_EXPIRES', 0),//不设置，默认取session.gc_maxlifetime配置
+	],
 	'cache' => [
 		'default' => [
 			'driver' => 'redis',
@@ -32,6 +44,10 @@ return [
 			'host' => '',
 			'port' => '6379',
 			'timeout' => 30,
+		],
+		'test' => [
+			//自定义handler  在app/Handler/Log/TestHandler
+			'driver' => 'test'
 		],
 	],
 	'database' => [
