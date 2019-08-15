@@ -17,8 +17,7 @@ return [
 		'interval' => 10,
 	],
 	'reload' => [
-		'interval' => 5, //重复检测的间隔时长
-		'debug' => false, //开启后，将不监控文件变化，重复reload，方便调试
+		'interval' => 1, //重复检测的间隔时长
 	],
 	'cache' => [
 		'default' => [
