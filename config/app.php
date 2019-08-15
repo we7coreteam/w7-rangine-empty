@@ -7,9 +7,10 @@ return [
 		//SETTING_DEVELOPMENT = RELEASE|CLEAR_LOG
 		'env' => ienv('SETTING_DEVELOPMENT', RELEASE),
 		//最新版可用
-		'error_reporting' => E_ALL ^ E_NOTICE,
+		'error_reporting' => E_ALL ^ E_NOTICE ^ E_WARNING,
 		'basedir' => [
-			'/home/wwwroot/we7/swoole'
+			'/home/wwwroot/we7/swoole',
+			BASE_PATH . '/tests'
 		]
 	],
 	'crontab' => [
