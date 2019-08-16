@@ -22,6 +22,13 @@ class HomeController extends ControllerAbstract {
 		];
 	}
 
+	public function session(Request $request) {
+		$request->session->set('test', 1);
+		var_dump($request->session->get('test'));
+
+		return true;
+	}
+
 	public function userLogin(Request $request, $uid = 0) {
 		return 'user-login ---- uid : ' . $uid . ' --- post: ' . $request->post('password');
 	}
