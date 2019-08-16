@@ -1,5 +1,4 @@
 <?php
-
 return [
 	'setting' => [
 		//SETTING_DEVELOPMENT = DEVELOPMENT^CLEAR_LOG
@@ -7,10 +6,10 @@ return [
 		//SETTING_DEVELOPMENT = RELEASE|CLEAR_LOG
 		'env' => ienv('SETTING_DEVELOPMENT', RELEASE),
 		//最新版可用
-		'error_reporting' => E_ALL ^ E_NOTICE ^ E_WARNING,
+		'error_reporting' => E_ALL,
 		'basedir' => [
 			'/home/wwwroot/we7/swoole',
-			BASE_PATH . '/tests'
+			BASE_PATH . '/tests',
 		]
 	],
 	'crontab' => [
@@ -18,6 +17,7 @@ return [
 		'interval' => 10,
 	],
 	'reload' => [
+		'debug' => false,
 		'interval' => 1, //重复检测的间隔时长
 	],
 	'session' => [

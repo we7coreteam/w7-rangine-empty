@@ -17,12 +17,4 @@ class WelcomeController extends ControllerAbstract {
 	public function index() {
 		return 'Hello World';
 	}
-
-	public function index1() {
-		return $this->responseHtml('<h1>Hello World</h1>');
-	}
-
-	public function index2() {
-		return $this->responseRaw('<h1>Hello World</h1>');
-	}
 }

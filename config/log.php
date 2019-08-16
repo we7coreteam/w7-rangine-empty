@@ -55,6 +55,7 @@ return [
 			'buffer_limit' => 10,
 			//自定义handler 在app/Handler/Log/TestHandler
 			'driver' => 'test',
+			'level' => 'debug',
 		]
 //		'daily' => [
 //			'driver' => 'daily',
