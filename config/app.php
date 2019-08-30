@@ -10,7 +10,8 @@ return [
 		'basedir' => [
 			'/home/wwwroot/we7/swoole',
 			BASE_PATH . '/tests',
-		]
+		],
+		'lang' => 'zh-CN'
 	],
 	'crontab' => [
 		'enabled' => false,
