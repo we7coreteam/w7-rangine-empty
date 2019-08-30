@@ -17,10 +17,6 @@ return [
 		'enabled' => false,
 		'interval' => 10,
 	],
-	'reload' => [
-		'debug' => false,
-		'interval' => 1, //重复检测的间隔时长
-	],
 	'session' => [
 		//自定义session handler, 在app/Handler/Session/TestHandler
 		'handler' => 'test'
