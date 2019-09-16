@@ -8,9 +8,5 @@ return [
 //	'crontest1' => [
 //		'rule' => '* * * * *',
 //		'task' => \W7\App\Task\CronTestTask::class,
-//	],
-//	'crontest2' => [
-//		'rule' => '*/2 * * * *',
-//		'task' => \W7\App\Task\CronTest1Task::class,
-//	],
+//	]
 ];

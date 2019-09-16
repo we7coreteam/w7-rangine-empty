@@ -1,11 +1,11 @@
 <?php
 
-namespace W7\App\Command;
+namespace W7\App\Command\Example;
 
 use Symfony\Component\Console\Input\InputOption;
 use W7\Console\Command\CommandAbstract;
 
-class ExampleCommand extends CommandAbstract {
+class FirstCommand extends CommandAbstract {
 	protected function configure() {
 		$this->addOption('--test', '-o', InputOption::VALUE_REQUIRED, 'the option desc');
 	}

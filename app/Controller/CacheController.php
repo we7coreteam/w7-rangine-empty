@@ -9,15 +9,15 @@ use W7\Http\Message\Server\Request;
 
 class CacheController extends ControllerAbstract {
 	public function set(Request $request) {
-		icache()->channel('test')->set('test', 1);
+		icache()->set('test', 1);
 		return true;
 	}
 
 	public function get(Request $request) {
-		return icache()->channel('test')->get('test');
+		return icache()->get('test');
 	}
 
 	public function destroy(Request $request) {
-		return icache()->channel('test')->delete('test');
+		return icache()->delete('test');
 	}
 }

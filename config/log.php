@@ -49,13 +49,6 @@ return [
 			'path' => RUNTIME_PATH . DS. 'logs'. DS. 'invoice.log',
 			'level' => 'debug',
 			'days' => 1,
-		],
-		'test' => [
-			//日志缓存条数
-			'buffer_limit' => 10,
-			//自定义handler 在app/Handler/Log/TestHandler
-			'driver' => 'test',
-			'level' => 'debug',
 		]
 //		'daily' => [
 //			'driver' => 'daily',
