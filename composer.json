@@ -1,5 +1,5 @@
 {
-	"name": "w7/rangine",
+	"name": "w7/rangine-demo",
 	"type": "project",
 	"description": "基于 Swoole 的常驻内存型 PHP 高性能框架",
 	"license": "Apache-2.0",
