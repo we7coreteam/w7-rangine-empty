@@ -14,7 +14,7 @@ class CacheController extends ControllerAbstract {
 	}
 
 	public function get(Request $request) {
-		return icache()->get('test');
+		return icache()->get('test', 'empty');
 	}
 
 	public function destroy(Request $request) {

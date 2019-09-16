@@ -20,13 +20,7 @@ return [
 	'cache' => [
 		'default' => [
 			'driver' => 'redis',
-			'host' => '',
-			'port' => '6379',
-			'timeout' => 30,
-		],
-		'addons' => [ //可定义多个通道
-			'driver' => 'redis',
-			'host' => '',
+			'host' => '127.0.0.1',
 			'port' => '6379',
 			'timeout' => 30,
 		]
@@ -42,40 +36,20 @@ return [
 			'collation' => 'utf8_unicode_ci',
 			'prefix' => 'ims_',
 			'port' =>'3306',
-		],
-		'addons' => [
-			'driver' => 'mysql',
-			'read' => [
-				'host' => ['127.0.0.1'],
-			],
-			'write' => [
-				'host' => '127.0.0.1'
-			],
-			'database' => 'addons',
-			'username' => 'root',
-			'password' => '123456',
-			'charset' => 'utf8',
-			'collation' => 'utf8_unicode_ci',
-			'prefix' => 'ims_',
-			'port'=>'3306',
-		],
+		]
 	],
 	'pool' => [
 		'database' => [
 			'default' => [
 				'enable' => true,
 				'max' => 1000,
-			],
-			'addons' => [
-				'enable' => false,
-				'max' => 20,
-			],
+			]
 		],
 		'cache' => [
 			'redis' => [
 				'enable' => false,
 				'max' => 20,
-			],
+			]
 		]
 	],
 	'process' => [
