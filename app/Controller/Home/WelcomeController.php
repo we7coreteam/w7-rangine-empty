@@ -12,7 +12,7 @@ use W7\Core\Controller\ControllerAbstract;
 class WelcomeController extends ControllerAbstract {
 
 	/**
-	 * 访问URL http://127.0.0.1:88/home/welcome/index
+	 * 访问URL http://127.0.0.1:88/
 	 */
 	public function index() {
 		return 'Hello World';

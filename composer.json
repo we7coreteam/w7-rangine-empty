@@ -17,7 +17,7 @@
 	"autoload": {
 		"psr-4": {
 			"W7\\App\\": "app/",
-			"W7\\Tests\\" : "tests/"
+			"W7\\Tests\\": "tests/"
 		},
 		"files": [
 			"config/define.php",

@@ -50,32 +50,5 @@ return [
 			'level' => 'debug',
 			'days' => 1,
 		]
-//		'daily' => [
-//			'driver' => 'daily',
-//			'path' => RUNTIME_PATH . DS. 'logs'. DS. 'w72.log',
-//			'level' => 'debug',
-//			'days' => 7,
-//		],
-//		'syslog' => [
-//			'driver' => 'syslog',
-//			'level' => 'debug',
-//		],
-//		'errorlog' => [
-//			'driver' => 'errorlog',
-//			'level' => 'debug',
-//		],
-//		'mail' => [
-//			'driver' => 'mail',
-//			'level' => 'debug',
-//			'to' => 'donknap@qq.com',
-//			'username' => '914417117@qq.com',
-//			'password' => 'mkheevmmnezdbfcg',
-//			'subject' => '我爱你微擎标题',
-//			'server' => [
-//				'host' => 'smtp.qq.com',
-//				'port' => 465,
-//				'scheme' => 'ssl',
-//			]
-//		],
 	],
 ];
