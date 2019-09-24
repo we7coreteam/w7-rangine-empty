@@ -6,7 +6,7 @@ return [
 		//SETTING_DEVELOPMENT = RELEASE|CLEAR_LOG
 		'env' => ienv('SETTING_DEVELOPMENT', RELEASE),
 		//最新版可用
-		'error_reporting' => E_ALL,
+		'error_reporting' => ienv('SETTING_ERROR_REPORTING', E_ALL),
 		'basedir' => [
 			'/home/wwwroot/we7/swoole',
 			BASE_PATH . '/tests',
