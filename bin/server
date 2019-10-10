@@ -1,6 +1,7 @@
 #!/usr/bin/env sh
 
 dir=$(cd "${0%[/\\]*}" > /dev/null; cd '../vendor/bin' && pwd)
+cur_dir=$(cd "${0%[/\\]*}" > /dev/null; cd '../' && pwd)
 
 if [ -d /proc/cygdrive ]; then
 case $(which php) in
@@ -11,4 +12,4 @@ dir=$(cygpath -m "$dir");
 esac
 fi
 
-"${dir}/rangine-server" "$@"
+"${dir}/rangine-server" "$@" --app-path=${cur_dir}
