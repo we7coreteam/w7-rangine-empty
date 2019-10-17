@@ -13,10 +13,6 @@ return [
 		],
 		'lang' => 'zh-CN'
 	],
-	'crontab' => [
-		'enabled' => false,
-		'interval' => 10,
-	],
 	'cache' => [
 		'default' => [
 			'driver' => 'redis',
