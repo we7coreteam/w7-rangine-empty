@@ -2,6 +2,7 @@
 
 namespace W7\Tests;
 
+use W7\Http\Message\Base\Cookie;
 use W7\Http\Message\Formatter\ResponseFormatterInterface;
 use W7\Http\Message\Server\Response;
 
@@ -72,5 +73,25 @@ class ResponseTest extends TestCase {
 
 		$content = $response->getBody()->getContents();
 		$this->assertSame('test', $content);
+	}
+
+	public function testCookie() {
+		$response = new Response();
+		$response = $response->withCookie('test', 1);
+		$response = $response->withCookie('test1', new Cookie([
+			'name' => 'test1',
+			'value' => '2'
+		]));
+
+		/**
+		 * @var Cookie $cookie
+		 */
+		$cookie = $response->getCookies()['test'];
+		$this->assertSame("1", $cookie->getValue());
+		$this->assertSame("test", $cookie->getName());
+
+		$cookie = $response->getCookies()['test1'];
+		$this->assertSame("2", $cookie->getValue());
+		$this->assertSame("test1", $cookie->getName());
 	}
 }
