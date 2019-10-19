@@ -60,6 +60,23 @@ class ViewProvider extends ProviderAbstract {
 
 
 class ProviderTest extends TestCase {
+	public function testMake() {
+		/**
+		 * @var Application $application
+		 */
+		$application = iloader()->singleton(Application::class);
+		$command = $application->get('make:provider');
+		$command->run(new ArgvInput([
+			'input',
+			'--name=test'
+		]), ioutputer());
+
+		$this->assertSame(true, file_exists(APP_PATH . '/Provider/TestProvider.php'));
+
+		unlink(APP_PATH . '/Provider/TestProvider.php');
+		rmdir(APP_PATH . '/Provider');
+	}
+
 	public function testRoute() {
 		file_put_contents(BASE_PATH . '/route/route.php', file_get_contents(__DIR__ . '/Provider/route.php'));
 		/**
