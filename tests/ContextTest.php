@@ -18,6 +18,12 @@ class ContextTest extends TestCase {
 		go(function () use (&$context) {
 			$context->setContextDataByKey('test', 1);
 			$this->assertSame(1, $context->getContextDataByKey('test'));
+			igo(function () {
+				$data = icontext()->getContextDataByKey('test');
+				$this->assertSame(1, $data);
+				icontext()->setContextDataByKey('test', 3);
+			});
+			$this->assertSame(1, $context->getContextDataByKey('test'));
 		});
 		go(function () use (&$context1) {
 			$context1->setContextDataByKey('test', 2);
