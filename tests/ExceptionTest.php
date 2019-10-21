@@ -27,6 +27,7 @@ class ExceptionTest extends TestCase {
 	}
 
 	public function testRender() {
+		!defined('ENV') && define('ENV', RELEASE);
 		icontext()->setResponse(new Response());
 
 		try{
@@ -38,24 +39,8 @@ class ExceptionTest extends TestCase {
 		}
 	}
 
-	public function testDebugRender() {
-		define('ENV', DEBUG);
-		parent::setUp();
-		App::$server = new \stdClass();
-		App::$server->type = 'http';
-		icontext()->setResponse(new Response());
-
-		try{
-			throw new \RuntimeException('test');
-		} catch (\Throwable $e) {
-			$response = (new HandlerExceptions())->handle($e);
-			$this->assertContains('test', $response->getBody()->getContents());
-			$this->assertSame(true, !empty(glob(RUNTIME_PATH . '/logs/w7-*.log')));
-		}
-	}
-
 	public function testReleaseRender() {
-		define('ENV', RELEASE);
+		!defined('ENV') && define('ENV', RELEASE);
 		parent::setUp();
 		App::$server = new \stdClass();
 		App::$server->type = 'http';
@@ -71,7 +56,7 @@ class ExceptionTest extends TestCase {
 	}
 
 	public function testErrorRender() {
-		define('ENV', RELEASE);
+		!defined('ENV') && define('ENV', RELEASE);
 		putenv('SETTING_ERROR_REPORTING=' . E_ALL);
 		parent::setUp();
 		App::$server = new \stdClass();
@@ -91,7 +76,7 @@ class ExceptionTest extends TestCase {
 		$filesystem = new Filesystem();
 		$filesystem->copyDirectory(__DIR__ . '/Handler/Exception', APP_PATH . '/Handler/Exception');
 
-		define('ENV', RELEASE);
+		!defined('ENV') && define('ENV', RELEASE);
 		putenv('SETTING_ERROR_REPORTING=' . E_ALL);
 		parent::setUp();
 		App::$server = new \stdClass();
@@ -107,5 +92,21 @@ class ExceptionTest extends TestCase {
 		}
 
 		$filesystem->deleteDirectory(APP_PATH . '/Handler/Exception');
+	}
+
+	public function testDebugRender() {
+		define('ENV', DEBUG);
+		parent::setUp();
+		App::$server = new \stdClass();
+		App::$server->type = 'http';
+		icontext()->setResponse(new Response());
+
+		try{
+			throw new \RuntimeException('test');
+		} catch (\Throwable $e) {
+			$response = (new HandlerExceptions())->handle($e);
+			$this->assertContains('test', $response->getBody()->getContents());
+			$this->assertSame(true, !empty(glob(RUNTIME_PATH . '/logs/w7-*.log')));
+		}
 	}
 }

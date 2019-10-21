@@ -25,6 +25,7 @@ class SessionTest extends TestCase {
 	}
 
 	public function testGc() {
+		session_reset();
 		$config = iconfig()->getUserConfig('app');
 		$config['session'] = [
 			'gc_divisor' => 1,
@@ -34,6 +35,11 @@ class SessionTest extends TestCase {
 		iconfig()->setUserConfig('app', $config);
 
 		$session = new Session();
+		$sessionReflect = new \ReflectionClass($session);
+		$property = $sessionReflect->getProperty('handler');
+		$property->setAccessible(true);
+		$property->setValue($session, null);
+
 		$session->start(new Request('GET', '/'));
 		$session->set('test', 1);
 
@@ -41,7 +47,6 @@ class SessionTest extends TestCase {
 		$session->gc();
 		$session->gc();
 
-		$sessionReflect = new \ReflectionClass($session);
 		$property = $sessionReflect->getProperty('cache');
 		$property->setAccessible(true);
 		$property->setValue($session, null);
@@ -58,8 +63,12 @@ class SessionTest extends TestCase {
 		iconfig()->setUserConfig('app', $config);
 
 		$session = new Session();
-		$session->start(new Request('GET', '/'));
+		$sessionReflect = new \ReflectionClass($session);
+		$property = $sessionReflect->getProperty('handler');
+		$property->setAccessible(true);
+		$property->setValue($session, null);
 
+		$session->start(new Request('GET', '/'));
 		$session->set('test', 1);
 
 		$this->assertSame(1, $session->get('test'));
