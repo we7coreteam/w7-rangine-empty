@@ -2,6 +2,7 @@
 
 namespace W7\Tests;
 
+use Illuminate\Filesystem\Filesystem;
 use Psr\Http\Message\ResponseInterface;
 use W7\App;
 use W7\Core\Exception\HandlerExceptions;
@@ -84,5 +85,27 @@ class ExceptionTest extends TestCase {
 			$this->assertSame('{"error":"系统内部错误"}', $response->getBody()->getContents());
 			$this->assertSame(true, !empty(glob(RUNTIME_PATH . '/logs/w7-*.log')));
 		}
+	}
+
+	public function testUserHandler() {
+		$filesystem = new Filesystem();
+		$filesystem->copyDirectory(__DIR__ . '/Handler/Exception', APP_PATH . '/Handler/Exception');
+
+		define('ENV', RELEASE);
+		putenv('SETTING_ERROR_REPORTING=' . E_ALL);
+		parent::setUp();
+		App::$server = new \stdClass();
+		App::$server->type = 'http';
+		icontext()->setResponse(new Response());
+
+		try{
+			1/0;
+		} catch (\Throwable $e) {
+			$response = iloader()->get(HandlerExceptions::class)->handle($e);
+			$this->assertSame('test', $response->getBody()->getContents());
+			$this->assertSame(false, !empty(glob(RUNTIME_PATH . '/logs/w7-*.log')));
+		}
+
+		$filesystem->deleteDirectory(APP_PATH . '/Handler/Exception');
 	}
 }
