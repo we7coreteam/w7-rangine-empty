@@ -8,6 +8,7 @@ return [
 		//最新版可用
 		'error_reporting' => ienv('SETTING_ERROR_REPORTING', E_ALL),
 		'basedir' => [
+			BASE_PATH, //在测试用例中需要，正式项目中删除
 			'/home/wwwroot/we7/swoole',
 			BASE_PATH . '/tests',
 		],
