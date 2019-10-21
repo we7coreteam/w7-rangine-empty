@@ -8,6 +8,7 @@ use W7\App;
 use W7\Core\Exception\HandlerExceptions;
 use W7\Core\Exception\ResponseExceptionAbstract;
 use W7\Http\Message\Server\Response;
+use W7\Http\Server\Server;
 
 class UserException extends ResponseExceptionAbstract {
 	public function render(): ResponseInterface {
@@ -42,8 +43,7 @@ class ExceptionTest extends TestCase {
 	public function testReleaseRender() {
 		!defined('ENV') && define('ENV', RELEASE);
 		parent::setUp();
-		App::$server = new \stdClass();
-		App::$server->type = 'http';
+		App::$server = new Server();
 		icontext()->setResponse(new Response());
 
 		try{
@@ -59,8 +59,7 @@ class ExceptionTest extends TestCase {
 		!defined('ENV') && define('ENV', RELEASE);
 		putenv('SETTING_ERROR_REPORTING=' . E_ALL);
 		parent::setUp();
-		App::$server = new \stdClass();
-		App::$server->type = 'http';
+		App::$server = new Server();
 		icontext()->setResponse(new Response());
 
 		try{
@@ -79,8 +78,7 @@ class ExceptionTest extends TestCase {
 		!defined('ENV') && define('ENV', RELEASE);
 		putenv('SETTING_ERROR_REPORTING=' . E_ALL);
 		parent::setUp();
-		App::$server = new \stdClass();
-		App::$server->type = 'http';
+		App::$server = new Server();
 		icontext()->setResponse(new Response());
 
 		try{
@@ -97,8 +95,7 @@ class ExceptionTest extends TestCase {
 	public function testDebugRender() {
 		define('ENV', DEBUG);
 		parent::setUp();
-		App::$server = new \stdClass();
-		App::$server->type = 'http';
+		App::$server = new Server();
 		icontext()->setResponse(new Response());
 
 		try{
