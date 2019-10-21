@@ -38,7 +38,7 @@ class ExceptionTest extends TestCase {
 	}
 
 	public function testDebugRender() {
-		define('ENV', RELEASE);
+		define('ENV', DEBUG);
 		parent::setUp();
 		App::$server = new \stdClass();
 		App::$server->type = 'http';
