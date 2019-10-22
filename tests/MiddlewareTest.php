@@ -29,6 +29,7 @@ class AfterMiddleware extends MiddlewareAbstract {
 
 class LastMiddleware extends MiddlewareAbstract {
 	public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface {
+		echo 'last';
 		return (new Response())->withContent('success');
 	}
 }
@@ -62,7 +63,7 @@ class MiddlewareTest extends TestCase {
 		$response = $middlewareHandler->handle(new Request('GET', '/'));
 		$echo = ob_get_clean();
 
-		$this->assertSame('beforeafter', $echo);
+		$this->assertSame('beforelastafter', $echo);
 		$this->assertSame('success', $response->getBody()->getContents());
 	}
 }
