@@ -6,56 +6,35 @@
 
 namespace W7\Tests;
 
-use W7\Core\Config\Config;
+use W7\Core\Config\Env;
 
 class ConfigTest extends TestCase {
+	public function testDefaultEnv() {
+		(new Env(BASE_PATH))->load();
+		$this->assertEquals(getenv('CACHE_DEFAULT_HOST'), '127.0.0.1');
+	}
+
 	public function testDevelopEnv() {
-		$_ENV = [];
-		$fileName = BASE_PATH . '/.env.develop';
-		if (!file_exists($fileName)) {
-			return true;
-		}
+		copy(__DIR__ . '/.env.develop', BASE_PATH . '/.env.develop');
+
 		putenv('ENV_NAME=develop');
+		(new Env(BASE_PATH))->load();
 
-		$config = new Config();
-		$developContent = file_get_contents($fileName);
+		$this->assertEquals(getenv('TEST_DEVELOP'), 1);
 
-		$this->assertEquals(getenv('DATABASE_DEFAULT_HOST'), '10.0.0.17');
-		return $this->assertStringContainsString('DATABASE_DEFAULT_HOST = ' . getenv('DATABASE_DEFAULT_HOST'), $developContent);
-	}
-
-	public function testEnv() {
-		$_ENV = [];
-		$fileName = BASE_PATH . '/.env';
-		if (!file_exists($fileName)) {
-			return true;
-		}
-		putenv('ENV_NAME=');
-
-		$config = new Config();
-		$developContent = file_get_contents($fileName);
-
-		$this->assertEquals(getenv('DATABASE_DEFAULT_HOST'), '172.16.1.13');
-		return $this->assertStringContainsString('DATABASE_DEFAULT_HOST = ' . getenv('DATABASE_DEFAULT_HOST'), $developContent);
-	}
-
-	public function testEncrypt() {
-		$_ENV = [];
-		$fileName = BASE_PATH . '/.env.release.encrypt';
-		if (!file_exists($fileName)) {
-			return true;
-		}
-		putenv('ENV_NAME=release.encrypt');
-
-		$config = new Config();
-		$developContent = file_get_contents($fileName);
-
-		$this->assertEquals(getenv('SERVER_COMMON_TASK_WORKER_NUM'), '1');
-		return $this->assertStringContainsString('SERVER_COMMON_TASK_WORKER_NUM = ' . getenv('SERVER_COMMON_TASK_WORKER_NUM'), $developContent);
+		unlink(BASE_PATH . '/.env.develop');
 	}
 
 	public function testLoadConfig() {
 		$log = iconfig()->getUserConfig('log');
 		$this->assertEquals('stack', $log['default']);
+	}
+
+	public function testSet() {
+		$config = iconfig()->getUserConfig('app');
+		$config['test'] = 1;
+		iconfig()->setUserConfig('app', $config);
+
+		$this->assertSame(1, iconfig()->getUserConfig('app')['test']);
 	}
 }
