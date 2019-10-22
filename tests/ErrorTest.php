@@ -8,8 +8,8 @@ class ErrorTest extends TestCase {
 	}
 
 	public function testEAll() {
-		putenv('ENV_NAME=.e_all');
-		file_put_contents(BASE_PATH . '/.env.e_all', file_get_contents(__DIR__ . '/.env.e_all'));
+		copy(__DIR__ . '/.env.e_all', BASE_PATH . '/.env.e_all');
+		putenv('ENV_NAME=e_all');
 		parent::setUp();
 
 		$error = '';
@@ -19,11 +19,13 @@ class ErrorTest extends TestCase {
 			$error = $e->getMessage();
 		}
 		$this->assertSame('Division by zero', $error);
+
+		unlink(BASE_PATH . '/.env.e_all');
 	}
 
 	public function testNotice() {
-		putenv('ENV_NAME=.notice');
-		file_put_contents(BASE_PATH . '/.env.notice', file_get_contents(__DIR__ . '/.env.notice'));
+		copy(__DIR__ . '/.env.notice', BASE_PATH . '/.env.notice');
+		putenv('ENV_NAME=notice');
 		parent::setUp();
 
 		$error = '';
@@ -33,5 +35,7 @@ class ErrorTest extends TestCase {
 			$error = $e->getMessage();
 		}
 		$this->assertSame('', $error);
+
+		unlink(BASE_PATH . '/.env.notice');
 	}
 }
