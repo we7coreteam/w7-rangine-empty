@@ -3,6 +3,8 @@
 namespace W7\Tests;
 
 
+use Illuminate\Filesystem\Filesystem;
+use W7\App\Handler\Log\TestHandler;
 use W7\Core\Log\Handler\BufferHandler;
 use W7\Core\Log\Logger;
 
@@ -95,5 +97,20 @@ class LoggerTest extends TestCase {
 		$this->assertSame(true, count($files) > 0);
 
 		$this->clearLog();
+	}
+
+	public function testUserHandler() {
+		$filesystem = new Filesystem();
+		$filesystem->copyDirectory(__DIR__ . '/Handler/Log', APP_PATH . '/Handler/Log');
+
+		$handler = new BufferHandler(new TestHandler(), 1, Logger::DEBUG, true, true);
+		ilogger()->setHandlers([$handler]);
+		ob_start();
+		ilogger()->debug('test');
+		$content = ob_get_clean();
+
+		$this->assertSame('test', unserialize($content)[0]['message']);
+
+		$filesystem->deleteDirectory(APP_PATH . '/Handler/Log');
 	}
 }
