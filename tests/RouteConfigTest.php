@@ -229,4 +229,18 @@ class RouteConfigTest extends TestCase {
 			]
 		];
 	}
+
+	public function testMulti() {
+		irouter()->add('GET', '/multi', function () {
+			return 'success';
+		});
+
+		try {
+			irouter()->add('GET', '/multi', function () {
+				return 'success';
+			});
+		} catch (\Throwable $e) {
+			$this->assertSame('route "/multi" for method "GET" exists in system', $e->getMessage());
+		}
+	}
 }
