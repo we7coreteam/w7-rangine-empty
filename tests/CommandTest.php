@@ -12,6 +12,7 @@ class TestCommand extends CommandAbstract {
 	public $name;
 
 	protected function configure() {
+		$this->addOption('--config-app-setting-overwrite', '-w', InputOption::VALUE_REQUIRED);
 		$this->addOption('--name', null, InputOption::VALUE_REQUIRED);
 	}
 
@@ -104,5 +105,23 @@ class CommandTest extends TestCase {
 		]), ioutputer());
 		$result = ob_get_clean();
 		$this->assertSame('1', $result);
+	}
+
+	public function testOverwriteConfig() {
+		$this->assertSame('', iconfig()->getUserConfig('app')['setting']['overwrite'] ?? '');
+		/**
+		 * @var Application $application
+		 */
+		$application = iloader()->singleton(Application::class);
+		$command = new TestCommand('test:command');
+		$application->add($command);
+		$application->get('test:command')->run(new ArgvInput([
+			'test',
+			'--name=test',
+			'--config-app-setting-overwrite=1'
+		]), ioutputer());
+
+		$this->assertSame('test', $command->name);
+		$this->assertSame('1', iconfig()->getUserConfig('app')['setting']['overwrite']);
 	}
 }
