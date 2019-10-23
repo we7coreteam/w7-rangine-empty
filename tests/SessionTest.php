@@ -3,6 +3,7 @@
 namespace W7\Tests;
 
 use Illuminate\Filesystem\Filesystem;
+use W7\App\Handler\Session\TestHandler;
 use W7\Core\Session\Session;
 use W7\Http\Message\Server\Request;
 
@@ -72,6 +73,10 @@ class SessionTest extends TestCase {
 		$session->set('test', 1);
 
 		$this->assertSame(1, $session->get('test'));
+		$property = $sessionReflect->getProperty('handler');
+		$property->setAccessible(true);
+		$handler = $property->getValue($session);
+		$this->assertSame(true, $handler instanceof TestHandler);
 
 		$filesystem->deleteDirectory(APP_PATH . '/Handler/Session');
 	}
