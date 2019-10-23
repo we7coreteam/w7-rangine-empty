@@ -20,6 +20,24 @@ class TestCommand extends CommandAbstract {
 	}
 }
 
+class Call1Command extends CommandAbstract {
+	protected function configure() {
+		$this->addOption('test', null, InputOption::VALUE_REQUIRED);
+	}
+
+	protected function handle($options) {
+		echo $options['test'];
+	}
+}
+
+class CallCommand extends CommandAbstract {
+	protected function handle($options) {
+		$this->call('call:call1', [
+			'--test' => '1'
+		]);
+	}
+}
+
 class CommandTest extends TestCase {
 	public function testMake() {
 		/**
@@ -71,5 +89,20 @@ class CommandTest extends TestCase {
 		} catch (\Throwable $e) {
 			$this->assertSame('The "--name1" option does not exist.', $e->getMessage());
 		}
+	}
+
+	public function testCallCommand() {
+		$application = iloader()->singleton(Application::class);
+		$command = new CallCommand('call:call');
+		$command1 = new Call1Command('call:call1');
+		$application->add($command);
+		$application->add($command1);
+
+		ob_start();
+		$application->get('call:call')->run(new ArgvInput([
+			'test'
+		]), ioutputer());
+		$result = ob_get_clean();
+		$this->assertSame('1', $result);
 	}
 }
