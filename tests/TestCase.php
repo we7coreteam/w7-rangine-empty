@@ -11,7 +11,7 @@ class TestCase extends \PHPUnit\Framework\TestCase {
 	public function setUp() :void {
 		parent::setUp();
 
-		require_once '../config/define.php';
+		require_once __DIR__ . '/../config/define.php';
 		new App();
 	}
 }
