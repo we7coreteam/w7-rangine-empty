@@ -6,6 +6,7 @@ namespace W7\Tests;
 use Illuminate\Filesystem\Filesystem;
 use W7\App\Handler\Log\TestHandler;
 use W7\Core\Log\Handler\BufferHandler;
+use W7\Core\Log\Handler\StreamHandler;
 use W7\Core\Log\Logger;
 
 class LoggerTest extends TestCase {
@@ -112,5 +113,24 @@ class LoggerTest extends TestCase {
 		$this->assertSame('test', unserialize($content)[0]['message']);
 
 		$filesystem->deleteDirectory(APP_PATH . '/Handler/Log');
+	}
+
+	public function testDestructFlushLog() {
+		$this->clearLog();
+
+		$logger = new Logger('flush', [
+			new BufferHandler(StreamHandler::getHandler([
+				'path' => RUNTIME_PATH . DS. 'logs'. DS. 'flush.log',
+				'level' => 'debug',
+			]), 2)
+		]);
+		$logger->bufferLimit = 2;
+
+		$logger->debug('flush');
+		$this->assertSame(false, file_exists(RUNTIME_PATH . DS. 'logs'. DS. 'flush.log'));
+
+		unset($logger);
+		$this->assertSame(true, file_exists(RUNTIME_PATH . DS. 'logs'. DS. 'flush.log'));
+		$this->clearLog();
 	}
 }
