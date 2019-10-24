@@ -7,6 +7,7 @@ use Illuminate\Filesystem\Filesystem;
 use W7\App;
 use W7\App\Middleware\Dispatcher1Middleware;
 use W7\App\Middleware\DispatcherMiddleware;
+use W7\Core\Exception\FaviconException;
 use W7\Core\Helper\Storage\Context;
 use W7\Core\Middleware\ControllerMiddleware;
 use W7\Core\Middleware\MiddlewareHandler;
@@ -50,6 +51,24 @@ class RequestDispatcherTest extends TestCase {
 			APP_PATH . '/Middleware/DispatcherMiddleware.php',
 			APP_PATH . '/Middleware/Dispatcher1Middleware.php'
 		]);
+	}
+
+	public function testIgnoreRoute() {
+		App::$server = new Server();
+		$request = new Request('GET', '/favicon.ico');
+		$dispatcher = new Dispatcher();
+
+		$reflect = new \ReflectionClass($dispatcher);
+		$method = $reflect->getMethod('getRoute');
+		$method->setAccessible(true);
+		try {
+			$method->invoke($dispatcher, $request);
+		} catch (\Throwable $e) {
+			$this->assertSame(true, $e instanceof FaviconException);
+			$this->assertSame('Route Ignore', $e->getMessage());
+			$this->assertSame(404, $e->getCode());
+		}
+
 	}
 
 	private function addRoute() {
