@@ -9,43 +9,45 @@ return [
 		'error_reporting' => ienv('SETTING_ERROR_REPORTING', E_ALL),
 		'basedir' => [
 			BASE_PATH, //在测试用例中需要，正式项目中删除
-			'/home/wwwroot/we7/swoole',
 			BASE_PATH . '/tests',
 		],
 		'lang' => 'zh-CN'
 	],
 	'cache' => [
 		'default' => [
-			'driver' => 'redis',
-			'host' => '127.0.0.1',
-			'port' => '6379',
-			'timeout' => 30,
+			'driver' => ienv('CACHE_DEFAULT_DRIVER', 'redis'),
+			'host' => ienv('CACHE_DEFAULT_HOST', '127.0.0.1'),
+			'port' => ienv('CACHE_DEFAULT_PORT', '6379'),
+			'password' => ienv('CACHE_DEFAULT_PASSWORD', ''),
+			'timeout' => ienv('CACHE_DEFAULT_TIMEOUT', '30'),
+			'database' => ienv('CACHE_DEFAULT_DATABASE', '0')
 		]
 	],
 	'database' => [
 		'default' => [
 			'driver' => 'mysql',
-			'database' => 'default',
-			'host' => '127.0.0.1',
-			'username' => 'root',
-			'password' => '123456',
+			'database' => ienv('DATABASE_DEFAULT_DATABASE', ''),
+			'host' => ienv('DATABASE_DEFAULT_HOST', ''),
+			'username' => ienv('DATABASE_DEFAULT_USERNAME', ''),
+			'password' => ienv('DATABASE_DEFAULT_PASSWORD', ''),
 			'charset' => 'utf8',
 			'collation' => 'utf8_unicode_ci',
 			'prefix' => 'ims_',
-			'port' =>'3306',
+			'port' => '3306',
+			'strict' => false,
 		]
 	],
 	'pool' => [
 		'database' => [
 			'default' => [
-				'enable' => true,
-				'max' => 1000,
+				'enable' => ienv('POOL_DATABASE_DEFAULT_ENABLE', false),
+				'max' => ienv('POOL_DATABASE_DEFAULT_MAX', 20)
 			]
 		],
 		'cache' => [
 			'redis' => [
-				'enable' => false,
-				'max' => 20,
+				'enable' => ienv('POOL_CACHE_DEFAULT_ENABLE', false),
+				'max' => ienv('POOL_CACHE_DEFAULT_MAX', 20)
 			]
 		]
 	]
