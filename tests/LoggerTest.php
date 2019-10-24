@@ -9,7 +9,7 @@ use W7\Core\Log\Handler\BufferHandler;
 use W7\Core\Log\Logger;
 
 class LoggerTest extends TestCase {
-	private function clearLog() {
+	protected function clearLog() {
 		//清空当前日志
 		$files = glob(RUNTIME_PATH . '/logs/*.log');
 		if ($files) {
