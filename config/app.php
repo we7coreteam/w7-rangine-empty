@@ -1,17 +1,14 @@
 <?php
 return [
 	'setting' => [
-		//SETTING_DEVELOPMENT = DEVELOPMENT^CLEAR_LOG
-		//SETTING_DEVELOPMENT = DEBUG|CLEAR_LOG
-		//SETTING_DEVELOPMENT = RELEASE|CLEAR_LOG
 		'env' => ienv('SETTING_DEVELOPMENT', RELEASE),
-		//最新版可用
 		'error_reporting' => ienv('SETTING_ERROR_REPORTING', E_ALL),
 		'basedir' => [
 			BASE_PATH, //在测试用例中需要，正式项目中删除
 			BASE_PATH . '/tests',
 		],
-		'lang' => 'zh-CN'
+		'lang' => 'zh-CN',
+		'server' => ienv('SETTING_SERVERS', 'http'),
 	],
 	'cache' => [
 		'default' => [
