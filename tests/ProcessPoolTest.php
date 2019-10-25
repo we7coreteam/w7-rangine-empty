@@ -33,7 +33,7 @@ class Test1Process extends ProcessAbstract {
 
 class ProcessPoolTest extends TestCase {
 	public function testIndependentRegister() {
-		$pool = new IndependentPool(ServerEnum::TYPE_HTTP, [
+		$pool = new IndependentPool([
 			'pid_file' => '/test'
 		]);
 		global $checkReturn;
@@ -50,7 +50,7 @@ class ProcessPoolTest extends TestCase {
 	}
 
 	public function testIndependentRegisterCheck() {
-		$pool = new IndependentPool(ServerEnum::TYPE_HTTP, [
+		$pool = new IndependentPool([
 			'pid_file' => '/test'
 		]);
 		global $checkReturn;
@@ -67,7 +67,7 @@ class ProcessPoolTest extends TestCase {
 	}
 
 	public function testDependentRegister() {
-		$pool = new DependentPool(ServerEnum::TYPE_HTTP, [
+		$pool = new DependentPool([
 			'pid_file' => '/test'
 		]);
 		global $checkReturn;
@@ -84,7 +84,7 @@ class ProcessPoolTest extends TestCase {
 	}
 
 	public function testDependentRegisterCheck() {
-		$pool = new DependentPool(ServerEnum::TYPE_HTTP, [
+		$pool = new DependentPool([
 			'pid_file' => '/test'
 		]);
 		global $checkReturn;
