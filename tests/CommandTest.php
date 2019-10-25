@@ -124,4 +124,20 @@ class CommandTest extends TestCase {
 		$this->assertSame('test', $command->name);
 		$this->assertSame('1', iconfig()->getUserConfig('app')['setting']['overwrite']);
 	}
+
+	public function testAuthFindCommand() {
+		$application = new Application();
+		$reflect = new \ReflectionClass($application);
+		$method = $reflect->getMethod('findCommands');
+		$method->setAccessible(true);
+		$commands = $method->invoke($application, __DIR__ . '/Util/Command', 'W7\Test', null);
+
+		$this->assertSame(true, file_exists(__DIR__ . '/Util/Command/TestCommand.php'));
+		$this->assertSame(true, file_exists(__DIR__ . '/Util/Command/Test/Command.php'));
+		$this->assertSame(true, file_exists(__DIR__ . '/Util/Command/Test/IndexCommand.php'));
+
+		$this->assertSame(1, count($commands));
+		$this->assertSame('test:index', array_keys($commands)[0]);
+		$this->assertSame('W7\Test\Command\Test\IndexCommand', $commands['test:index']);
+	}
 }
