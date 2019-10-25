@@ -2,7 +2,6 @@
 
 namespace W7\Tests;
 
-use Illuminate\Filesystem\Filesystem;
 use Psr\Http\Message\ResponseInterface;
 use W7\App;
 use W7\Core\Exception\HandlerExceptions;
@@ -71,29 +70,8 @@ class ExceptionTest extends TestCase {
 		}
 	}
 
-	public function testUserHandler() {
-		$filesystem = new Filesystem();
-		$filesystem->copyDirectory(__DIR__ . '/Handler/Exception', APP_PATH . '/Handler/Exception');
-
-		!defined('ENV') && define('ENV', RELEASE);
-		putenv('SETTING_ERROR_REPORTING=' . E_ALL);
-		parent::setUp();
-		App::$server = new Server();
-		icontext()->setResponse(new Response());
-
-		try{
-			1/0;
-		} catch (\Throwable $e) {
-			$response = iloader()->get(HandlerExceptions::class)->handle($e);
-			$this->assertSame('test', $response->getBody()->getContents());
-			$this->assertSame(false, !empty(glob(RUNTIME_PATH . '/logs/w7-*.log')));
-		}
-
-		$filesystem->deleteDirectory(APP_PATH . '/Handler/Exception');
-	}
-
 	public function testDebugRender() {
-		define('ENV', DEBUG);
+		!defined('ENV') && define('ENV', DEBUG);
 		parent::setUp();
 		App::$server = new Server();
 		icontext()->setResponse(new Response());
@@ -104,6 +82,25 @@ class ExceptionTest extends TestCase {
 			$response = (new HandlerExceptions())->handle($e);
 			$this->assertContains('test', $response->getBody()->getContents());
 			$this->assertSame(true, !empty(glob(RUNTIME_PATH . '/logs/w7-*.log')));
+		}
+	}
+
+	public function testUserHandler() {
+		require __DIR__ . '/Handler/Exception/ExceptionHandler.php';
+
+		!defined('ENV') && define('ENV', RELEASE);
+		putenv('SETTING_ERROR_REPORTING=' . E_ALL);
+		parent::setUp();
+		iloader()->get(HandlerExceptions::class)->setHandler(new \W7\App\Handler\Exception\ExceptionHandler());
+		App::$server = new Server();
+		icontext()->setResponse(new Response());
+
+		try{
+			1/0;
+		} catch (\Throwable $e) {
+			$response = iloader()->get(HandlerExceptions::class)->handle($e);
+			$this->assertSame('test', $response->getBody()->getContents());
+			$this->assertSame(false, !empty(glob(RUNTIME_PATH . '/logs/w7-*.log')));
 		}
 	}
 }
