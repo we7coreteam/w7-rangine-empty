@@ -166,4 +166,17 @@ class ProviderTest extends TestCase {
 		$content = iloader()->singleton(View::class)->render('@provider/index');
 		$this->assertSame('ok', $content);
 	}
+
+	public function testAutoFind() {
+		$providerManager = new ProviderManager();
+		$providers = $providerManager->autoFindProviders(__DIR__ . '/Util/Provider', 'W7\Test');
+
+		$this->assertSame(true, file_exists(__DIR__ . '/Util/Provider/Provider.php'));
+		$this->assertSame(true, file_exists(__DIR__ . '/Util/Provider/TestProvider.php'));
+		$this->assertSame(true, file_exists(__DIR__ . '/Util/Provider/ProviderTest.php'));
+
+		$this->assertSame(1, count($providers));
+		$this->assertSame('W7\Test\TestProvider', array_keys($providers)[0]);
+		$this->assertSame('W7\Test\TestProvider', $providers['W7\Test\TestProvider']);
+	}
 }
