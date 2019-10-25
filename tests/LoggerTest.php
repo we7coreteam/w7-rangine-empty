@@ -102,7 +102,7 @@ class LoggerTest extends TestCase {
 
 	public function testUserHandler() {
 		$filesystem = new Filesystem();
-		$filesystem->copyDirectory(__DIR__ . '/Handler/Log', APP_PATH . '/Handler/Log');
+		$filesystem->copyDirectory(__DIR__ . '/Util/Handler/Log', APP_PATH . '/Handler/Log');
 
 		$handler = new BufferHandler(new TestHandler(), 1, Logger::DEBUG, true, true);
 		ilogger()->setHandlers([$handler]);

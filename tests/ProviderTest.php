@@ -53,7 +53,7 @@ class CommandProvider extends ProviderAbstract {
 
 class ViewProvider extends ProviderAbstract {
 	public function register() {
-		$this->rootPath = __DIR__ . '/Provider';
+		$this->rootPath = __DIR__ . '/Util/Provider';
 		$this->registerView('provider');
 	}
 }
@@ -78,7 +78,7 @@ class ProviderTest extends TestCase {
 	}
 
 	public function testRoute() {
-		file_put_contents(BASE_PATH . '/route/route.php', file_get_contents(__DIR__ . '/Provider/route.php'));
+		file_put_contents(BASE_PATH . '/route/route.php', file_get_contents(__DIR__ . '/Util/Provider/route.php'));
 		/**
 		 * @var ProviderManager $providerManager
 		 */
@@ -134,7 +134,7 @@ class ProviderTest extends TestCase {
 		if (!is_dir(APP_PATH . '/src/Command/Provider')) {
 			mkdir(APP_PATH . '/src/Command/Provider', 0777, true);
 		}
-		file_put_contents(APP_PATH . '/src/Command/Provider/IndexCommand.php', file_get_contents(__DIR__ . '/Provider/IndexCommand.php'));
+		file_put_contents(APP_PATH . '/src/Command/Provider/IndexCommand.php', file_get_contents(__DIR__ . '/Util/Provider/IndexCommand.php'));
 
 		/**
 		 * @var ProviderManager $providerManager

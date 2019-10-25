@@ -8,7 +8,7 @@ use W7\Tests\TestCase;
 class ValidateTest extends TestCase {
 	public function testExtend() {
 		mkdir(BASE_PATH . '/config/lang/zh-CN', 0777, true);
-		copy(__DIR__ . '/../lang/zh-CN/validation.php', BASE_PATH . '/config/lang/zh-CN/validation.php');
+		copy(__DIR__ . '/../Util/lang/zh-CN/validation.php', BASE_PATH . '/config/lang/zh-CN/validation.php');
 
 		ivalidator()->extend('user_validate', function ($attribute, $value, $parameters) {
 			return $value === 'test';

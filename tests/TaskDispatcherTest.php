@@ -76,7 +76,7 @@ class TaskDispatcherTest extends TestCase {
 	}
 
 	public function testDispatcher() {
-		copy(__DIR__ . '/Task/TestTask.php', APP_PATH . '/Task/TestTask.php');
+		copy(__DIR__ . '/Util/Task/TestTask.php', APP_PATH . '/Task/TestTask.php');
 
 		$dispatcher = new TaskDispatcher();
 		$task = new Task('test', [

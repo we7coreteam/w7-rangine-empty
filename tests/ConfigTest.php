@@ -15,7 +15,7 @@ class ConfigTest extends TestCase {
 	}
 
 	public function testDevelopEnv() {
-		copy(__DIR__ . '/Env/.env.develop', BASE_PATH . '/.env.develop');
+		copy(__DIR__ . '/Util/Env/.env.develop', BASE_PATH . '/.env.develop');
 
 		putenv('ENV_NAME=develop');
 		(new Env(BASE_PATH))->load();

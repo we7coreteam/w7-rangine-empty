@@ -28,7 +28,7 @@ class LangTest extends TestCase {
 		$this->init();
 
 		$filesystem = new Filesystem();
-		$filesystem->copyDirectory(__DIR__ . '/lang', BASE_PATH . '/config/lang');
+		$filesystem->copyDirectory(__DIR__ . '/Util/lang', BASE_PATH . '/config/lang');
 
 		$result = itrans('test.test');
 		$this->assertSame('我是测试', $result);

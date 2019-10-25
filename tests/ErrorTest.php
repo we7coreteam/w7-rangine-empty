@@ -8,7 +8,7 @@ class ErrorTest extends TestCase {
 	}
 
 	public function testEAll() {
-		copy(__DIR__ . '/Env/.env.e_all', BASE_PATH . '/.env.e_all');
+		copy(__DIR__ . '/Util/Env/.env.e_all', BASE_PATH . '/.env.e_all');
 		putenv('ENV_NAME=e_all');
 		parent::setUp();
 
@@ -24,7 +24,7 @@ class ErrorTest extends TestCase {
 	}
 
 	public function testNotice() {
-		copy(__DIR__ . '/Env/.env.notice', BASE_PATH . '/.env.notice');
+		copy(__DIR__ . '/Util/Env/.env.notice', BASE_PATH . '/.env.notice');
 		putenv('ENV_NAME=notice');
 		parent::setUp();
 

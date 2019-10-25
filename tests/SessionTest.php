@@ -57,7 +57,7 @@ class SessionTest extends TestCase {
 
 	public function testUserHandler() {
 		$filesystem = new Filesystem();
-		$filesystem->copyDirectory(__DIR__ . '/Handler/Session', APP_PATH . '/Handler/Session');
+		$filesystem->copyDirectory(__DIR__ . '/Util/Handler/Session', APP_PATH . '/Handler/Session');
 
 		$config = iconfig()->getUserConfig('app');
 		$config['session']['handler'] = 'test';

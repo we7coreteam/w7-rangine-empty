@@ -8,7 +8,7 @@ use W7\Core\View\View;
 
 class ViewTest extends TestCase {
 	public function testRender() {
-		copy(__DIR__ . '/Provider/view/index.html', APP_PATH . '/View/test.html');
+		copy(__DIR__ . '/Util/Provider/view/index.html', APP_PATH . '/View/test.html');
 
 		$content = (new View())->render('test');
 
@@ -21,7 +21,7 @@ class ViewTest extends TestCase {
 		$config = iconfig()->getUserConfig('app');
 		$config['view'] = [
 			'template_path' => [
-				'test' => __DIR__ . '/Provider/view'
+				'test' => __DIR__ . '/Util/Provider/view'
 			]
 		];
 		iconfig()->setUserConfig('app', $config);
@@ -30,7 +30,7 @@ class ViewTest extends TestCase {
 		$handler = new TwigHandler([
 			'debug' => false,
 			'provider_template_path' => [
-				'test' => [__DIR__ . '/Provider/view']
+				'test' => [__DIR__ . '/Util/Provider/view']
 			]
 		]);
 		$handlerReflect = new \ReflectionClass($handler);
@@ -45,7 +45,7 @@ class ViewTest extends TestCase {
 
 	public function testHandler() {
 		$filesystem = new Filesystem();
-		$filesystem->copyDirectory(__DIR__ . '/Handler/View', APP_PATH . '/Handler/View');
+		$filesystem->copyDirectory(__DIR__ . '/Util/Handler/View', APP_PATH . '/Handler/View');
 
 		$config = iconfig()->getUserConfig('app');
 		$config['view'] = [

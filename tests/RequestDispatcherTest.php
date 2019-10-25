@@ -20,7 +20,7 @@ use W7\Http\Server\Server;
 class RequestDispatcherTest extends TestCase {
 	public function testDispatcher() {
 		$filesystem = new Filesystem();
-		$filesystem->copyDirectory(__DIR__ . '/Middlewares', APP_PATH . '/Middleware');
+		$filesystem->copyDirectory(__DIR__ . '/Util/Middlewares', APP_PATH . '/Middleware');
 
 		App::$server = new Server();
 		$this->addRoute();

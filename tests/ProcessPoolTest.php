@@ -1,11 +1,11 @@
 <?php
 
 namespace W7\Tests;
+
 use Swoole\Process;
 use W7\Core\Process\Pool\DependentPool;
 use W7\Core\Process\Pool\IndependentPool;
 use W7\Core\Process\ProcessAbstract;
-use W7\Core\Server\ServerEnum;
 
 $checkReturn = true;
 
