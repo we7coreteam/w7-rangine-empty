@@ -57,14 +57,16 @@ class ProcessPoolTest extends TestCase {
 		global $checkReturn;
 		$checkReturn = false;
 
-		$pool->registerProcess('test', TestProcess::class, 1);
-		$pool->registerProcess('test1', Test1Process::class, 1);
+		$pool->registerProcess('itest', TestProcess::class, 1);
+		$pool->registerProcess('itest1', Test1Process::class, 1);
 
-		try{
-			$pool->getProcessFactory()->make(0);
-		} catch (\Throwable $e) {
-			$this->assertSame('Undefined offset: 0', $e->getMessage());
-		}
+		$factory = $pool->getProcessFactory();
+		$reflect = new \ReflectionClass($factory);
+		$property = $reflect->getProperty('processMap');
+		$property->setAccessible(true);
+		$map = $property->getValue($factory);
+
+		$this->assertSame(0, count($map));
 	}
 
 	public function testDependentRegister() {
@@ -91,13 +93,15 @@ class ProcessPoolTest extends TestCase {
 		global $checkReturn;
 		$checkReturn = false;
 
-		$pool->registerProcess('test', TestProcess::class, 1);
-		$pool->registerProcess('test1', Test1Process::class, 1);
+		$pool->registerProcess('dtest', TestProcess::class, 1);
+		$pool->registerProcess('dtest1', Test1Process::class, 1);
 
-		try{
-			$pool->getProcessFactory()->make(0);
-		} catch (\Throwable $e) {
-			$this->assertSame('Undefined offset: 0', $e->getMessage());
-		}
+		$factory = $pool->getProcessFactory();
+		$reflect = new \ReflectionClass($factory);
+		$property = $reflect->getProperty('processMap');
+		$property->setAccessible(true);
+		$map = $property->getValue($factory);
+
+		$this->assertSame(0, count($map));
 	}
 }
