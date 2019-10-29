@@ -10,6 +10,8 @@ class ServerTest extends TestCase {
 		$httpServer = new Server();
 
 		$this->assertSame(1, $httpServer->setting['worker_num']);
+		$this->assertSame(SWOOLE_PROCESS, $httpServer->setting['mode']);
+		$this->assertSame(SWOOLE_TCP, $httpServer->setting['sock_type']);
 	}
 
 	public function testOverDefaultConfig() {

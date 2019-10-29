@@ -24,10 +24,8 @@ class TaskDispatcherTest extends TestCase {
 			'rule' => '*/2 */2 * * * *',
 			'task' => ''
 		]);
-		$time = strtotime('2019-10-10 12:12:13');
-		$this->assertSame(true, $task->check($time));
 		$time = strtotime('2019-10-10 12:12:12');
-		$this->assertSame(false, $task->check($time));
+		$this->assertSame(true, $task->check($time));
 		$time = strtotime('2019-10-10 12:13:12');
 		$this->assertSame(false, $task->check($time));
 
@@ -35,11 +33,9 @@ class TaskDispatcherTest extends TestCase {
 			'rule' => '*/2 */2 12 * * *',
 			'task' => ''
 		]);
-		$time = strtotime('2019-10-10 12:12:13');
+		$time = strtotime('2019-10-10 12:12:12');
 		$this->assertSame(true, $task->check($time));
 		$time = strtotime('2019-10-10 12:11:13');
-		$this->assertSame(false, $task->check($time));
-		$time = strtotime('2019-10-10 12:12:12');
 		$this->assertSame(false, $task->check($time));
 		$time = strtotime('2019-10-10 12:11:12');
 		$this->assertSame(false, $task->check($time));
@@ -48,13 +44,11 @@ class TaskDispatcherTest extends TestCase {
 			'rule' => '*/2 */2 12 10 10 *',
 			'task' => ''
 		]);
-		$time = strtotime('2019-10-10 12:12:13');
+		$time = strtotime('2019-10-10 12:12:12');
 		$this->assertSame(true, $task->check($time));
 		$time = strtotime('2019-10-11 12:12:13');
 		$this->assertSame(false, $task->check($time));
 		$time = strtotime('2019-10-10 12:11:13');
-		$this->assertSame(false, $task->check($time));
-		$time = strtotime('2019-10-10 12:12:12');
 		$this->assertSame(false, $task->check($time));
 		$time = strtotime('2019-10-10 12:11:12');
 		$this->assertSame(false, $task->check($time));
@@ -63,13 +57,11 @@ class TaskDispatcherTest extends TestCase {
 			'rule' => '*/2 */2 12 10 10 4',
 			'task' => ''
 		]);
-		$time = strtotime('2019-10-10 12:12:13');
+		$time = strtotime('2019-10-10 12:12:12');
 		$this->assertSame(true, $task->check($time));
 		$time = strtotime('2019-10-11 12:12:13');
 		$this->assertSame(false, $task->check($time));
 		$time = strtotime('2019-10-10 12:11:13');
-		$this->assertSame(false, $task->check($time));
-		$time = strtotime('2019-10-10 12:12:12');
 		$this->assertSame(false, $task->check($time));
 		$time = strtotime('2019-10-10 12:11:12');
 		$this->assertSame(false, $task->check($time));

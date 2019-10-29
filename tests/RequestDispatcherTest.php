@@ -54,6 +54,35 @@ class RequestDispatcherTest extends TestCase {
 	}
 
 	public function testIgnoreRoute() {
+		$routeInfo = iloader()->get(RouteMapping::class)->getMapping();
+		$route = new GroupCountBased($routeInfo);
+		iloader()->set(Context::ROUTE_KEY, $route);
+
+		App::$server = new Server();
+		$request = new Request('GET', '/favicon.ico');
+		$response = new Response();
+		icontext()->setResponse($response);
+		$dispatcher = new Dispatcher();
+
+		$reflect = new \ReflectionClass($dispatcher);
+		$method = $reflect->getMethod('getRoute');
+		$method->setAccessible(true);
+
+		$route = $method->invoke($dispatcher, $request);
+		$this->assertSame(true, $route['controller'] instanceof \Closure);
+		$this->assertSame('system', $route['module']);
+		$this->assertSame('', $route['controller']()->getBody()->getContents());
+	}
+
+	public function testUserIgnoreRoute() {
+		irouter()->get('/favicon.ico', function () {
+			return 'user favicon';
+		});
+
+		$routeInfo = iloader()->get(RouteMapping::class)->getMapping();
+		$route = new GroupCountBased($routeInfo);
+		iloader()->set(Context::ROUTE_KEY, $route);
+
 		App::$server = new Server();
 		$request = new Request('GET', '/favicon.ico');
 		$dispatcher = new Dispatcher();
@@ -61,14 +90,11 @@ class RequestDispatcherTest extends TestCase {
 		$reflect = new \ReflectionClass($dispatcher);
 		$method = $reflect->getMethod('getRoute');
 		$method->setAccessible(true);
-		try {
-			$method->invoke($dispatcher, $request);
-		} catch (\Throwable $e) {
-			$this->assertSame(true, $e instanceof FaviconException);
-			$this->assertSame('Route Ignore', $e->getMessage());
-			$this->assertSame(404, $e->getCode());
-		}
 
+		$route = $method->invoke($dispatcher, $request);
+		$this->assertSame(true, $route['controller'] instanceof \Closure);
+		$this->assertSame('system', $route['module']);
+		$this->assertSame('user favicon', $route['controller']());
 	}
 
 	private function addRoute() {
