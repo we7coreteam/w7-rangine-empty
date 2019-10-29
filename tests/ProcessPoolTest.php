@@ -6,6 +6,7 @@ use Swoole\Process;
 use W7\Core\Process\Pool\DependentPool;
 use W7\Core\Process\Pool\IndependentPool;
 use W7\Core\Process\ProcessAbstract;
+use W7\Core\Server\ServerEnum;
 
 $checkReturn = true;
 
@@ -33,7 +34,7 @@ class Test1Process extends ProcessAbstract {
 
 class ProcessPoolTest extends TestCase {
 	public function testIndependentRegister() {
-		$pool = new IndependentPool([
+		$pool = new IndependentPool(ServerEnum::TYPE_HTTP, [
 			'pid_file' => '/test'
 		]);
 		global $checkReturn;
@@ -50,7 +51,7 @@ class ProcessPoolTest extends TestCase {
 	}
 
 	public function testIndependentRegisterCheck() {
-		$pool = new IndependentPool([
+		$pool = new IndependentPool(ServerEnum::TYPE_HTTP, [
 			'pid_file' => '/test'
 		]);
 		global $checkReturn;
@@ -67,7 +68,7 @@ class ProcessPoolTest extends TestCase {
 	}
 
 	public function testDependentRegister() {
-		$pool = new DependentPool([
+		$pool = new DependentPool(ServerEnum::TYPE_HTTP, [
 			'pid_file' => '/test'
 		]);
 		global $checkReturn;
@@ -84,7 +85,7 @@ class ProcessPoolTest extends TestCase {
 	}
 
 	public function testDependentRegisterCheck() {
-		$pool = new DependentPool([
+		$pool = new DependentPool(ServerEnum::TYPE_HTTP, [
 			'pid_file' => '/test'
 		]);
 		global $checkReturn;
