@@ -6,6 +6,7 @@ use Psr\Http\Message\ResponseInterface;
 use W7\App;
 use W7\Core\Exception\HandlerExceptions;
 use W7\Core\Exception\ResponseExceptionAbstract;
+use W7\Http\Exception\FatalException;
 use W7\Http\Message\Server\Response;
 use W7\Http\Server\Server;
 
@@ -39,37 +40,6 @@ class ExceptionTest extends TestCase {
 		}
 	}
 
-	public function testReleaseRender() {
-		!defined('ENV') && define('ENV', RELEASE);
-		parent::setUp();
-		App::$server = new Server();
-		icontext()->setResponse(new Response());
-
-		try{
-			throw new \RuntimeException('test');
-		} catch (\Throwable $e) {
-			$response = (new HandlerExceptions())->handle($e);
-			$this->assertSame('{"error":"系统内部错误"}', $response->getBody()->getContents());
-			$this->assertSame(true, !empty(glob(RUNTIME_PATH . '/logs/w7-*.log')));
-		}
-	}
-
-	public function testErrorRender() {
-		!defined('ENV') && define('ENV', RELEASE);
-		putenv('SETTING_ERROR_REPORTING=' . E_ALL);
-		parent::setUp();
-		App::$server = new Server();
-		icontext()->setResponse(new Response());
-
-		try{
-			1/0;
-		} catch (\Throwable $e) {
-			$response = (new HandlerExceptions())->handle($e);
-			$this->assertSame('{"error":"系统内部错误"}', $response->getBody()->getContents());
-			$this->assertSame(true, !empty(glob(RUNTIME_PATH . '/logs/w7-*.log')));
-		}
-	}
-
 	public function testDebugRender() {
 		!defined('ENV') && define('ENV', DEBUG);
 		parent::setUp();
@@ -82,6 +52,23 @@ class ExceptionTest extends TestCase {
 			$response = (new HandlerExceptions())->handle($e);
 			$this->assertContains('test', $response->getBody()->getContents());
 			$this->assertSame(true, !empty(glob(RUNTIME_PATH . '/logs/w7-*.log')));
+		}
+	}
+
+	public function testReleaseRender() {
+		!defined('ENV') && define('ENV', RELEASE);
+		parent::setUp();
+		App::$server = new Server();
+		icontext()->setResponse(new Response());
+
+		try{
+			throw new \RuntimeException('test');
+		} catch (\Throwable $e) {
+			$e = new FatalException($e->getMessage(), $e->getCode(), $e);
+			$reflect = new \ReflectionClass($e);
+			$method = $reflect->getMethod('release');
+			$method->setAccessible(true);
+			$this->assertSame('{"error":"系统内部错误"}', $method->invoke($e)->getBody()->getContents());
 		}
 	}
 

@@ -7,7 +7,6 @@ use Illuminate\Filesystem\Filesystem;
 use W7\App;
 use W7\App\Middleware\Dispatcher1Middleware;
 use W7\App\Middleware\DispatcherMiddleware;
-use W7\Core\Exception\FaviconException;
 use W7\Core\Helper\Storage\Context;
 use W7\Core\Middleware\ControllerMiddleware;
 use W7\Core\Middleware\MiddlewareHandler;
@@ -25,7 +24,7 @@ class RequestDispatcherTest extends TestCase {
 		App::$server = new Server();
 		$this->addRoute();
 
-		$request = new Request('GET', '/test');
+		$request = new Request('GET', '/test_dispatcher');
 		$response = new Response();
 		icontext()->setResponse($response);
 		$dispatcher = new Dispatcher();
@@ -101,7 +100,7 @@ class RequestDispatcherTest extends TestCase {
 		irouter()->middleware([
 			DispatcherMiddleware::class,
 			Dispatcher1Middleware::class
-		])->get('/test', function () {
+		])->get('/test_dispatcher', function () {
 			return 1;
 		});
 
