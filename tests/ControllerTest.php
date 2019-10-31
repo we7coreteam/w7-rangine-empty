@@ -8,7 +8,41 @@ use W7\Console\Application;
 use W7\Core\Route\RouteMapping;
 
 class ControllerTest extends TestCase {
-	public function testMake() {
+	public function testMakeWithOutDir() {
+		/**
+		 * @var Application $application
+		 */
+		$application = iloader()->singleton(Application::class);
+		$command = $application->get('make:controller');
+		$command->run(new ArgvInput([
+			'input',
+			'--name=user'
+		]), ioutputer());
+
+		$this->assertSame(true, file_exists(APP_PATH . '/Controller/UserController.php'));
+		$this->assertSame(true, file_exists(BASE_PATH . '/route/common.php'));
+
+		$routeMapping = iloader()->singleton(RouteMapping::class);
+		$routeMapping->getMapping();
+		$routeInfo = irouter()->getData();
+		$dispatch = new GroupCountBased($routeInfo);
+		$route = $dispatch->dispatch('GET', '/user');
+		$this->assertSame('\W7\App\Controller\UserController', $route[1]['handler'][0]);
+
+		$command->run(new ArgvInput([
+			'input',
+			'--name=person'
+		]), ioutputer());
+		$this->assertSame(true, file_exists(APP_PATH . '/Controller/PersonController.php'));
+		$route = $dispatch->dispatch('GET', '/person');
+		$this->assertSame(true, empty($route[1]));
+
+
+		unlink(BASE_PATH . '/route/common.php');
+		unlink(APP_PATH . '/Controller/PersonController.php');
+		unlink(APP_PATH . '/Controller/UserController.php');
+	}
+	public function testMakeWithDir() {
 		/**
 		 * @var Application $application
 		 */
@@ -32,5 +66,28 @@ class ControllerTest extends TestCase {
 		unlink(BASE_PATH . '/route/test.php');
 		unlink(APP_PATH . '/Controller/Test/IndexController.php');
 		rmdir(APP_PATH . '/Controller/Test');
+	}
+
+	public function testMakeExistDir() {
+		/**
+		 * @var Application $application
+		 */
+		$application = iloader()->singleton(Application::class);
+		$command = $application->get('make:controller');
+		$command->run(new ArgvInput([
+			'input',
+			'--name=home/test'
+		]), ioutputer());
+
+		$this->assertSame(true, file_exists(APP_PATH . '/Controller/Home/TestController.php'));
+
+		$routeMapping = iloader()->singleton(RouteMapping::class);
+		$routeMapping->getMapping();
+		$routeInfo = irouter()->getData();
+		$dispatch = new GroupCountBased($routeInfo);
+		$route = $dispatch->dispatch('GET', '/home/test');
+		$this->assertSame(true, empty($route[1]));
+
+		unlink(APP_PATH . '/Controller/Home/TestController.php');
 	}
 }
