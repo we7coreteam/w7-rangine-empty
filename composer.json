@@ -24,7 +24,8 @@
 			"app/Helper/Functions.php"
 		],
 		"classmap": [
-			"database/seeds"
+			"database/seeds",
+			"database/migrations"
 		]
 	},
 	"autoload-dev": {
