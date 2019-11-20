@@ -35,7 +35,8 @@
 	},
 	"require": {
 		"w7/rangine": "~2.0",
-		"w7/rangine-crontab": "~1.0"
+		"w7/rangine-crontab": "~1.0",
+		"doctrine/dbal": "*"
 	},
 	"require-dev": {
 		"phpunit/phpunit": "^7.0"
