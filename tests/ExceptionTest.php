@@ -87,7 +87,7 @@ class ExceptionTest extends TestCase {
 		} catch (\Throwable $e) {
 			$response = iloader()->get(HandlerExceptions::class)->handle($e);
 			$this->assertSame('test', $response->getBody()->getContents());
-			$this->assertSame(false, !empty(glob(RUNTIME_PATH . '/logs/w7-*.log')));
+			$this->assertSame(true, !empty(glob(RUNTIME_PATH . '/logs/w7-*.log')));
 		}
 	}
 }
