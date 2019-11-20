@@ -28,7 +28,9 @@ class ExceptionTest extends TestCase {
 	}
 
 	public function testUserHandler() {
-		require __DIR__ . '/../Util/Handler/Exception/ExceptionHandler.php';
+		if (!class_exists('W7\App\Handler\Exception\ExceptionHandler', false)) {
+			require __DIR__ . '/../Util/Handler/Exception/ExceptionHandler.php';
+		}
 
 		!defined('ENV') && define('ENV', RELEASE);
 		putenv('SETTING_ERROR_REPORTING=' . E_ALL);
