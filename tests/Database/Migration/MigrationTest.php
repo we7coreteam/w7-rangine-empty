@@ -1,11 +1,11 @@
 <?php
 
-namespace W7\Tests\Future\Database\Migration;
+namespace W7\Tests\Database\Migration;
 
 use Illuminate\Filesystem\Filesystem;
 use Symfony\Component\Console\Input\ArgvInput;
 use W7\Console\Application;
-use W7\Tests\Future\Database\DatabaseTestCase;
+use W7\Tests\Database\DatabaseTestCase;
 
 class MigrationTest extends DatabaseTestCase {
 	private function addMigrates() {

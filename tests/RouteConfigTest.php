@@ -8,9 +8,26 @@ namespace W7\Tests;
 
 
 use FastRoute\Dispatcher\GroupCountBased;
+use W7\App;
 use W7\App\Middleware\GatewayCheckSiteMiddleware;
+use W7\Core\Exception\RouteNotAllowException;
+use W7\Core\Exception\RouteNotFoundException;
+use W7\Core\Helper\Storage\Context;
+use W7\Core\Middleware\MiddlewareAbstract;
 use W7\Core\Route\Route;
 use W7\Core\Route\RouteMapping;
+use W7\Http\Message\Server\Request;
+use W7\Http\Message\Server\Response;
+use W7\Http\Server\Dispatcher;
+use W7\Http\Server\Server;
+
+class TestMiddleware extends MiddlewareAbstract {
+
+}
+
+class Test1Middleware extends MiddlewareAbstract {
+
+}
 
 class RouteConfigTest extends TestCase {
 	public function testFuncAdd() {
@@ -242,5 +259,148 @@ class RouteConfigTest extends TestCase {
 		} catch (\Throwable $e) {
 			$this->assertSame('route "/multi" for method "GET" exists in system', $e->getMessage());
 		}
+	}
+
+	public function testNotFound() {
+		$routeInfo = iloader()->get(RouteMapping::class)->getMapping();
+		$route = new GroupCountBased($routeInfo);
+		iloader()->set(Context::ROUTE_KEY, $route);
+
+		App::$server = new Server();
+		$request = new Request('POST', '/post');
+		$response = new Response();
+		icontext()->setResponse($response);
+		$dispatcher = new Dispatcher();
+
+		$reflect = new \ReflectionClass($dispatcher);
+		$method = $reflect->getMethod('getRoute');
+		$method->setAccessible(true);
+
+		try {
+			$method->invoke($dispatcher, $request);
+		} catch (\Throwable $e) {
+			$this->assertSame(true, $e instanceof RouteNotFoundException);
+			$this->assertSame('Route not found, /post', $e->getMessage());
+		}
+	}
+
+	public function testNotAllow() {
+		$routeInfo = iloader()->get(RouteMapping::class)->getMapping();
+		$route = new GroupCountBased($routeInfo);
+		iloader()->set(Context::ROUTE_KEY, $route);
+
+		App::$server = new Server();
+		$request = new Request('POST', '/');
+		$response = new Response();
+		icontext()->setResponse($response);
+		$dispatcher = new Dispatcher();
+
+		$reflect = new \ReflectionClass($dispatcher);
+		$method = $reflect->getMethod('getRoute');
+		$method->setAccessible(true);
+
+		try {
+			$method->invoke($dispatcher, $request);
+		} catch (\Throwable $e) {
+			$this->assertSame(true, $e instanceof RouteNotAllowException);
+			$this->assertSame('Route not allowed, /', $e->getMessage());
+		}
+	}
+
+	public function testFix() {
+		$routeMapping = new RouteMapping();
+		$routeMapping->setRouteConfig([$this->getFixConfig()]);
+		$routeMapping->getMapping();
+		$routeInfo = irouter()->getData();
+		$dispatch = new GroupCountBased($routeInfo);
+
+		$this->assertSame('test-name', $dispatch->dispatch('GET', '/jsdata/app/hot')[1]['name']);
+		$this->assertSame('conf-test.large', $dispatch->dispatch('GET', '/jsdata/app/test-large')[1]['name']);
+		$this->assertSame('top', $dispatch->dispatch('GET', '/jsdata/popularize/top')[1]['name']);
+		$this->assertSame(1, $dispatch->dispatch('GET', '/p-js/test/a')[1]['name']);
+		$this->assertSame('W7\App\Middleware\W7\Tests\Test1Middleware', $dispatch->dispatch('GET', '/p-js/test/a')[1]['middleware']['before'][0][0]);
+		$this->assertSame('b', $dispatch->dispatch('GET', '/p-js/test/b')[1]['name']);
+		$this->assertSame('c', $dispatch->dispatch('GET', '/p-js/test/c')[1]['name']);
+		$this->assertSame(1, $dispatch->dispatch('GET', '/p-js/test1/a')[1]['name']);
+		$this->assertSame(1, $dispatch->dispatch('POST', '/p-js/test1/a')[1]['name']);
+		$this->assertSame('b', $dispatch->dispatch('GET', '/p-js/test1/b')[1]['name']);
+		$this->assertSame('W7\App\Middleware\W7\Tests\TestMiddleware', $dispatch->dispatch('GET', '/p-js/test1/b')[1]['middleware']['before'][1][0]);
+		$this->assertSame('c1', $dispatch->dispatch('GET', '/p-js/test1/p-c/c1')[1]['name']);
+		$this->assertSame(1, $dispatch->dispatch('GET', '/p-js/test-2/a')[1]['name']);
+		$this->assertSame(1, $dispatch->dispatch('POST', '/p-js/test-2/a')[1]['name']);
+		$this->assertSame('W7\App\Middleware\W7\Tests\TestMiddleware', $dispatch->dispatch('POST', '/p-js/test-2/a')[1]['middleware']['before'][1][0]);
+		$this->assertSame('test-2.b', $dispatch->dispatch('GET', '/p-js/test-2/b')[1]['name']);
+		$this->assertSame('test-2.c1', $dispatch->dispatch('GET', '/p-js/test-2/p-c/c1')[1]['name']);
+	}
+
+	private function getFixConfig() {
+		return [
+			'method' => 'GET',
+			'middleware' => [Test1Middleware::class],
+			'jsdata' => [
+				'middleware' => 'AppCheckMiddleware',
+				'app' => [
+					//热门应用
+					'name' => 'conf-test',
+					'hot' => [
+						'name' => 'test-name',
+						'uri' => '/jsdata/app/hot[/{limit:\d+}]',
+						'handler' => 'Jsdata\AppController@hot',
+					],
+					//大应用
+					'large' => [
+						'prefix' => '/test-large',
+						'middleware' => [TestMiddleware::class],
+						'handler' => 'Jsdata\AppController@large',
+					]
+				],
+				'popularize' => [
+					'top' => [],
+					'bottom' => [],
+					'ads' => [],
+				]
+			],
+			'js' => [
+				'prefix' => 'p-js',
+				'test' => [
+					'a' => [
+						'name' => 1
+					],
+					'b' => [
+						'middleware' => [TestMiddleware::class]
+					],
+					'c' => []
+				],
+				'test1' => [
+					'a' => [
+						'method' => 'GET, POST',
+						'name' => 1
+					],
+					'b' => [
+						'middleware' => [TestMiddleware::class]
+					],
+					'c' => [
+						'prefix' => 'p-c',
+						'c1' => []
+					]
+				],
+				'test2' => [
+					'prefix' => 'test-2',
+					'name' => 'test-2',
+					'middleware' => [TestMiddleware::class],
+					'a' => [
+						'method' => 'GET, POST',
+						'name' => 1
+					],
+					'b' => [
+
+					],
+					'c' => [
+						'prefix' => 'p-c',
+						'c1' => []
+					]
+				]
+			]
+		];
 	}
 }

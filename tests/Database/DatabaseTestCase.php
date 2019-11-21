@@ -1,6 +1,6 @@
 <?php
 
-namespace W7\Tests\Future\Database;
+namespace W7\Tests\Database;
 
 use Illuminate\Database\Connection;
 use Illuminate\Database\Eloquent\Model;

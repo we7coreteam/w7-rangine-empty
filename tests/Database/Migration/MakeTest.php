@@ -1,10 +1,10 @@
 <?php
 
-namespace W7\Tests\Future\Database\Migration;
+namespace W7\Tests\Database\Migration;
 
 use Symfony\Component\Console\Input\ArgvInput;
 use W7\Console\Application;
-use W7\Tests\Future\Database\DatabaseTestCase;
+use W7\Tests\Database\DatabaseTestCase;
 
 class MakeTest extends DatabaseTestCase {
 	public function testMake() {
