@@ -403,4 +403,21 @@ class RouteConfigTest extends TestCase {
 			]
 		];
 	}
+
+	public function testStaticRoute() {
+		try{
+			irouter()->get('/static', 'static/index.html');
+		} catch (\Throwable $e) {
+			$this->assertSame('route handler static/index.html error', $e->getMessage());
+		}
+
+		irouter()->get('/static', 'index.html');
+
+		$routeInfo = iloader()->get(RouteMapping::class)->getMapping();
+		$router = new GroupCountBased($routeInfo);
+		$route = $router->dispatch('GET', '/static');
+
+		$this->assertSame(true, $route[1]['handler'] instanceof \Closure);
+		$this->assertSame('/static', $route[1]['uri']);
+	}
 }
