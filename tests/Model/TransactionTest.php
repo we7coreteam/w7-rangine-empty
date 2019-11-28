@@ -12,7 +12,7 @@ class TestModel extends ModelAbstract {
 }
 
 class Test1Model extends ModelAbstract {
-	protected $connection = 'default';
+	protected $connection = 'sqlite_test';
 	protected $table = 'test1';
 }
 
@@ -24,7 +24,7 @@ class TransactionTest extends ModelTestAbstract {
 			$table->string('name');
 		});
 
-		$this->assertSame('default', (new Test1Model())->getConnection()->getName());
+		$this->assertSame('sqlite_test', (new Test1Model())->getConnection()->getName());
 
 		idb()->beginTransaction();
 
@@ -102,7 +102,7 @@ class TransactionTest extends ModelTestAbstract {
 
 		$this->assertSame(true, Schema::hasTable('test'));
 
-		$this->assertSame('default', (new Test1Model())->getConnection()->getName());
+		$this->assertSame('sqlite_test', (new Test1Model())->getConnection()->getName());
 
 		DB::beginTransaction();
 
@@ -116,7 +116,7 @@ class TransactionTest extends ModelTestAbstract {
 
 		DB::rollBack();
 
-		$this->assertSame('default', (new Test1Model())->getConnection()->getName());
+		$this->assertSame('sqlite_test', (new Test1Model())->getConnection()->getName());
 		$value = (new TestModel())->where('id', '=', 1)->first();
 		$this->assertSame(null, $value);
 
@@ -144,7 +144,7 @@ class TransactionTest extends ModelTestAbstract {
 			$model->name = 'test';
 			$model->save();
 		});
-		$this->assertSame('default', (new Test1Model())->getConnection()->getName());
+		$this->assertSame('sqlite_test', (new Test1Model())->getConnection()->getName());
 
 		$value = (new TestModel())->where('id', '=', 2)->first();
 		$this->assertSame(2, $value->id);
@@ -166,7 +166,7 @@ class TransactionTest extends ModelTestAbstract {
 		} catch (\Throwable $e) {
 			$this->assertSame('rollback', $e->getMessage());
 		}
-		$this->assertSame('default', (new Test1Model())->getConnection()->getName());
+		$this->assertSame('sqlite_test', (new Test1Model())->getConnection()->getName());
 
 		$value = (new TestModel())->where('id', '=', 3)->first();
 		$this->assertSame(null, $value);
@@ -231,5 +231,60 @@ class TransactionTest extends ModelTestAbstract {
 		$this->assertSame(null, $value);
 
 		Schema::dropIfExists('test');
+	}
+
+	public function testConnection() {
+		$this->assertSame('sqlite', DB::getDefaultConnection());
+
+
+		Schema::connection('sqlite_test')->create('test1', function (Blueprint $table) {
+			$table->bigIncrements('id');
+			$table->timestamps();
+			$table->string('name');
+		});
+
+		DB::beginTransaction('sqlite_test');
+		$model = new Test1Model();
+		$model->id = 4;
+		$model->name = 'test';
+		$model->save();
+		DB::rollBack();
+
+		$value = (new Test1Model())->where('id', '=', 4)->first();
+		$this->assertSame(null, $value);
+
+		DB::beginTransaction('sqlite_test');
+		$model = new Test1Model();
+		$model->id = 4;
+		$model->name = 'test';
+		$model->save();
+		DB::commit();
+
+		$value = (new Test1Model())->where('id', '=', 4)->first();
+		$this->assertSame(4, $value->id);
+		$this->assertSame('test', $value->name);
+
+		DB::connection('sqlite_test')->beginTransaction();
+		$model = new Test1Model();
+		$model->id = 5;
+		$model->name = 'test';
+		$model->save();
+		DB::rollBack();
+
+		$value = (new Test1Model())->where('id', '=', 5)->first();
+		$this->assertSame(null, $value);
+
+		DB::connection('sqlite_test')->beginTransaction();
+		$model = new Test1Model();
+		$model->id = 5;
+		$model->name = 'test';
+		$model->save();
+		DB::commit();
+
+		$value = (new Test1Model())->where('id', '=', 5)->first();
+		$this->assertSame(5, $value->id);
+		$this->assertSame('test', $value->name);
+
+		Schema::connection('sqlite_test')->dropIfExists('test1');
 	}
 }

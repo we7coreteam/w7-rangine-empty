@@ -26,6 +26,18 @@ abstract class ModelTestAbstract extends DatabaseTestCase {
 			'port' => '3306',
 			'strict' => false
 		];
+		$dbconfig['database']['sqlite_test'] = [
+			'driver' => 'sqlite',
+			'database' => __DIR__ . '/Data/test1.db',
+			'host' => 'localhost',
+			'username' => 'root',
+			'password' => '123456',
+			'charset' => 'utf8',
+			'collation' => 'utf8_unicode_ci',
+			'prefix' => 'ims_',
+			'port' => '3306',
+			'strict' => false
+		];
 
 		$resolver = Model::getConnectionResolver();
 		$reflect = new \ReflectionClass($resolver);
