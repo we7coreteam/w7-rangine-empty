@@ -29,7 +29,7 @@ class SQLite3Connection extends SQLiteConnection {
 }
 
 class DatabaseTestCase extends TestCase {
-	private function registerSqlite() {
+	protected function registerSqlite() {
 		Connection::resolverFor('sqlite', function ($connection, $database, $prefix, $config) {
 			return new SQLite3Connection($connection, $database, $prefix, $config);
 		});
