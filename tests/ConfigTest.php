@@ -37,4 +37,18 @@ class ConfigTest extends TestCase {
 
 		$this->assertSame(1, iconfig()->getUserConfig('app')['test']);
 	}
+
+	public function testServerConfig() {
+		$server = iconfig()->getServer();
+
+		$this->assertSame(10000, $server['common']['max_request']);
+
+		$config = iconfig()->getUserConfig('server');
+		$config['common']['max_request'] = 5000;
+		iconfig()->setUserConfig('server', $config);
+
+		$server = iconfig()->getServer();
+
+		$this->assertSame(5000, $server['common']['max_request']);
+	}
 }
