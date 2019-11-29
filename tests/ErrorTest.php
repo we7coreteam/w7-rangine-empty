@@ -3,10 +3,6 @@
 namespace W7\Tests;
 
 class ErrorTest extends TestCase {
-	public function setUp(): void {
-
-	}
-
 	public function testEAll() {
 		copy(__DIR__ . '/Util/Env/.env.e_all', BASE_PATH . '/.env.e_all');
 		putenv('ENV_NAME=e_all');
