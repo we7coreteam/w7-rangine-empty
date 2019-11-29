@@ -2,7 +2,33 @@
 
 namespace W7\Tests;
 
+use Illuminate\Contracts\Validation\Rule;
 use W7\Core\Exception\ValidatorException;
+
+class UserRule implements Rule {
+	private $error;
+
+	public function passes($attribute, $value) {
+		if (!is_string($value)) {
+			$this->error = '用户名类型错误';
+			return false;
+		}
+		if (strlen($value) < 6) {
+			$this->error = '用户名不能少于6位';
+			return false;
+		}
+		if (strlen($value) > 10) {
+			$this->error = '用户名不能多余10位';
+			return false;
+		}
+
+		return true;
+	}
+
+	public function message() {
+		return $this->error;
+	}
+}
 
 class ValidateTest extends TestCase {
 	public function testValidate() {
@@ -91,5 +117,40 @@ class ValidateTest extends TestCase {
 		unlink(BASE_PATH . '/config/lang/zh-CN/validation.php');
 		rmdir(BASE_PATH . '/config/lang/zh-CN');
 		rmdir(BASE_PATH . '/config/lang');
+	}
+
+	public function testUserRule() {
+		$data = [
+			'name' => '1'
+		];
+
+		try{
+			ivalidate($data, [
+				'name' => [new UserRule()]
+			]);
+		} catch (\Throwable $e) {
+			$this->assertSame('name : 用户名不能少于6位', $e->getMessage());
+		}
+
+		$data = [
+			'name' => '12121212111'
+		];
+
+		try{
+			ivalidate($data, [
+				'name' => [new UserRule()]
+			]);
+		} catch (\Throwable $e) {
+			$this->assertSame('name : 用户名不能多余10位', $e->getMessage());
+		}
+
+		$data = [
+			'name' => '12121211'
+		];
+
+		$result = ivalidate($data, [
+			'name' => [new UserRule()]
+		]);
+		$this->assertSame('12121211', $result['name']);
 	}
 }
