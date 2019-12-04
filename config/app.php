@@ -5,7 +5,7 @@ return [
 		'error_reporting' => ienv('SETTING_ERROR_REPORTING', E_ALL),
 		'basedir' => [
 			BASE_PATH, //在测试用例中需要，正式项目中删除
-			BASE_PATH . '/tests',
+			BASE_PATH . '/tests'
 		],
 		'lang' => 'zh-CN',
 		'server' => ienv('SETTING_SERVERS', 'http'),
@@ -42,7 +42,7 @@ return [
 			]
 		],
 		'cache' => [
-			'redis' => [
+			'default' => [
 				'enable' => ienv('POOL_CACHE_DEFAULT_ENABLE', false),
 				'max' => ienv('POOL_CACHE_DEFAULT_MAX', 20)
 			]
