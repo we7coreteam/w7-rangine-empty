@@ -39,6 +39,7 @@
 		"doctrine/dbal": "*"
 	},
 	"require-dev": {
+		"w7/rangine-debugger": "~1.0.0",
 		"phpunit/phpunit": "^7.0"
 	}
 }
