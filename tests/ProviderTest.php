@@ -21,8 +21,8 @@ class RouteProvider extends ProviderAbstract {
 		/**
 		 * 加载该扩展包的路由
 		 */
-		$this->rootPath = BASE_PATH . '/';
-		$this->registerRoute('route.php');
+		$this->rootPath = __DIR__ . '/Util/Provider/';
+		$this->registerRoute('/../route.php');
 	}
 }
 
@@ -78,7 +78,6 @@ class ProviderTest extends TestCase {
 	}
 
 	public function testRoute() {
-		file_put_contents(BASE_PATH . '/route/route.php', file_get_contents(__DIR__ . '/Util/Provider/route.php'));
 		/**
 		 * @var ProviderManager $providerManager
 		 */
@@ -93,8 +92,6 @@ class ProviderTest extends TestCase {
 		$result = $dispatch->dispatch('POST', '/module1/setting/save1');
 		$this->assertSame('save1', $result[1]['name']);
 		$this->assertStringContainsString("\\Vendor\\Test\\", $result[1]['handler'][0]);
-
-		unlink(BASE_PATH . '/route/route.php');
 	}
 
 	public function testConfig() {

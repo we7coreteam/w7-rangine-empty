@@ -150,7 +150,6 @@ class LoggerTest extends TestCase {
 		]);
 
 		$this->assertSame(false, empty($logManager->getConfig()['channel']['debug']));
-		$this->assertSame('stream', $logManager->getConfig()['channel']['database']['driver']);
 
 		ilogger()->channel('debug')->debug('test');
 
@@ -174,7 +173,6 @@ class LoggerTest extends TestCase {
 		]);
 
 		$this->assertSame(false, empty($logManager->getConfig()['channel']['test']));
-		$this->assertSame('stream', $logManager->getConfig()['channel']['database']['driver']);
 
 		ilogger()->channel('test')->debug('test');
 

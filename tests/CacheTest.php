@@ -19,59 +19,61 @@ class CacheTest extends TestCase {
 	}
 
 	public function testCache() {
-		icache()->set('test', 'test1');
-		$ret = icache()->get('test');
-		$this->assertSame('test1', $ret);
+		igo(function () {
+			icache()->set('test', 'test1');
+			$ret = icache()->get('test');
+			$this->assertSame('test1', $ret);
 
-		icache()->set('test', [
-			'test1' => 1
-		]);
-		$ret = icache()->get('test');
-		$this->assertArrayHasKey('test1', $ret);
-
-		$obj = new TestCache();
-		icache()->set('obj', $obj);
-		$ret = icache()->get('obj');
-		$this->assertSame(true, method_exists($ret, 'ok'));
-
-		icache()->set('obj', serialize($obj));
-		$ret = icache()->get('obj');
-		$this->assertSame(true, method_exists(unserialize($ret), 'ok'));
-
-		icache()->setMultiple([
-			'test' => [
+			icache()->set('test', [
 				'test1' => 1
-			],
-			'test1' => [
-				'test2' => 2
-			]
-		]);
-		$ret = icache()->getMultiple(['test', 'test1']);
-		$this->assertArrayHasKey('test', $ret);
-		$this->assertArrayHasKey('test1', $ret['test']);
+			]);
+			$ret = icache()->get('test');
+			$this->assertArrayHasKey('test1', $ret);
+
+			$obj = new TestCache();
+			icache()->set('obj', $obj);
+			$ret = icache()->get('obj');
+			$this->assertSame(true, method_exists($ret, 'ok'));
+
+			icache()->set('obj', serialize($obj));
+			$ret = icache()->get('obj');
+			$this->assertSame(true, method_exists(unserialize($ret), 'ok'));
+
+			icache()->setMultiple([
+				'test' => [
+					'test1' => 1
+				],
+				'test1' => [
+					'test2' => 2
+				]
+			]);
+			$ret = icache()->getMultiple(['test', 'test1']);
+			$this->assertArrayHasKey('test', $ret);
+			$this->assertArrayHasKey('test1', $ret['test']);
+		});
 	}
 
-	public function testHmsetAndHmget() {
-		$key    = uniqid();
+	public function hmsetAndHmget() {
+		$key = uniqid();
 		$result = $this->redis->hMset($key, ['key' => 'value', 'key2' => 'value2', 'key3' => 'value3']);
 		$this->assertEquals(true, $result);
 
-		$data   = [
+		$data = [
 			'key2' => 'value2',
-			'key'  => 'value',
+			'key' => 'value',
 		];
 		$values = $this->redis->hMGet($key, ['key2', 'key']);
 		$this->assertEquals($data, $values);
 
-		$data   = [
-			'NotExistKey'  => false,
+		$data = [
+			'NotExistKey' => false,
 			'NotExistKey2' => false,
 		];
 		$values = $this->redis->hMGet($key, ['NotExistKey', 'NotExistKey2']);
 		$this->assertEquals($data, $values);
 
 		$this->redis->set($key, 'xxxxx');
-		$result = $this->redis->hMGet($key,['key']);
+		$result = $this->redis->hMGet($key, ['key']);
 		$this->assertFalse($result);
 
 		$this->redis->delete($key);
@@ -85,11 +87,11 @@ class CacheTest extends TestCase {
 
 	public function testHmsetAndHmgetByCo() {
 		go(function () {
-			$this->testHmsetAndHmget();
+			$this->hmsetAndHmget();
 		});
 	}
 
-	public function testHGetAll() {
+	public function hGetAll() {
 		$key = uniqid();
 		$result = $this->redis->hMset($key, ['key' => 'value', 'key2' => 'value2', 'key3' => 'value3']);
 		$this->assertEquals(true, $result);
@@ -112,11 +114,11 @@ class CacheTest extends TestCase {
 
 	public function testHGetAllByCo() {
 		go(function () {
-			$this->testHGetAll();
+			$this->hGetAll();
 		});
 	}
 
-	public function testHIncrBy() {
+	public function hIncrBy() {
 		$key = uniqid();
 		/** @var \Redis $redis */
 		$redis = $this->redis;
@@ -130,11 +132,11 @@ class CacheTest extends TestCase {
 
 	public function testHIncrByCo() {
 		go(function () {
-			$this->testHIncrBy();
+			$this->hIncrBy();
 		});
 	}
 
-	public function testHSetNx() {
+	public function hSetNx() {
 		$key = uniqid();
 		/** @var \Redis $redis */
 		$redis = $this->redis;
@@ -147,11 +149,11 @@ class CacheTest extends TestCase {
 
 	public function testHSetNxByCo() {
 		go(function () {
-			$this->testHSetNx();
+			$this->hSetNx();
 		});
 	}
 
-	public function testHDel() {
+	public function hDel() {
 		$key = uniqid();
 		/** @var \Redis $redis */
 		$redis = $this->redis;
@@ -170,11 +172,11 @@ class CacheTest extends TestCase {
 
 	public function testHDelByCo() {
 		go(function () {
-			$this->testHDel();
+			$this->hDel();
 		});
 	}
 
-	public function testHLen() {
+	public function hLen() {
 		$key = uniqid();
 		/** @var \Redis $redis */
 		$redis = $this->redis;
@@ -191,11 +193,11 @@ class CacheTest extends TestCase {
 
 	public function testHLenByCo() {
 		go(function () {
-			$this->testHLen();
+			$this->hLen();
 		});
 	}
 
-	public function testHExists() {
+	public function hExists() {
 		$key = uniqid();
 		/** @var \Redis $redis */
 		$redis = $this->redis;
@@ -210,11 +212,11 @@ class CacheTest extends TestCase {
 
 	public function testHExistsByCo() {
 		go(function () {
-			$this->testHExists();
+			$this->hExists();
 		});
 	}
 
-	public function testHValsAndHKeys() {
+	public function hValsAndHKeys() {
 		$key = uniqid();
 		/** @var \Redis $redis */
 		$redis = $this->redis;
@@ -230,11 +232,11 @@ class CacheTest extends TestCase {
 
 	public function testHValsAndHKeysByCo() {
 		go(function () {
-			$this->testHValsAndHKeys();
+			$this->hValsAndHKeys();
 		});
 	}
 
-	public function testSaddAndSMembers() {
+	public function sAddAndSMembers() {
 		$key    = uniqid();
 		$value1 = uniqid();
 		$value2 = uniqid();
@@ -255,11 +257,11 @@ class CacheTest extends TestCase {
 
 	public function testSaddAndSMembersByCo() {
 		go(function () {
-			$this->testSaddAndSMembers();
+			$this->sAddAndSMembers();
 		});
 	}
 
-	public function testSremoveAndScontainsAndScard() {
+	public function sRemoveAndScontainsAndScard() {
 		$key    = uniqid();
 		$value1 = uniqid();
 		$value2 = uniqid();
@@ -282,11 +284,11 @@ class CacheTest extends TestCase {
 
 	public function testSremoveByCo() {
 		go(function () {
-			$this->testSremoveAndScontainsAndScard();
+			$this->sRemoveAndScontainsAndScard();
 		});
 	}
 
-	public function testZadd() {
+	public function zAdd() {
 		$key = uniqid();
 		$ret = $this->redis->zAdd($key, 1.1, 'key');
 		$this->assertEquals($ret, 1);
@@ -371,7 +373,7 @@ class CacheTest extends TestCase {
 
 	public function testZaddByCo() {
 		go(function () {
-			$this->testZadd();
+			$this->zAdd();
 		});
 	}
 
