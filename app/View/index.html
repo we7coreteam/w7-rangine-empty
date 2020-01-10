@@ -1,82 +1,28 @@
-<!doctype html>
-<html lang="zh">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!--360极速模式-->
-    <meta name="renderer" content="webkit">
+    <meta charset="UTF-8">
     <title>Rangine Framework，软擎框架</title>
     <meta name="keywords" content="微信开发，微信运营，微擎，软擎框架，swoole api 协程">
     <meta name="description" content="Rangine Framework 一款基于Swoole开源高性能异步&协程开发框架。基于Swoole扩展，常驻内存，不依赖传统的php-fpm。">
-
-    <link rel="icon" href="https://cdn.w7.cc/favicon.ico" type="image/x-icon" >
-
-    <!-- ie -->
-    <script>
-        if (!!window.ActiveXObject || "ActiveXObject" in window) {
-            document.write('<script src="https://cdn.bootcss.com/babel-polyfill/7.0.0-alpha.20/polyfill.js"><\/script>')
-        }
-    </script>
-    <script src="//cdn.w7.cc/new/js/vue.min.js"></script>
-    <script src="//cdn.w7.cc/new/js/libs/tippy.all.min.js"></script>
-    <script src="//cdn.w7.cc/new/js/libs/lazyload.min.js"></script>
-    <script src="//cdn.w7.cc/new/js/libs/axios.min.js"></script>
-    <script src="//cdn.w7.cc/new/js/libs/we7.axios.js?v=4"></script>
-    <!-- <link rel="stylesheet" href="/css/libs/tippy.css" > -->
-    <!-- <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css"> -->
-    <link rel="stylesheet" href="//s.w7.cc/css/app.css?20190225">
-    <link rel="stylesheet" href="//at.alicdn.com/t/font_588424_z1ml7qlcwsm.css">
-    <script src="//cdn.w7.cc/new/js/libs/sweetalert2/sweetalert2.min.js"></script>
-    <link rel="stylesheet" href="//cdn.w7.cc/new/js/libs/sweetalert2/sweetalert2.css">
-    <!-- <link href="//cdn.w7.cc/web/resource/css/wechat/style.css" rel="stylesheet" type="text/css"> -->
-    <link rel="stylesheet" href="//s.w7.cc/css/rangine/index.css?id=27e87c280dc09afb72ff">
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://cdn.w7.cc/ued/rangine/css/index.css?v1">
+    <link rel="stylesheet" href="https://at.alicdn.com/t/font_588424_1eaadxj3zyx.css">
+    <script src="https://cdn.w7.cc/ued/vue/vue.min.js"></script>
+    <script src="https://cdn.w7.cc/ued/vue/axios.min.js"></script>
+    <script src="https://cdn.w7.cc/ued/plugins/release/w7Plugins.umd.min.js"></script>
+    <title>Document</title>
 </head>
 <body>
-<div class="heaer-static ">
+<div class="heaer-static">
     <div id="header">
         <we7-head class="Nav-Header" :is-login="isLogin" :j-url="jUrl" :active="active" :show-right="showRight"></we7-head>
     </div>
-    <script src="//cdn.w7.cc/ued/plugins/release/w7Plugins.umd.min.js"></script>
-
-    <script>
-        new Vue({
-            el: '#header',
-            data: {
-                active: 2,
-                jUrl: 'https://j.w7.cc',
-                isLogin: false,
-                showRight: true,
-                activeArray: {
-                    www: '0',
-                    install: '1',
-                    buy: '1',
-                    w7goods: '1',
-                    rangine: '5'
-                }
-            },
-            components: {
-                we7Head: w7Plugins.default[6]
-            },
-            created: function() {
-                this.showRight = true;
-                this.active = this.activeArray['rangine'] ? this.activeArray['rangine'] : 2;
-                this.showRight = false
-            }
-        })
-    </script>
-
-    <script>
-        function Url(url) {
-            window.open(url, "_self")
-        }
-    </script>
-
 </div>
 <div class="rangine">
     <div class="rangine-banner">
-        <img src="//s.w7.cc/img/rangine/rangine-banner.png" alt="">
+        <img src="https://cdn.w7.cc/ued/rangine/image/index/rangine-banner.png" alt="">
         <div class="content">
             <div class="title">
                 Rangine  Framework
@@ -85,9 +31,9 @@
                 一款基于Swoole开源高性能异步&协程开发框架。基于Swoole扩展，常驻内存，不依赖传统的php-fpm。
             </div>
             <div class="action">
-                <a href="https://gitee.com/we7coreteam/w7swoole_empty" rel=”nofollow” target="_blank" class="btn btn-default">源代码（Gitee）</a>
+                <a href="https://gitee.com/we7coreteam/w7-rangine-empty" rel=”nofollow” target="_blank" class="btn btn-default">源代码（Gitee）</a>
                 <a href="https://github.com/we7coreteam/w7-rangine-empty" rel=”nofollow” target="_blank" class="btn btn-default">源代码（Github）</a>
-                <a href="//s.w7.cc/index.php?c=wiki&do=view&id=317&list=2284" target="_blank" class="btn btn-text">查看文档</a>
+                <a href="https://wiki.w7.cc/chapter/1?id=7#" target="_blank" class="btn btn-text">查看文档</a>
             </div>
         </div>
     </div>
@@ -97,16 +43,16 @@
             <p>框架使用场景</p>
         </div>
         <div class="content">
-            <div class="item after">
-                <img src="//s.w7.cc/img/rangine/d.png" alt="">
+            <div class="item">
+                <img src="https://cdn.w7.cc/ued/rangine/image/index/d.png" alt="">
                 <div class="desc">
                     <h3 class="name">文档系统</h3>
                     <div class="">基于软擎开发的开源版文档管理系统，是微擎多年开发经验的技术沉淀产品。支持多个编辑器，多用户协同操作，管理员审核发布等功能。让您的工作更高效，更智慧。</div>
-
+                    <a href="https://www.rangine.com/doc.html" class="go" target="_blank">查看实例 ></a>
                 </div>
             </div>
             <div class="item after">
-                <img src="//s.w7.cc/img/rangine/j.png" alt="">
+                <img src="https://cdn.w7.cc/ued/rangine/image/index/j.png" alt="">
                 <div class="desc">
                     <h3 class="name">积分商城</h3>
                     <div>基于软擎开发的开源版积分商城系统，是微擎为拓展业务需求所成立的自建商城新项目，可用于兑换商品或服务，支持入驻，积分+钱等系统化的积分运营，有助于拉近您与客户的关系，提高付费转化比例。</div>
@@ -122,7 +68,7 @@
         <div class="content">
             <div class="item">
                 <div class="box">
-                    <img src="//s.w7.cc/img/rangine/1.png" alt="">
+                    <img src="https://cdn.w7.cc/ued/rangine/image/index/1.png" alt="">
                     <p>协程/异步</p>
                 </div>
                 <p class="desc">
@@ -131,7 +77,7 @@
             </div>
             <div class="item">
                 <div class="box">
-                    <img src="//s.w7.cc/img/rangine/2.png" alt="">
+                    <img src="https://cdn.w7.cc/ued/rangine/image/index/2.png" alt="">
                     <p>组件化</p>
                 </div>
                 <p class="desc">
@@ -140,7 +86,7 @@
             </div>
             <div class="item">
                 <div class="box">
-                    <img src="//s.w7.cc/img/rangine/3.png" alt="">
+                    <img src="https://cdn.w7.cc/ued/rangine/image/index/3.png" alt="">
                     <p>学习成本低</p>
                 </div>
                 <p class="desc">
@@ -156,14 +102,14 @@
         </div>
         <div class="content">
             <div class="item">
-                <img src="//s.w7.cc/img/rangine/4.png" alt="">
+                <img src="https://cdn.w7.cc/ued/rangine/image/index/4.png" alt="">
                 <div class="box">
                     <h3>环境要求</h3>
-                    <p> PHP > 7.0.0、PHP Swoole 扩展 > 4.3.0、PHP Mbstring 扩展、PHP Pdo MySql</p>
+                    <p> PHP > 7.0.0、PHP Swoole 扩展 > 4.2.3、PHP Mbstring 扩展、PHP Pdo MySql</p>
                 </div>
             </div>
             <div class="item">
-                <img src="//s.w7.cc/img/rangine/5.png" alt="">
+                <img src="https://cdn.w7.cc/ued/rangine/image/index/5.png" alt="">
                 <div class="box">
                     <h3>安装</h3>
                     <p> 通过 Composer 来管理依赖，请确保你的机器上安装了 Composer</p>
@@ -177,17 +123,17 @@
             <h2>应用场景</h2>
             <p>框架的适用场景</p>
         </div>
-        <img src="//s.w7.cc/img/rangine/rangine-scene.png" alt="">
+        <img src="https://cdn.w7.cc/ued/rangine/image/index/rangine-scene.png" alt="">
     </div>
 </div>
 <div class="goTop">
     <div class="qqgroup">
         <div class="title">
-            <img src="//s.w7.cc/img/rangine/contact.png" alt="">
+            <img src="https://cdn.w7.cc/ued/rangine/image/index/contact.png" alt="">
             加群了解
         </div>
         <a class="qq" href="https://jq.qq.com/?_wv=1027&k=5IfX9e1" target="_blank">
-            <img src="//s.w7.cc/img/rangine/qq.png" alt="">
+            <img src="https://cdn.w7.cc/ued/rangine/image/index/qq.png" alt="">
             <div class="info">
                 QQ群:
                 <p>
@@ -200,6 +146,29 @@
         <i class="wi wi-angle-up"></i>
     </div>
 </div>
+<div id="we7-footer">
+    <we7-footer></we7-footer>
+</div>
+<script>
+    new Vue({
+        el: '#header',
+        data: {
+            active: 5,
+            jUrl: 'https://j.w7.cc',
+            isLogin: false,
+            showRight: false
+        },
+        components: {
+            we7Head: w7Plugins.default[6]
+        },
+    })
+    new Vue({
+        el: '#we7-footer',
+        components: {
+            we7Head: w7Plugins.default[7]
+        }
+    })
+</script>
 <script>
     window.onscroll=function(){
         var osTop=document.documentElement.scrollTop|| document.body.scrollTop;
@@ -211,77 +180,6 @@
     document.querySelector('.goTop .top').addEventListener('click', function() {
         document.body.scrollTop = document.documentElement.scrollTop = 0;
     })
-</script>
-
-<div id="we7-footer">
-    <we7-footer></we7-footer>
-</div>
-
-<script>
-    new Vue({
-        el: '#we7-footer',
-        components: {
-            we7Head: w7Plugins.default[7]
-        }
-    })
-</script>
-
-
-<!--qq统计-->
-
-<script>
-    var widths = document.body.clientWidth
-    var WidthZ = Number(254 * 0.364)
-    var box = document.querySelector('.U-Info');
-    if (box) {
-        box.style.setProperty('left',Number(WidthZ - Number(WidthZ * 2)) + 'px')
-    }
-    tippy('.uinfos', {
-        html: '#UiNfo'
-    })
-    tippy('.siteinfo', {
-        html: '#SiteListCard'
-    })
-    tippy('.product', {
-        html: '#W7Products'
-    })
-    tippy('.DevContentMenu', {
-        html: '#DevContent'
-    })
-    var myLazyLoad = new LazyLoad({
-        elements_selector: "[data-src]",
-        skip_invisible: false
-    });
-</script>
-
-
-
-<script type="text/javascript" src="//tajs.qq.com/stats?sId=52086755" charset="UTF-8"></script>
-<!-- end qq统计 -->
-<!--百度推送-->
-<script>
-    (function(){
-        var bp = document.createElement('script');
-        var curProtocol = window.location.protocol.split(':')[0];
-        if (curProtocol === 'https') {
-            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
-        } else {
-            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
-        }
-        var s = document.getElementsByTagName("script")[0];
-        s.parentNode.insertBefore(bp, s);
-    })();
-</script>
-<!--end百度推送-->
-<!--百度统计-->
-<script>
-    var _hmt = _hmt || [];
-    (function() {
-        var hm = document.createElement("script");
-        hm.src = "https://hm.baidu.com/hm.js?4984b9f5afc95eecf84cbe734a73504a";
-        var s = document.getElementsByTagName("script")[0];
-        s.parentNode.insertBefore(hm, s);
-    })();
 </script>
 </body>
 </html>
