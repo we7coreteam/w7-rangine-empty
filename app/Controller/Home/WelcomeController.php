@@ -23,7 +23,10 @@ class WelcomeController extends ControllerAbstract {
 		return $this->render('index');
 	}
 
-	public function apiGet(Request $request) {
-		return $request->getQueryParams();
+	public function apiGet(Request $request, int $id = 0) {
+		if (!empty($id)) {
+			return ['id' => $id];
+		}
+		return $request->getQueryParams() ?: 'success';
 	}
 }
