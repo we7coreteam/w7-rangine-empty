@@ -10,7 +10,6 @@
  */
 irouter()->middleware('TestMiddleware')->get('/', 'Home\WelcomeController@index');
 
-irouter()->group('', function (\W7\Core\Route\Route $route) {
-	$route->get('/', 'Home\WelcomeController@index');
-	$route->get('/home/api-get', [\W7\App\Controller\Home\WelcomeController::class, 'apiGet']);
+irouter()->middleware(\W7\App\Middleware\TestMiddleware::class)->group('', function (\W7\Core\Route\Route $route) {
+	$route->get('/home/api-get[/{id:\d+}]', [\W7\App\Controller\Home\WelcomeController::class, 'apiGet']);
 });
