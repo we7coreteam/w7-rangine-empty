@@ -23,6 +23,9 @@ class WelcomeController extends ControllerAbstract {
 		return $this->render('index');
 	}
 
+	/**
+	 * 文档说明 https://wiki.w7.cc/chapter/1?id=205#_36
+	 */
 	public function apiGet(Request $request, int $id = 0) {
 		if (!empty($id)) {
 			return ['id' => $id];
