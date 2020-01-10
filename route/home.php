@@ -1,19 +1,16 @@
 <?php
 /**
- * @author donknap
- * @date 19-4-23 下午4:00
+ * This file is part of Rangine
+ *
+ * (c) We7Team 2019 <https://www.rangine.com/>
+ *
+ * document http://s.w7.cc/index.php?c=wiki&do=view&id=317&list=2284
+ *
+ * visited https://www.rangine.com/ for more details
  */
+irouter()->middleware('TestMiddleware')->get('/', 'Home\WelcomeController@index');
 
-return [
-	'/' => [
-		'method' => 'GET',
-		//路由分組name
-		'name' => 'route-home',
-		//公共的中间件
-		'middleware' => [
-			\W7\App\Middleware\TestMiddleware::class
-		],
-		//当该路由的name未定义时，默认name生成方式为分组路由的name按.连接，再拼接上当前路由的action
-		'handler' => 'Home\WelcomeController@index', //指定处理方法
-	],
-];
+irouter()->group('', function (\W7\Core\Route\Route $route) {
+	$route->get('/', 'Home\WelcomeController@index');
+	$route->get('/home/api-get', [\W7\App\Controller\Home\WelcomeController::class, 'apiGet']);
+});
