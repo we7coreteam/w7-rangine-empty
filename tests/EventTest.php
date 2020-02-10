@@ -2,9 +2,31 @@
 
 namespace W7\Tests;
 
+use Symfony\Component\Console\Input\ArgvInput;
+use W7\Console\Application;
 use W7\Core\Dispatcher\EventDispatcher;
 
 class EventTest extends TestCase {
+
+	public function testMakeException() {
+		/**
+		 * @var Application $application
+		 */
+		$application = iloader()->singleton(Application::class);
+		$command = $application->get('make:listener');
+
+		$command->run(new ArgvInput([
+			'input',
+			'--name=test'
+		]), ioutputer());
+
+		$file = APP_PATH . '/Listener/TestListener.php';
+
+		$this->assertSame(true, file_exists($file));
+
+		unlink($file);
+	}
+
 	public function testSet() {
 		$event = new EventDispatcher();
 		$event->listen('test', function () {

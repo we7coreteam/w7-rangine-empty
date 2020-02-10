@@ -3,6 +3,8 @@
 namespace W7\Tests;
 
 use Illuminate\Contracts\Validation\Rule;
+use Symfony\Component\Console\Input\ArgvInput;
+use W7\Console\Application;
 use W7\Core\Exception\ValidatorException;
 
 class UserRule implements Rule {
@@ -31,6 +33,25 @@ class UserRule implements Rule {
 }
 
 class ValidateTest extends TestCase {
+	public function testMake() {
+		/**
+		 * @var Application $application
+		 */
+		$application = iloader()->singleton(Application::class);
+		$command = $application->get('make:validate');
+
+		$command->run(new ArgvInput([
+			'input',
+			'--name=test'
+		]), ioutputer());
+
+		$file = APP_PATH . '/Model/Validate/TestRule.php';
+
+		$this->assertSame(true, file_exists($file));
+
+		unlink($file);
+	}
+
 	public function testValidate() {
 		$data = [
 			'key' => 1,

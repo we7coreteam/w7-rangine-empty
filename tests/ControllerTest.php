@@ -50,7 +50,7 @@ class ControllerTest extends TestCase {
 		$command = $application->get('make:controller');
 		$command->run(new ArgvInput([
 			'input',
-			'--name=test/index'
+			'--name=test\index'
 		]), ioutputer());
 
 		$this->assertSame(true, file_exists(APP_PATH . '/Controller/Test/IndexController.php'));
