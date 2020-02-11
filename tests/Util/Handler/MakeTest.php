@@ -7,7 +7,7 @@ namespace W7\Tests;
 use Symfony\Component\Console\Input\ArgvInput;
 use W7\Console\Application;
 
-class HandlerTest extends TestCase {
+class MakeTest extends TestCase {
 
 	protected $supportTypeWithName = ['session', 'log', 'cache', 'view'];
 
