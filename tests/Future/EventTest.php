@@ -2,7 +2,10 @@
 
 namespace W7\Tests;
 
+use Illuminate\Filesystem\Filesystem;
 use Symfony\Component\Console\Input\ArgvInput;
+use W7\App\Event\Test\TestEvent as TestTestEvent;
+use W7\App\Event\TestEvent;
 use W7\Console\Application;
 use W7\Core\Dispatcher\EventDispatcher;
 
@@ -28,5 +31,22 @@ class EventTest extends TestCase {
 
 		unlink($listenerFile);
 		unlink($eventFile);
+    }
+
+    public function testAutoRegister() { 
+        $filesystem = new Filesystem();
+        $filesystem->copyDirectory(__DIR__ . '/tests/Util/Event', APP_PATH . '/Event');
+        $filesystem->copyDirectory(__DIR__ . '/tests/Util/Listener', APP_PATH . '/Listener');
+
+        $eventDispatcher = new EventDispatcher();
+        $eventDispatcher->autoRegisterEvents(__DIR__ . '/../Util/', 'W7\\App');
+        
+		$this->assertSame(true, $eventDispatcher->hasListeners(TestEvent::class));
+		$this->assertSame(true, $eventDispatcher->hasListeners(TestTestEvent::class));
+
+        $filesystem->deleteDirectory(APP_PATH . '/Event/Test');
+        $filesystem->deleteDirectory(APP_PATH . '/Listener/Test');
+        $filesystem->delete(APP_PATH . '/Event/TestEvent.php');
+        $filesystem->delete(APP_PATH . '/Listener/TestListener.php');
     }
 }
