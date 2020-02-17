@@ -27,7 +27,7 @@ class ControllerTest extends TestCase {
 		$routeInfo = irouter()->getData();
 		$dispatch = new GroupCountBased($routeInfo);
 		$route = $dispatch->dispatch('GET', '/user');
-		$this->assertSame('\W7\App\Controller\UserController', $route[1]['handler'][0]);
+		$this->assertSame('W7\App\Controller\UserController', $route[1]['handler'][0]);
 
 		$command->run(new ArgvInput([
 			'input',
@@ -61,7 +61,7 @@ class ControllerTest extends TestCase {
 		$routeInfo = irouter()->getData();
 		$dispatch = new GroupCountBased($routeInfo);
 		$route = $dispatch->dispatch('GET', '/test/index');
-		$this->assertSame('\W7\App\Controller\Test\IndexController', $route[1]['handler'][0]);
+		$this->assertSame('W7\App\Controller\Test\IndexController', $route[1]['handler'][0]);
 
 		unlink(BASE_PATH . '/route/test.php');
 		unlink(APP_PATH . '/Controller/Test/IndexController.php');

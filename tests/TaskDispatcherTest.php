@@ -73,11 +73,11 @@ class TaskDispatcherTest extends TestCase {
 		$dispatcher = new TaskDispatcher();
 		$task = new Task('test', [
 			'rule' => '*/2 * * * *',
-			'task' => TestTask::class
+			'class' => TestTask::class
 		]);
 
 		ob_start();
-		$dispatcher->dispatch(new Server(), 0, 0, $task->getTaskInfo());
+		$dispatcher->dispatch(new Server(), 0, 0, $task->getTaskMessage()->pack());
 		$echo = ob_get_clean();
 		$this->assertSame('run', $echo);
 
