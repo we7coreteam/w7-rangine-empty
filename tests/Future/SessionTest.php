@@ -27,4 +27,13 @@ class SessionTest extends TestCase {
 		$this->assertSame(1, $data['test']);
 		$this->assertSame(2, $data['test1']);
 	}
+
+	public function testSetSessionId() {
+		$session = new Session();
+		$session->start(new Request('GET', '/'));
+		$id = 1234;
+		$session->setId($id);
+
+		$this->assertSame(1234, $session->getId());
+	}
 }
