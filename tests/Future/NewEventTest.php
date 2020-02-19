@@ -35,11 +35,11 @@ class NewEventTest extends TestCase {
 
 	public function testAutoRegister() {
 		$filesystem = new Filesystem();
-		$filesystem->copyDirectory(__DIR__ . '/tests/Util/Event', APP_PATH . '/Event');
-		$filesystem->copyDirectory(__DIR__ . '/tests/Util/Listener', APP_PATH . '/Listener');
+		$filesystem->copyDirectory(__DIR__ . '/../Util/Event', APP_PATH . '/Event');
+		$filesystem->copyDirectory(__DIR__ . '/../Util/Listener', APP_PATH . '/Listener');
 
 		$eventDispatcher = new EventDispatcher();
-		$eventDispatcher->autoRegisterEvents(__DIR__ . '/../Util/', 'W7\\App');
+		$eventDispatcher->autoRegisterEvents(__DIR__ . '/../Util/Event', 'W7\\App');
 
 		$this->assertSame(true, $eventDispatcher->hasListeners(TestEvent::class));
 		$this->assertSame(true, $eventDispatcher->hasListeners(TestTestEvent::class));
