@@ -1,6 +1,6 @@
 <?php
 
-use W7\Core\Database\Seed\Seeder;
+use W7\DatabaseTool\Seed\Seeder;
 
 class DatabaseSeeder extends Seeder {
 	/**
