@@ -2,6 +2,6 @@
 
 namespace W7\App\Event\Test;
 
-class TestEvent {
+class TestAutoEvent {
     
 }

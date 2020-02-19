@@ -27,8 +27,11 @@ class LangTest extends TestCase {
 	public function testUserTrans() {
 		$this->init();
 
-		$filesystem = new Filesystem();
-		$filesystem->copyDirectory(__DIR__ . '/Util/lang', BASE_PATH . '/config/lang');
+		if (!file_exists(BASE_PATH . '/lang/zh-CN')) {
+			mkdir(BASE_PATH . '/lang/zh-CN', 0777, true);
+		}
+
+		copy(__DIR__ . '/Util/lang/zh-CN/test.php', BASE_PATH . '/lang/zh-CN/test.php');
 
 		$result = itrans('test.test');
 		$this->assertSame('我是测试', $result);
@@ -36,6 +39,8 @@ class LangTest extends TestCase {
 		$result = itrans('test.group.test');
 		$this->assertSame('我是分组测试', $result);
 
-		$filesystem->deleteDirectory(BASE_PATH . '/config/lang');
+		unlink(BASE_PATH . '/lang/zh-CN/test.php');
+		$filesystem = new Filesystem();
+		$filesystem->deleteDirectory(BASE_PATH . '/lang/zh-CN/');
 	}
 }

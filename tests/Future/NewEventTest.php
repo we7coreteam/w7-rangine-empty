@@ -4,8 +4,7 @@ namespace W7\Tests;
 
 use Illuminate\Filesystem\Filesystem;
 use Symfony\Component\Console\Input\ArgvInput;
-use W7\App\Event\Test\TestEvent as TestTestEvent;
-use W7\App\Event\TestEvent;
+use W7\App\Event\TestAutoEvent;
 use W7\Console\Application;
 use W7\Core\Dispatcher\EventDispatcher;
 
@@ -24,7 +23,7 @@ class NewEventTest extends TestCase {
 		]), ioutputer());
 
 		$listenerFile = APP_PATH . '/Listener/TestEventListener.php';
-		$eventFile = APP_PATH . '/Event/TestEvent.php';
+		$eventFile = APP_PATH . '/Event/TestEventEvent.php';
 
 		$this->assertSame(true, file_exists($listenerFile));
 		$this->assertSame(true, file_exists($eventFile));
@@ -35,18 +34,20 @@ class NewEventTest extends TestCase {
 
 	public function testAutoRegister() {
 		$filesystem = new Filesystem();
-		$filesystem->copyDirectory(__DIR__ . '/../Util/Event', APP_PATH . '/Event');
-		$filesystem->copyDirectory(__DIR__ . '/../Util/Listener', APP_PATH . '/Listener');
+		$filesystem->copyDirectory(BASE_PATH . '/tests/Util/Event', APP_PATH . '/Event');
+		$filesystem->copyDirectory(BASE_PATH . '/tests/Util/Listener', APP_PATH . '/Listener');
 
 		$eventDispatcher = new EventDispatcher();
-		$eventDispatcher->autoRegisterEvents(__DIR__ . '/../Util/Event', 'W7\\App');
+		$eventDispatcher->autoRegisterEvents(BASE_PATH . '/tests/Util/Event', 'W7\\App');
 
-		$this->assertSame(true, $eventDispatcher->hasListeners(TestEvent::class));
-		$this->assertSame(true, $eventDispatcher->hasListeners(TestTestEvent::class));
+		$this->assertSame(true, $eventDispatcher->hasListeners(TestAutoEvent::class));
+		$this->assertSame(true, $eventDispatcher->hasListeners(\W7\App\Event\Test\TestAutoEvent::class));
 
+		$filesystem->delete(APP_PATH . '/Event/Test/TestAutoEvent.php');
+		$filesystem->delete(APP_PATH . '/Listener/Test/TestAutoListener.php');
 		$filesystem->deleteDirectory(APP_PATH . '/Event/Test');
 		$filesystem->deleteDirectory(APP_PATH . '/Listener/Test');
-		$filesystem->delete(APP_PATH . '/Event/TestEvent.php');
-		$filesystem->delete(APP_PATH . '/Listener/TestListener.php');
+		$filesystem->delete(APP_PATH . '/Event/TestAutoEvent.php');
+		$filesystem->delete(APP_PATH . '/Listener/TestAutoListener.php');
 	}
 }

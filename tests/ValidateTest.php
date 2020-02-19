@@ -98,8 +98,11 @@ class ValidateTest extends TestCase {
 	}
 
 	public function testExtend() {
-		mkdir(BASE_PATH . '/config/lang/zh-CN', 0777, true);
-		copy(__DIR__ . '/Util/lang/zh-CN/validation.php', BASE_PATH . '/config/lang/zh-CN/validation.php');
+		if (!file_exists(BASE_PATH . '/lang/zh-CN')) {
+			mkdir(BASE_PATH . '/lang/zh-CN', 0777, true);
+		}
+
+		copy(__DIR__ . '/Util/lang/zh-CN/validation.php', BASE_PATH . '/lang/zh-CN/validation.php');
 
 		ivalidator()->extend('user_validate', function ($attribute, $value, $parameters) {
 			return $value === 'test';
@@ -135,9 +138,8 @@ class ValidateTest extends TestCase {
 			$this->assertSame('value : 自定义验证', $e->getMessage());
 		}
 
-		unlink(BASE_PATH . '/config/lang/zh-CN/validation.php');
-		rmdir(BASE_PATH . '/config/lang/zh-CN');
-		rmdir(BASE_PATH . '/config/lang');
+		unlink(BASE_PATH . '/lang/zh-CN/validation.php');
+		rmdir(BASE_PATH . '/lang/zh-CN');
 	}
 
 	public function testUserRule() {
