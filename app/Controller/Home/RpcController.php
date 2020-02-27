@@ -2,29 +2,23 @@
 
 namespace W7\App\Controller\Home;
 
+use GuzzleHttp\Client;
 use W7\Core\Controller\ControllerAbstract;
 use W7\Http\Message\Server\Request;
-use W7\RpcClient\Rpc;
 
 class RpcController extends ControllerAbstract {
-	private $rpc;
-
-	public function __construct()
-	{
-		$this->rpc = new Rpc([
-			'base_uri' => 'json://127.0.0.1:99'
-		]);
-	}
-
 	public function server(Request $request) {
 		return $request->post();
 	}
 
 	public function client(Request $request) {
-		$result = $this->rpc->post('/rpc-server', [
-			'test' => 1
+		$client = new Client();
+		$response = $client->post('http://127.0.0.1:99/rpc-server?re=asd&sd=34', [
+			'form_params' => [
+				'test' => 1
+			],
+			'protocol' => 'tcp'
 		]);
-
-		return $result;
+		return $this->responseHtml($response->getBody()->getContents());
 	}
 }
