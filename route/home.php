@@ -15,5 +15,6 @@ irouter()->middleware(\W7\App\Middleware\TestMiddleware::class)->group('', funct
 });
 
 
-irouter()->get('/rpc-client', 'Home\RpcController@client');
-irouter()->post('/rpc-server', 'Home\RpcController@server');
+irouter()->get('/http-client', 'Home\ClientController@http');
+irouter()->get('/tcp-client', 'Home\ClientController@tcp');
+irouter()->post('/server', 'Home\ClientController@server');
