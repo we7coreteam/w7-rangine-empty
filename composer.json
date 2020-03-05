@@ -36,13 +36,13 @@
 	"repositories": [
 		{
 			"type": "git",
-			"url": "https://github.com/we7coreteam/w7-rangine-guzzle.git"
+			"url": "https://github.com/we7coreteam/w7-rangine-client.git"
 		}
 	],
 	"require": {
-		"w7/rangine": "~2.0",
+		"w7/rangine": "dev-master",
 		"w7/rangine-crontab": "~1.0",
-		"w7/rangine-guzzle": "dev-master",
+		"w7/rangine-client": "dev-master",
 		"doctrine/dbal": "*"
 	},
 	"require-dev": {

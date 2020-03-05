@@ -56,8 +56,7 @@ class ControllerTest extends TestCase {
 		$this->assertSame(true, file_exists(APP_PATH . '/Controller/Test/IndexController.php'));
 		$this->assertSame(true, file_exists(BASE_PATH . '/route/test.php'));
 
-		$routeMapping = iloader()->singleton(RouteMapping::class);
-		$routeMapping->getMapping();
+		require_once BASE_PATH . '/route/test.php';
 		$routeInfo = irouter()->getData();
 		$dispatch = new GroupCountBased($routeInfo);
 		$route = $dispatch->dispatch('GET', '/test/index');

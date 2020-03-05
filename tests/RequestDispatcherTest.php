@@ -22,12 +22,21 @@ class RequestDispatcherTest extends TestCase {
 		$filesystem->copyDirectory(__DIR__ . '/Util/Middlewares', APP_PATH . '/Middleware');
 
 		App::$server = new Server();
-		$this->addRoute();
+		$dispatcher = new Dispatcher();
+		irouter()->middleware([
+			DispatcherMiddleware::class,
+			Dispatcher1Middleware::class
+		])->get('/test_dispatcher', function () {
+			return 1;
+		});
+
+		$routeInfo = iloader()->get(RouteMapping::class)->getMapping();
+		$router = new GroupCountBased($routeInfo);
+		$dispatcher->setRouter($router);
 
 		$request = new Request('GET', '/test_dispatcher');
 		$response = new Response();
 		icontext()->setResponse($response);
-		$dispatcher = new Dispatcher();
 
 		$reflect = new \ReflectionClass($dispatcher);
 		$method = $reflect->getMethod('getRoute');
@@ -54,14 +63,14 @@ class RequestDispatcherTest extends TestCase {
 
 	public function testIgnoreRoute() {
 		$routeInfo = iloader()->get(RouteMapping::class)->getMapping();
-		$route = new GroupCountBased($routeInfo);
-		iloader()->set(Context::ROUTE_KEY, $route);
+		$router = new GroupCountBased($routeInfo);
+		$dispatcher = new Dispatcher();
+		$dispatcher->setRouter($router);
 
 		App::$server = new Server();
 		$request = new Request('GET', '/favicon.ico');
 		$response = new Response();
 		icontext()->setResponse($response);
-		$dispatcher = new Dispatcher();
 
 		$reflect = new \ReflectionClass($dispatcher);
 		$method = $reflect->getMethod('getRoute');
@@ -80,11 +89,11 @@ class RequestDispatcherTest extends TestCase {
 
 		$routeInfo = iloader()->get(RouteMapping::class)->getMapping();
 		$route = new GroupCountBased($routeInfo);
-		iloader()->set(Context::ROUTE_KEY, $route);
+		$dispatcher = new Dispatcher();
+		$dispatcher->setRouter($route);
 
 		App::$server = new Server();
 		$request = new Request('GET', '/favicon.ico');
-		$dispatcher = new Dispatcher();
 
 		$reflect = new \ReflectionClass($dispatcher);
 		$method = $reflect->getMethod('getRoute');
@@ -94,18 +103,5 @@ class RequestDispatcherTest extends TestCase {
 		$this->assertSame(true, $route['controller'] instanceof \Closure);
 		$this->assertSame('system', $route['module']);
 		$this->assertSame('user favicon', $route['controller']());
-	}
-
-	private function addRoute() {
-		irouter()->middleware([
-			DispatcherMiddleware::class,
-			Dispatcher1Middleware::class
-		])->get('/test_dispatcher', function () {
-			return 1;
-		});
-
-		$routeInfo = iloader()->get(RouteMapping::class)->getMapping();
-		$route = new GroupCountBased($routeInfo);
-		iloader()->set(Context::ROUTE_KEY, $route);
 	}
 }

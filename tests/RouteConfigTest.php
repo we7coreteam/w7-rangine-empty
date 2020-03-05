@@ -263,14 +263,14 @@ class RouteConfigTest extends TestCase {
 
 	public function testNotFound() {
 		$routeInfo = iloader()->get(RouteMapping::class)->getMapping();
-		$route = new GroupCountBased($routeInfo);
-		iloader()->set(Context::ROUTE_KEY, $route);
+		$router = new GroupCountBased($routeInfo);
+		$dispatcher = new Dispatcher();
+		$dispatcher->setRouter($router);
 
 		App::$server = new Server();
 		$request = new Request('POST', '/post');
 		$response = new Response();
 		icontext()->setResponse($response);
-		$dispatcher = new Dispatcher();
 
 		$reflect = new \ReflectionClass($dispatcher);
 		$method = $reflect->getMethod('getRoute');
@@ -286,14 +286,14 @@ class RouteConfigTest extends TestCase {
 
 	public function testNotAllow() {
 		$routeInfo = iloader()->get(RouteMapping::class)->getMapping();
-		$route = new GroupCountBased($routeInfo);
-		iloader()->set(Context::ROUTE_KEY, $route);
+		$router = new GroupCountBased($routeInfo);
+		$dispatcher = new Dispatcher();
+		$dispatcher->setRouter($router);
 
 		App::$server = new Server();
-		$request = new Request('POST', '/');
+		$request = new Request('POST', '/favicon.ico');
 		$response = new Response();
 		icontext()->setResponse($response);
-		$dispatcher = new Dispatcher();
 
 		$reflect = new \ReflectionClass($dispatcher);
 		$method = $reflect->getMethod('getRoute');
@@ -303,7 +303,7 @@ class RouteConfigTest extends TestCase {
 			$method->invoke($dispatcher, $request);
 		} catch (\Throwable $e) {
 			$this->assertSame(true, $e instanceof RouteNotAllowException);
-			$this->assertSame('Route not allowed, /', $e->getMessage());
+			$this->assertSame('Route not allowed, /favicon.ico', $e->getMessage());
 		}
 	}
 

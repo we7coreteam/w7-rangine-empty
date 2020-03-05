@@ -24,6 +24,10 @@ return [
 	],
 	'http' => [
 		'host'  => '0.0.0.0',
-		'port'  => ienv('SERVER_HTTP_PORT', 88)
+		'port'  => ienv('SERVER_HTTP_PORT', 888)
+	],
+	'webSocket' => [
+		'host'  => '0.0.0.0',
+		'port'  => ienv('SERVER_WEBSOCKET_PORT', 888)
 	],
 ];
