@@ -25,6 +25,7 @@ class EventTest extends TestCase {
 		$this->assertSame(true, file_exists($file));
 
 		unlink($file);
+		unlink(APP_PATH . '/Event/TestEvent.php');
 	}
 
 	public function testSet() {
