@@ -50,6 +50,7 @@ class ValidateTest extends TestCase {
 		$this->assertSame(true, file_exists($file));
 
 		unlink($file);
+		rmdir(APP_PATH . '/Model/Validate');
 	}
 
 	public function testValidate() {
