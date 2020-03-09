@@ -33,16 +33,10 @@
 			"W7\\Tests\\" : "tests/"
 		}
 	},
-	"repositories": [
-		{
-			"type": "git",
-			"url": "https://github.com/we7coreteam/w7-rangine-client.git"
-		}
-	],
 	"require": {
 		"w7/rangine": "~2.0",
 		"w7/rangine-crontab": "~1.0",
-		"w7/rangine-client": "dev-master",
+		"w7/rangine-client": "~1.0",
 		"doctrine/dbal": "*"
 	},
 	"require-dev": {
