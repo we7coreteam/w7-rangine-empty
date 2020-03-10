@@ -14,6 +14,13 @@ irouter()->middleware(\W7\App\Middleware\TestMiddleware::class)->group('', funct
 	$route->get('/home/api-get[/{id:\d+}]', [\W7\App\Controller\Home\WelcomeController::class, 'apiGet']);
 });
 
+//此路由是302跳转
+irouter()->redirect('/index.js', '/static/testjs.js');
+irouter()->redirect('/index', '/index.html');
+
+//此路由直接显示内容,
+irouter()->get('/change-name.js', '/static/testjs.js');
+irouter()->get('/show-pic', '/image/testpic.jpg');
 
 irouter()->get('/http-client', 'Home\ClientController@http');
 irouter()->get('/tcp-client', 'Home\ClientController@tcp');
