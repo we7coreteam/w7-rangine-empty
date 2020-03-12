@@ -9,7 +9,7 @@ class ServerTest extends TestCase {
 	public function testDefaultConfig() {
 		$httpServer = new Server();
 
-		$this->assertSame(1, $httpServer->setting['worker_num']);
+		$this->assertSame(2, $httpServer->setting['worker_num']);
 		$this->assertSame(SWOOLE_PROCESS, $httpServer->setting['mode']);
 		$this->assertSame(SWOOLE_TCP, $httpServer->setting['sock_type']);
 	}
@@ -21,7 +21,7 @@ class ServerTest extends TestCase {
 
 		$httpServer = new Server();
 
-		$this->assertSame(1, $httpServer->setting['worker_num']);
+		$this->assertSame(2, $httpServer->setting['worker_num']);
 		$this->assertSame(SWOOLE_BASE, $httpServer->setting['mode']);
 		$this->assertSame(SWOOLE_TCP, $httpServer->setting['sock_type']);
 	}
