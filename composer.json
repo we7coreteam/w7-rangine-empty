@@ -35,14 +35,13 @@
 	},
 	"repositories": [
 		{
-			"type": "git",
-			"url": "https://github.com/we7coreteam/w7-rangine-fpm.git"
+			"type": "path",
+			"url": "../swoole"
 		}
 	],
 	"require": {
 		"w7/rangine": "dev-master",
-		"w7/rangine-http-message": "dev-master",
-		"w7/rangine-fpm": "dev-master",
+		"w7/rangine-http-message": "*",
 		"w7/rangine-crontab": "~1.0",
 		"w7/rangine-client": "~1.0",
 		"doctrine/dbal": "*"
