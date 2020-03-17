@@ -30,7 +30,7 @@ sudo composer install
 
 # 文档
 
-https://wiki.w7.cc/chapter/1?id=7 
+https://wiki.w7.cc/chapter/1?id=1175#
 
 # 功能
 
