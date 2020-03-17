@@ -5,7 +5,7 @@
 [![Rangine Doc](https://img.shields.io/badge/docs-passing-green.svg?maxAge=2592000)](https://s.we7.cc/index.php?c=wiki&do=view&id=317)
 # w7Rangine
 
-一款基于Swoole高性能应用框架。常驻内存，不依赖传统的 PHP-FPM，全异步非阻塞、协程实现。可以用于构建高性能的Web系统、API、中间件、基础服务等等。
+软擎是基于 Php 7.2+ 和 Swoole 4.3+ 的高性能、简单易用的开发框架。支持同时在 Swoole Server 和 php-fpm 两种模式下运行。内置了 Http (Swoole, Fpm)，Tcp，WebSocket，Process，Crontab服务。集成了大量成熟的组件，可以用于构建高性能的Web系统、API、中间件、基础服务等等。
 
 # 代码
 
