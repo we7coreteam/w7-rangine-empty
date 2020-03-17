@@ -41,13 +41,10 @@
 	],
 	"require": {
 		"w7/rangine": "dev-master",
-		"w7/rangine-http-message": "*",
-		"w7/rangine-crontab": "~1.0",
-		"w7/rangine-client": "~1.0",
-		"doctrine/dbal": "*"
+		"w7/rangine-http-message": "dev-master"
 	},
 	"require-dev": {
-		"w7/rangine-debugger": "~1.0.0",
+		"w7/rangine-debugger": "dev-master",
 		"phpunit/phpunit": "^7.0"
 	}
 }
