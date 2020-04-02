@@ -36,8 +36,7 @@
 	"require": {
 		"w7/rangine": "~2.0",
 		"w7/rangine-crontab": "~1.0",
-		"w7/rangine-client": "~1.0",
-		"doctrine/dbal": "*"
+		"w7/rangine-client": "~1.0"
 	},
 	"require-dev": {
 		"w7/rangine-debugger": "~1.0.0",
