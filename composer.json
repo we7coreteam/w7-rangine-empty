@@ -46,7 +46,8 @@
 	"require": {
 		"w7/rangine": "dev-master",
 		"w7/rangine-http-message": "dev-master",
-		"w7/rangine-package-plugin": "dev-master"
+		"w7/rangine-package-plugin": "dev-master",
+		"w7/rangine-crontab": "dev-master"
 	},
 	"require-dev": {
 		"w7/rangine-debugger": "dev-master",
