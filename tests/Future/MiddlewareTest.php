@@ -14,21 +14,13 @@ class MiddlewareTest extends TestCase {
 		$dispatcher = iloader()->get(Dispatcher::class);
 		$mapping = $dispatcher->getMiddlewareMapping();
 
+		$mapping->addBeforeMiddleware(SessionMiddleware::class);
 		$this->assertSame(SessionMiddleware::class, $mapping->beforeMiddleware[0][0]);
 
-		$mapping->deleteMiddleware(SessionMiddleware::class);
-
-		$this->assertSame(0, count($mapping->beforeMiddleware));
-
-		$mapping->addBeforeMiddleware(SessionMiddleware::class);
-
-		$this->assertSame(SessionMiddleware::class, $mapping->beforeMiddleware[1][0]);
 		$mapping->deleteAfterMiddleware(SessionMiddleware::class);
-		$this->assertSame(SessionMiddleware::class, $mapping->beforeMiddleware[1][0]);
+		$this->assertSame(SessionMiddleware::class, $mapping->beforeMiddleware[0][0]);
 
-		$this->assertSame(SessionMiddleware::class, $mapping->beforeMiddleware[1][0]);
 		$mapping->deleteBeforeMiddleware(SessionMiddleware::class);
 		$this->assertSame(0, count($mapping->beforeMiddleware));
-
 	}
 }

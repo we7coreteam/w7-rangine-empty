@@ -3,27 +3,12 @@
 namespace W7\Tests;
 
 use W7\Http\Message\Base\Cookie;
-use W7\Http\Message\Formatter\ResponseFormatterInterface;
 use W7\Http\Message\Server\Response;
-
-class UserFormatter implements ResponseFormatterInterface {
-	public function formatter(Response $response): Response {
-		$response = $response->withoutHeader('Content-Type')->withAddedHeader('Content-Type', 'text/plain');
-		$response->getCharset() && $response = $response->withCharset($response->getCharset());
-
-		$data = $response->getData();
-		if ($data) {
-			$response = $response->withContent(serialize($data));
-		}
-
-		return $response;
-	}
-}
 
 class ResponseTest extends TestCase {
 	public function testRaw() {
 		$response = new Response();
-		$response = $response->raw('test');
+		$response = $response->withHeader('Content-Type', 'text/plain')->withContent('test');
 
 		$content = $response->getBody()->getContents();
 		$this->assertSame('test', $content);
@@ -32,7 +17,7 @@ class ResponseTest extends TestCase {
 
 	public function testJson() {
 		$response = new Response();
-		$response = $response->json(['test']);
+		$response = $response->withHeader('Content-Type', 'application/json')->withContent(json_encode(['test']));
 
 		$content = $response->getBody()->getContents();
 		$this->assertSame('["test"]', $content);
@@ -41,30 +26,11 @@ class ResponseTest extends TestCase {
 
 	public function testHtml() {
 		$response = new Response();
-		$response = $response->html('test');
+		$response = $response->withHeader('Content-Type', 'text/html')->withContent('test');
 
 		$content = $response->getBody()->getContents();
 		$this->assertSame('test', $content);
 		$this->assertSame('text/html', $response->getHeader('Content-Type')[0]);
-	}
-
-	public function testDefaultFormatter() {
-		$response = new Response();
-		$response = $response->withData('test');
-
-		$content = $response->getBody()->getContents();
-		$this->assertSame('{"data":"test"}', $content);
-		$this->assertSame('application/json', $response->getHeader('Content-Type')[0]);
-	}
-
-	public function testUserFormatter() {
-		$response = new Response();
-		$response->setFormatter(new UserFormatter());
-		$response = $response->withData('test');
-
-		$content = $response->getBody()->getContents();
-		$this->assertSame('s:4:"test";', $content);
-		$this->assertSame('text/plain', $response->getHeader('Content-Type')[0]);
 	}
 
 	public function testWithContent() {
@@ -78,10 +44,10 @@ class ResponseTest extends TestCase {
 	public function testCookie() {
 		$response = new Response();
 		$response = $response->withCookie('test', 1);
-		$response = $response->withCookie('test1', new Cookie([
-			'name' => 'test1',
-			'value' => '2'
-		]));
+		$response = $response->withCookie('test1', new Cookie(
+			'test1',
+			'2'
+		));
 
 		/**
 		 * @var Cookie $cookie

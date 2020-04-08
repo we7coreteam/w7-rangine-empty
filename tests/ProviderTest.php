@@ -3,6 +3,7 @@
 namespace W7\Tests;
 
 use FastRoute\Dispatcher\GroupCountBased;
+use Illuminate\Filesystem\Filesystem;
 use Symfony\Component\Console\Input\ArgvInput;
 use W7\Console\Application;
 use W7\Core\Provider\ProviderAbstract;
@@ -21,8 +22,8 @@ class RouteProvider extends ProviderAbstract {
 		/**
 		 * 加载该扩展包的路由
 		 */
-		$this->rootPath = __DIR__ . '/Util/Provider/';
-		$this->registerRoute('/../route.php');
+		$this->rootPath = __DIR__ . '/Util/Provider';
+		$this->registerRoute('../route.php');
 	}
 }
 
@@ -46,7 +47,7 @@ class ConfigProvider extends ProviderAbstract {
 class CommandProvider extends ProviderAbstract {
 	public function register() {
 		$this->rootPath = APP_PATH ;
-		$this->namespace = 'W7\App\src';
+		$this->packageNamespace = 'W7\App\src';
 		$this->registerCommand();
 	}
 }
@@ -74,7 +75,6 @@ class ProviderTest extends TestCase {
 		$this->assertSame(true, file_exists(APP_PATH . '/Provider/TestProvider.php'));
 
 		unlink(APP_PATH . '/Provider/TestProvider.php');
-		rmdir(APP_PATH . '/Provider');
 	}
 
 	public function testRoute() {
@@ -165,15 +165,17 @@ class ProviderTest extends TestCase {
 	}
 
 	public function testAutoFind() {
+		$cmd = 'cd ' . BASE_PATH . '/' . ' && composer dump-autoload';
+		exec($cmd);
+		include_once BASE_PATH . '/vendor/composer/rangine/autoload/provider.php';
 		$providerManager = new ProviderManager();
-		$providers = $providerManager->autoFindProviders(__DIR__ . '/Util/Provider', 'W7\Test');
+		$providerManager->register();
 
-		$this->assertSame(true, file_exists(__DIR__ . '/Util/Provider/Provider.php'));
-		$this->assertSame(true, file_exists(__DIR__ . '/Util/Provider/TestProvider.php'));
-		$this->assertSame(true, file_exists(__DIR__ . '/Util/Provider/ProviderTest.php'));
+		$reflect = new \ReflectionClass($providerManager);
+		$property = $reflect->getProperty('registerProviders');
+		$property->setAccessible(true);
+		$providers = $property->getValue();
 
-		$this->assertSame(1, count($providers));
-		$this->assertSame('W7\Test\TestProvider', array_keys($providers)[0]);
-		$this->assertSame('W7\Test\TestProvider', $providers['W7\Test\TestProvider']);
+		$this->assertArrayHasKey('W7\Command\ServiceProvider', $providers);
 	}
 }

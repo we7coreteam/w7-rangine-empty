@@ -72,9 +72,10 @@ class CacheTest extends TestCase {
 		$values = $this->redis->hMGet($key, ['NotExistKey', 'NotExistKey2']);
 		$this->assertEquals($data, $values);
 
+		$this->redis->delete($key);
 		$this->redis->set($key, 'xxxxx');
 		$result = $this->redis->hMGet($key, ['key']);
-		$this->assertFalse($result);
+		$this->assertFalse($result['key']);
 
 		$this->redis->delete($key);
 		$result = $this->redis->hMGet($key, ['key']);
@@ -99,9 +100,10 @@ class CacheTest extends TestCase {
 		$result = $this->redis->hGetAll($key);
 		$this->assertEquals(['key' => 'value', 'key2' => 'value2', 'key3' => 'value3'], $result);
 
+		$this->redis->delete($key);
 		$this->redis->set($key, 'xxxxx');
 		$result = $this->redis->hGetAll($key);
-		$this->assertFalse($result);
+		$this->assertFalse(!empty($result));
 
 		$this->redis->delete($key);
 		$result = $this->redis->hGetAll($key);
