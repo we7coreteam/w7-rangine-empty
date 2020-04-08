@@ -22,8 +22,8 @@ class RouteProvider extends ProviderAbstract {
 		/**
 		 * 加载该扩展包的路由
 		 */
-		$this->rootPath = __DIR__ . '/Util/Provider/';
-		$this->registerRoute('/../route.php');
+		$this->rootPath = __DIR__ . '/Util/Provider';
+		$this->registerRoute('../route.php');
 	}
 }
 
@@ -47,7 +47,7 @@ class ConfigProvider extends ProviderAbstract {
 class CommandProvider extends ProviderAbstract {
 	public function register() {
 		$this->rootPath = APP_PATH ;
-		$this->namespace = 'W7\App\src';
+		$this->packageNamespace = 'W7\App\src';
 		$this->registerCommand();
 	}
 }
@@ -75,7 +75,6 @@ class ProviderTest extends TestCase {
 		$this->assertSame(true, file_exists(APP_PATH . '/Provider/TestProvider.php'));
 
 		unlink(APP_PATH . '/Provider/TestProvider.php');
-		rmdir(APP_PATH . '/Provider');
 	}
 
 	public function testRoute() {
