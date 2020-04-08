@@ -63,6 +63,7 @@ class ExceptionTest extends TestCase {
 	}
 
 	public function testRender() {
+		$server = new \W7\Fpm\Server\Server();
 		!defined('ENV') && define('ENV', RELEASE);
 		icontext()->setResponse(new Response());
 
@@ -76,6 +77,7 @@ class ExceptionTest extends TestCase {
 	}
 
 	public function testDebugRender() {
+		$server = new \W7\Fpm\Server\Server();
 		!defined('ENV') && define('ENV', DEBUG);
 		parent::setUp();
 		App::$server = new Server();
@@ -91,6 +93,7 @@ class ExceptionTest extends TestCase {
 	}
 
 	public function testReleaseRender() {
+		$server = new \W7\Fpm\Server\Server();
 		!defined('ENV') && define('ENV', RELEASE);
 		parent::setUp();
 		App::$server = new Server();
@@ -99,11 +102,9 @@ class ExceptionTest extends TestCase {
 		try{
 			throw new \RuntimeException('test');
 		} catch (\Throwable $e) {
-			$e = new FatalException($e->getMessage(), $e->getCode(), $e);
-			$reflect = new \ReflectionClass($e);
-			$method = $reflect->getMethod('release');
-			$method->setAccessible(true);
-			$this->assertSame('{"error":"系统内部错误"}', $method->invoke($e)->getBody()->getContents());
+			$response = (new HandlerExceptions())->handle($e);
+			$content = json_decode($response->getBody()->getContents(), true);
+			$this->assertSame('系统内部错误', $content['error']);
 		}
 	}
 
@@ -113,7 +114,7 @@ class ExceptionTest extends TestCase {
 		!defined('ENV') && define('ENV', RELEASE);
 		putenv('SETTING_ERROR_REPORTING=' . E_ALL);
 		parent::setUp();
-		iloader()->get(HandlerExceptions::class)->setHandler(new \W7\App\Handler\Exception\ExceptionHandler());
+		iloader()->get(HandlerExceptions::class)->setUserHandler(new \W7\App\Handler\Exception\ExceptionHandler());
 		App::$server = new Server();
 		icontext()->setResponse(new Response());
 
@@ -121,7 +122,7 @@ class ExceptionTest extends TestCase {
 			1/0;
 		} catch (\Throwable $e) {
 			$response = iloader()->get(HandlerExceptions::class)->handle($e);
-			$this->assertSame('test', $response->getBody()->getContents());
+			$this->assertSame('user exception handler', $response->getBody()->getContents());
 			$this->assertSame(true, !empty(glob(RUNTIME_PATH . '/logs/w7-*.log')));
 		}
 	}

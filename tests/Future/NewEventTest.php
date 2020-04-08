@@ -37,8 +37,11 @@ class NewEventTest extends TestCase {
 		$filesystem->copyDirectory(BASE_PATH . '/tests/Util/Event', APP_PATH . '/Event');
 		$filesystem->copyDirectory(BASE_PATH . '/tests/Util/Listener', APP_PATH . '/Listener');
 
+		$cmd = 'cd ' . BASE_PATH . '/' . ' && composer dump-autoload';
+		exec($cmd);
+		include_once BASE_PATH . '/vendor/composer/rangine/autoload/event.php';
 		$eventDispatcher = new EventDispatcher();
-		$eventDispatcher->autoRegisterEvents(BASE_PATH . '/tests/Util/Event', 'W7\\App');
+		$eventDispatcher->register();
 
 		$this->assertSame(true, $eventDispatcher->hasListeners(TestAutoEvent::class));
 		$this->assertSame(true, $eventDispatcher->hasListeners(\W7\App\Event\Test\TestAutoEvent::class));
