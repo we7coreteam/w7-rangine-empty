@@ -38,7 +38,7 @@ class ContainerTest extends TestCase {
 
 		icontainer()->append('test_arr',[6,7,8,9]);
 		$value = icontainer()->get('test_arr');
-		$this->assertSame(9, count($value));
+		$this->assertSame(5, count($value));
 
 
 		icontainer()->set('test_arr1', [
