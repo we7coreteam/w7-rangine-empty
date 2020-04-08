@@ -8,7 +8,6 @@ use W7\App;
 use W7\Console\Application;
 use W7\Core\Exception\HandlerExceptions;
 use W7\Core\Exception\ResponseExceptionAbstract;
-use W7\Http\Exception\FatalException;
 use W7\Http\Message\Server\Response;
 use W7\Http\Server\Server;
 use W7\App\Exception\Test\IndexException;
