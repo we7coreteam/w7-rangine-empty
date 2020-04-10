@@ -21,14 +21,16 @@ class DbHandler extends HandlerAbstract {
 			$session->save();
 		}
 
-		$userInfo = unserialize($session_data);
+		$userInfo = $this->unpack($session_data);
+		if (!empty($userInfo['user'])) {
+			//存储session的时候，再存一份在线用户列表
+			Online::query()->create([
+				'user_id' => $userInfo['user']['uid'],
+				'user_name' => $userInfo['user']['username'],
+				'fd' => $userInfo['fd'],
+			]);
+		}
 
-		//存储session的时候，再存一份在线用户列表
-		Online::query()->create([
-			'user_id' => $userInfo['user']['uid'],
-			'user_name' => $userInfo['user']['username'],
-			'fd' => $userInfo['user']['fd'],
-		]);
 		return true;
 	}
 
@@ -43,11 +45,22 @@ class DbHandler extends HandlerAbstract {
 		return $session->data;
 	}
 
-	public function destroy($session_id) {
-		return $session = Session::query()->where('session_id', '=', $session_id)->delete();
+	public function destroy($session_id, $sureDestroy = true) {
+		if (!$sureDestroy) {
+			$userInfo = $this->unpack($this->read($session_id));
+			if (!empty($userInfo['user'])) {
+				Online::query()->where([
+					'user_id' => $userInfo['user']['uid']
+				])->delete();
+			}
+			return true;
+		}
+
+		Session::query()->where('session_id', '=', $session_id)->delete();
+		return true;
 	}
 
 	public function gc($maxlifetime) {
-		//清理过期的session, 根据具体的存储方式清理
+		return true;
 	}
 }
