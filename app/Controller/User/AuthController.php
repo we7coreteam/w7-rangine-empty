@@ -26,10 +26,13 @@ class AuthController extends ControllerAbstract {
 		$data = [
 			'uid' => $user['uid'] ,
 			'username' => $user['username'],
-			'fd' => $request->fd,
 		];
 		//登录成功后写入session信息
 		$request->session->set('user', $data);
+
+
+
+
 
 		return $data;
 	}
