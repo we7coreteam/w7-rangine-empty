@@ -45,8 +45,8 @@ class DbHandler extends HandlerAbstract {
 		return $session->data;
 	}
 
-	public function destroy($session_id, $sureDestroy = true) {
-		if (!$sureDestroy) {
+	public function destroy($session_id, $flag = SESSION_DESTROY) {
+		if ($flag & SESSION_WEBSOCKET_CLOSE) {
 			$userInfo = $this->unpack($this->read($session_id));
 			if (!empty($userInfo['user'])) {
 				Online::query()->where([
