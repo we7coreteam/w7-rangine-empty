@@ -19,38 +19,36 @@ class CacheTest extends TestCase {
 	}
 
 	public function testCache() {
-		igo(function () {
-			icache()->set('test', 'test1');
-			$ret = icache()->get('test');
-			$this->assertSame('test1', $ret);
+		icache()->set('test', 'test1');
+		$ret = icache()->get('test');
+		$this->assertSame('test1', $ret);
 
-			icache()->set('test', [
+		icache()->set('test', [
+			'test1' => 1
+		]);
+		$ret = icache()->get('test');
+		$this->assertArrayHasKey('test1', $ret);
+
+		$obj = new TestCache();
+		icache()->set('obj', $obj);
+		$ret = icache()->get('obj');
+		$this->assertSame(true, method_exists($ret, 'ok'));
+
+		icache()->set('obj', serialize($obj));
+		$ret = icache()->get('obj');
+		$this->assertSame(true, method_exists(unserialize($ret), 'ok'));
+
+		icache()->setMultiple([
+			'test' => [
 				'test1' => 1
-			]);
-			$ret = icache()->get('test');
-			$this->assertArrayHasKey('test1', $ret);
-
-			$obj = new TestCache();
-			icache()->set('obj', $obj);
-			$ret = icache()->get('obj');
-			$this->assertSame(true, method_exists($ret, 'ok'));
-
-			icache()->set('obj', serialize($obj));
-			$ret = icache()->get('obj');
-			$this->assertSame(true, method_exists(unserialize($ret), 'ok'));
-
-			icache()->setMultiple([
-				'test' => [
-					'test1' => 1
-				],
-				'test1' => [
-					'test2' => 2
-				]
-			]);
-			$ret = icache()->getMultiple(['test', 'test1']);
-			$this->assertArrayHasKey('test', $ret);
-			$this->assertArrayHasKey('test1', $ret['test']);
-		});
+			],
+			'test1' => [
+				'test2' => 2
+			]
+		]);
+		$ret = icache()->getMultiple(['test', 'test1']);
+		$this->assertArrayHasKey('test', $ret);
+		$this->assertArrayHasKey('test1', $ret['test']);
 	}
 
 	public function hmsetAndHmget() {

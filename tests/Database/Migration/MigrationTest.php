@@ -113,32 +113,30 @@ class MigrationTest extends DatabaseTestCase {
 		/**
 		 * @var Application $application
 		 */
-		igo(function () {
-			try {
-				$connection = idb()->connection('sqlite');
-				icontext()->setContextDataByKey('db-transaction', $connection);
-				$application = iloader()->get(Application::class);
-				$application->run(new ArgvInput([
-					'migrate:migrate',
-					'migrate:migrate',
-					'--database=sqlite'
-				]));
-				$isExists = $connection->table('migration')->exists();
-				$this->assertSame(true, $isExists);
+		try {
+			$connection = idb()->connection('sqlite');
+			icontext()->setContextDataByKey('db-transaction', $connection);
+			$application = iloader()->get(Application::class);
+			$application->run(new ArgvInput([
+				'migrate:migrate',
+				'migrate:migrate',
+				'--database=sqlite'
+			]));
+			$isExists = $connection->table('migration')->exists();
+			$this->assertSame(true, $isExists);
 
-				$tables = $connection->getDoctrineSchemaManager()->listTableNames();
-				$this->assertSame(true, in_array('ims_user', $tables));
-				$this->assertSame(true, in_array('ims_fans', $tables));
-			} catch (\Throwable $e) {
-				//
-			} finally {
-				$filesystem = new Filesystem();
-				$files = glob(BASE_PATH . '/database/migrations/*.php');
-				$filesystem->delete($files);
+			$tables = $connection->getDoctrineSchemaManager()->listTableNames();
+			$this->assertSame(true, in_array('ims_user', $tables));
+			$this->assertSame(true, in_array('ims_fans', $tables));
+		} catch (\Throwable $e) {
+			//
+		} finally {
+			$filesystem = new Filesystem();
+			$files = glob(BASE_PATH . '/database/migrations/*.php');
+			$filesystem->delete($files);
 
-				$this->composerUpdate();
-			}
-		});
+			$this->composerUpdate();
+		}
 	}
 
 	public function testRollback() {
@@ -146,43 +144,41 @@ class MigrationTest extends DatabaseTestCase {
 		/**
 		 * @var Application $application
 		 */
-		igo(function () {
-			try {
-				$connection = idb()->connection('sqlite');
-				icontext()->setContextDataByKey('db-transaction', $connection);
-				$application = iloader()->get(Application::class);
-				$application->run(new ArgvInput([
-					'migrate:migrate',
-					'migrate:migrate',
-					'--database=sqlite'
-				]));
-				$isExists = $connection->table('migration')->exists();
-				$this->assertSame(true, $isExists);
+		try {
+			$connection = idb()->connection('sqlite');
+			icontext()->setContextDataByKey('db-transaction', $connection);
+			$application = iloader()->get(Application::class);
+			$application->run(new ArgvInput([
+				'migrate:migrate',
+				'migrate:migrate',
+				'--database=sqlite'
+			]));
+			$isExists = $connection->table('migration')->exists();
+			$this->assertSame(true, $isExists);
 
-				$tables = $connection->getDoctrineSchemaManager()->listTableNames();
-				$this->assertSame(true, in_array('ims_rollback_user', $tables));
-				$this->assertSame(true, in_array('ims_rollback_fans', $tables));
+			$tables = $connection->getDoctrineSchemaManager()->listTableNames();
+			$this->assertSame(true, in_array('ims_rollback_user', $tables));
+			$this->assertSame(true, in_array('ims_rollback_fans', $tables));
 
 
-				$application->run(new ArgvInput([
-					'migrate:make',
-					'migrate:rollback',
-					'--database=sqlite'
-				]));
-				$tables = $connection->getDoctrineSchemaManager()->listTableNames();
-				$this->assertSame(true, in_array('ims_migration', $tables));
-				$this->assertSame(false, in_array('ims_rollback_user', $tables));
-				$this->assertSame(false, in_array('ims_rollback_fans', $tables));
-			} catch (\Throwable $e) {
-				//
-			} finally {
-				$filesystem = new Filesystem();
-				$files = glob(BASE_PATH . '/database/migrations/*.php');
-				$filesystem->delete($files);
+			$application->run(new ArgvInput([
+				'migrate:make',
+				'migrate:rollback',
+				'--database=sqlite'
+			]));
+			$tables = $connection->getDoctrineSchemaManager()->listTableNames();
+			$this->assertSame(true, in_array('ims_migration', $tables));
+			$this->assertSame(false, in_array('ims_rollback_user', $tables));
+			$this->assertSame(false, in_array('ims_rollback_fans', $tables));
+		} catch (\Throwable $e) {
+			//
+		} finally {
+			$filesystem = new Filesystem();
+			$files = glob(BASE_PATH . '/database/migrations/*.php');
+			$filesystem->delete($files);
 
-				$this->composerUpdate();
-			}
-		});
+			$this->composerUpdate();
+		}
 	}
 
 	public function testReFresh() {
@@ -190,43 +186,41 @@ class MigrationTest extends DatabaseTestCase {
 		/**
 		 * @var Application $application
 		 */
-		igo(function () {
-			try {
-				$connection = idb()->connection('sqlite');
-				icontext()->setContextDataByKey('db-transaction', $connection);
-				$application = iloader()->get(Application::class);
-				$application->run(new ArgvInput([
-					'migrate:migrate',
-					'migrate:migrate',
-					'--database=sqlite'
-				]));
-				$isExists = $connection->table('migration')->exists();
-				$this->assertSame(true, $isExists);
+		try {
+			$connection = idb()->connection('sqlite');
+			icontext()->setContextDataByKey('db-transaction', $connection);
+			$application = iloader()->get(Application::class);
+			$application->run(new ArgvInput([
+				'migrate:migrate',
+				'migrate:migrate',
+				'--database=sqlite'
+			]));
+			$isExists = $connection->table('migration')->exists();
+			$this->assertSame(true, $isExists);
 
-				$tables = $connection->getDoctrineSchemaManager()->listTableNames();
-				$this->assertSame(true, in_array('ims_refresh_user', $tables));
-				$this->assertSame(true, in_array('ims_refresh_fans', $tables));
+			$tables = $connection->getDoctrineSchemaManager()->listTableNames();
+			$this->assertSame(true, in_array('ims_refresh_user', $tables));
+			$this->assertSame(true, in_array('ims_refresh_fans', $tables));
 
 
-				$application->run(new ArgvInput([
-					'migrate:make',
-					'migrate:refresh',
-					'--database=sqlite'
-				]));
-				$tables = $connection->getDoctrineSchemaManager()->listTableNames();
-				$this->assertSame(true, in_array('ims_migration', $tables));
-				$this->assertSame(true, in_array('ims_refresh_user', $tables));
-				$this->assertSame(true, in_array('ims_refresh_fans', $tables));
-			} catch (\Throwable $e) {
-				//
-			} finally {
-				$filesystem = new Filesystem();
-				$files = glob(BASE_PATH . '/database/migrations/*.php');
-				$filesystem->delete($files);
+			$application->run(new ArgvInput([
+				'migrate:make',
+				'migrate:refresh',
+				'--database=sqlite'
+			]));
+			$tables = $connection->getDoctrineSchemaManager()->listTableNames();
+			$this->assertSame(true, in_array('ims_migration', $tables));
+			$this->assertSame(true, in_array('ims_refresh_user', $tables));
+			$this->assertSame(true, in_array('ims_refresh_fans', $tables));
+		} catch (\Throwable $e) {
+			//
+		} finally {
+			$filesystem = new Filesystem();
+			$files = glob(BASE_PATH . '/database/migrations/*.php');
+			$filesystem->delete($files);
 
-				$this->composerUpdate();
-			}
-		});
+			$this->composerUpdate();
+		}
 	}
 
 	public function testReset() {
@@ -234,71 +228,67 @@ class MigrationTest extends DatabaseTestCase {
 		/**
 		 * @var Application $application
 		 */
-		igo(function () {
-			try {
-				$connection = idb()->connection('sqlite');
-				icontext()->setContextDataByKey('db-transaction', $connection);
-				$application = iloader()->get(Application::class);
-				$application->run(new ArgvInput([
-					'migrate:migrate',
-					'migrate:migrate',
-					'--database=sqlite'
-				]));
-				$isExists = $connection->table('migration')->exists();
-				$this->assertSame(true, $isExists);
+		try {
+			$connection = idb()->connection('sqlite');
+			icontext()->setContextDataByKey('db-transaction', $connection);
+			$application = iloader()->get(Application::class);
+			$application->run(new ArgvInput([
+				'migrate:migrate',
+				'migrate:migrate',
+				'--database=sqlite'
+			]));
+			$isExists = $connection->table('migration')->exists();
+			$this->assertSame(true, $isExists);
 
-				$tables = $connection->getDoctrineSchemaManager()->listTableNames();
-				$this->assertSame(true, in_array('ims_reset_user', $tables));
-				$this->assertSame(true, in_array('ims_reset_fans', $tables));
+			$tables = $connection->getDoctrineSchemaManager()->listTableNames();
+			$this->assertSame(true, in_array('ims_reset_user', $tables));
+			$this->assertSame(true, in_array('ims_reset_fans', $tables));
 
-				$application->run(new ArgvInput([
-					'migrate:reset',
-					'migrate:reset',
-					'--database=sqlite'
-				]));
-				$tables = $connection->getDoctrineSchemaManager()->listTableNames();
-				$this->assertSame(true, in_array('ims_migration', $tables));
-				$this->assertSame(false, in_array('ims_reset_user', $tables));
-				$this->assertSame(false, in_array('ims_reset_fans', $tables));
-			} catch (\Throwable $e) {
-				//
-			} finally {
-				$filesystem = new Filesystem();
-				$files = glob(BASE_PATH . '/database/migrations/*.php');
-				$filesystem->delete($files);
+			$application->run(new ArgvInput([
+				'migrate:reset',
+				'migrate:reset',
+				'--database=sqlite'
+			]));
+			$tables = $connection->getDoctrineSchemaManager()->listTableNames();
+			$this->assertSame(true, in_array('ims_migration', $tables));
+			$this->assertSame(false, in_array('ims_reset_user', $tables));
+			$this->assertSame(false, in_array('ims_reset_fans', $tables));
+		} catch (\Throwable $e) {
+			//
+		} finally {
+			$filesystem = new Filesystem();
+			$files = glob(BASE_PATH . '/database/migrations/*.php');
+			$filesystem->delete($files);
 
-				$this->composerUpdate();
-			}
-		});
+			$this->composerUpdate();
+		}
 	}
 
 	public function testPretend() {
 		$this->addMigrateForPretend();
-		igo(function () {
-			try {
-				$connection = idb()->connection('sqlite');
-				icontext()->setContextDataByKey('db-transaction', $connection);
-				$application = iloader()->get(Application::class);
-				$application->run(new ArgvInput([
-					'migrate:migrate',
-					'migrate:migrate',
-					'--database=sqlite',
-					'--pretend'
-				]));
-				$tables = $connection->getDoctrineSchemaManager()->listTableNames();;
-				$this->assertSame(true, in_array('ims_migration', $tables));
-				$this->assertSame(false, in_array('ims_pretend_user', $tables));
-				$this->assertSame(false, in_array('ims_pretend_fans', $tables));
-			} catch (\Throwable $e) {
-				//
-			} finally {
-				$filesystem = new Filesystem();
-				$files = glob(BASE_PATH . '/database/migrations/*.php');
-				$filesystem->delete($files);
+		try {
+			$connection = idb()->connection('sqlite');
+			icontext()->setContextDataByKey('db-transaction', $connection);
+			$application = iloader()->get(Application::class);
+			$application->run(new ArgvInput([
+				'migrate:migrate',
+				'migrate:migrate',
+				'--database=sqlite',
+				'--pretend'
+			]));
+			$tables = $connection->getDoctrineSchemaManager()->listTableNames();;
+			$this->assertSame(true, in_array('ims_migration', $tables));
+			$this->assertSame(false, in_array('ims_pretend_user', $tables));
+			$this->assertSame(false, in_array('ims_pretend_fans', $tables));
+		} catch (\Throwable $e) {
+			//
+		} finally {
+			$filesystem = new Filesystem();
+			$files = glob(BASE_PATH . '/database/migrations/*.php');
+			$filesystem->delete($files);
 
-				$this->composerUpdate();
-			}
-		});
+			$this->composerUpdate();
+		}
 	}
 
 	private function composerUpdate() {
