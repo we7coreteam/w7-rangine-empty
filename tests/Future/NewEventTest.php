@@ -39,7 +39,7 @@ class NewEventTest extends TestCase {
 
 		$cmd = 'cd ' . BASE_PATH . '/' . ' && composer dump-autoload';
 		exec($cmd);
-		include_once BASE_PATH . '/vendor/composer/rangine/autoload/event.php';
+		include_once BASE_PATH . '/vendor/composer/rangine/autoload/config/event.php';
 		$eventDispatcher = new EventDispatcher();
 		$eventDispatcher->register();
 

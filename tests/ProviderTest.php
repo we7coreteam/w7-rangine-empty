@@ -167,7 +167,7 @@ class ProviderTest extends TestCase {
 	public function testAutoFind() {
 		$cmd = 'cd ' . BASE_PATH . '/' . ' && composer dump-autoload';
 		exec($cmd);
-		include_once BASE_PATH . '/vendor/composer/rangine/autoload/provider.php';
+		include_once BASE_PATH . '/vendor/composer/rangine/autoload/config/provider.php';
 		$providerManager = new ProviderManager();
 		$providerManager->register();
 
