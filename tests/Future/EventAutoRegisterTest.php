@@ -9,7 +9,7 @@ use W7\App\Event\TestAutoEvent;
 use W7\Core\Dispatcher\EventDispatcher;
 use W7\Tests\TestCase;
 
-class EventAutoloadRegister extends TestCase {
+class EventAutoRegisterTest extends TestCase {
 	public function setUp(): void {
 
 	}

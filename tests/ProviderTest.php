@@ -163,19 +163,4 @@ class ProviderTest extends TestCase {
 		$content = iloader()->singleton(View::class)->render('@provider/index');
 		$this->assertSame('ok', $content);
 	}
-
-	public function testAutoFind() {
-		$cmd = 'cd ' . BASE_PATH . '/' . ' && composer dump-autoload';
-		exec($cmd);
-		include_once BASE_PATH . '/vendor/composer/rangine/autoload/config/provider.php';
-		$providerManager = new ProviderManager();
-		$providerManager->register();
-
-		$reflect = new \ReflectionClass($providerManager);
-		$property = $reflect->getProperty('registerProviders');
-		$property->setAccessible(true);
-		$providers = $property->getValue();
-
-		$this->assertArrayHasKey('W7\Command\ServiceProvider', $providers);
-	}
 }
