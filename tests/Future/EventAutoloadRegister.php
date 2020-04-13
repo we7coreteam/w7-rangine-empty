@@ -1,35 +1,17 @@
 <?php
 
-namespace W7\Tests;
+
+namespace W7\Tests\Future;
+
 
 use Illuminate\Filesystem\Filesystem;
-use Symfony\Component\Console\Input\ArgvInput;
 use W7\App\Event\TestAutoEvent;
-use W7\Console\Application;
 use W7\Core\Dispatcher\EventDispatcher;
+use W7\Tests\TestCase;
 
-class NewEventTest extends TestCase {
+class EventAutoloadRegister extends TestCase {
+	public function setUp(): void {
 
-	public function testMakeListenerAndEvent() {
-		/**
-		 * @var Application $application
-		 */
-		$application = iloader()->singleton(Application::class);
-		$command = $application->get('make:listener');
-
-		$command->run(new ArgvInput([
-			'input',
-			'--name=testEvent'
-		]), ioutputer());
-
-		$listenerFile = APP_PATH . '/Listener/TestEventListener.php';
-		$eventFile = APP_PATH . '/Event/TestEventEvent.php';
-
-		$this->assertSame(true, file_exists($listenerFile));
-		$this->assertSame(true, file_exists($eventFile));
-
-		unlink($listenerFile);
-		unlink($eventFile);
 	}
 
 	public function testAutoRegister() {
@@ -39,7 +21,9 @@ class NewEventTest extends TestCase {
 
 		$cmd = 'cd ' . BASE_PATH . '/' . ' && composer dump-autoload';
 		exec($cmd);
-		include_once BASE_PATH . '/vendor/composer/rangine/autoload/config/event.php';
+
+		$this->initApp();
+
 		$eventDispatcher = new EventDispatcher();
 		$eventDispatcher->register();
 
@@ -52,5 +36,7 @@ class NewEventTest extends TestCase {
 		$filesystem->deleteDirectory(APP_PATH . '/Listener/Test');
 		$filesystem->delete(APP_PATH . '/Event/TestAutoEvent.php');
 		$filesystem->delete(APP_PATH . '/Listener/TestAutoListener.php');
+
+		exec($cmd);
 	}
 }
