@@ -1,9 +1,10 @@
 <?php
 
-namespace W7\Tests;
+namespace W7\Tests\Future;
 
 use Symfony\Component\Console\Input\ArgvInput;
 use W7\Console\Application;
+use W7\Tests\TestCase;
 
 class EventTest extends TestCase {
 
