@@ -54,10 +54,10 @@ EOF;
 
 		$command->run(new ArgvInput([
 			'input',
-			'--name=user/user'
+			'--name=test/user'
 		]), ioutputer());
 
-		$file = APP_PATH . '/Model/Entity/User/User.php';
+		$file = APP_PATH . '/Model/Entity/Test/User.php';
 		$this->assertFileExists($file);
 		$this->assertStringContainsString("\$primaryKey = ''", file_get_contents($file));
 
