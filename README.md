@@ -17,13 +17,20 @@ Gitee : https://gitee.com/we7coreteam/w7swoole_empty.git
 
 composer install 前更改 composer 源，防止报错。
 
+## 初始化骨架项目
+
 ```
 composer config -g repo.packagist composer https://mirrors.aliyun.com/composer/
+composer create-project w7/rangine-demo ./project-name
+```
 
-git clone https://github.com/we7coreteam/w7-rangine-empty.git ./rangine-test
+## 初始化示例项目
 
-cd rangine-test
+示例项目中包含文档上的一些演示代码，仅供了解使用。
 
+```
+git clone https://github.com/we7coreteam/w7-rangine-empty.git ./rangine-demo-test
+cd rangine-demo-test
 sudo composer install
 ```
 
