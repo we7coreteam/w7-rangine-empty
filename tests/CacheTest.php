@@ -19,36 +19,38 @@ class CacheTest extends TestCase {
 	}
 
 	public function testCache() {
-		icache()->set('test', 'test1');
-		$ret = icache()->get('test');
-		$this->assertSame('test1', $ret);
+		igo(function () {
+			icache()->set('test', 'test1');
+			$ret = icache()->get('test');
+			$this->assertSame('test1', $ret);
 
-		icache()->set('test', [
-			'test1' => 1
-		]);
-		$ret = icache()->get('test');
-		$this->assertArrayHasKey('test1', $ret);
-
-		$obj = new TestCache();
-		icache()->set('obj', $obj);
-		$ret = icache()->get('obj');
-		$this->assertSame(true, method_exists($ret, 'ok'));
-
-		icache()->set('obj', serialize($obj));
-		$ret = icache()->get('obj');
-		$this->assertSame(true, method_exists(unserialize($ret), 'ok'));
-
-		icache()->setMultiple([
-			'test' => [
+			icache()->set('test', [
 				'test1' => 1
-			],
-			'test1' => [
-				'test2' => 2
-			]
-		]);
-		$ret = icache()->getMultiple(['test', 'test1']);
-		$this->assertArrayHasKey('test', $ret);
-		$this->assertArrayHasKey('test1', $ret['test']);
+			]);
+			$ret = icache()->get('test');
+			$this->assertArrayHasKey('test1', $ret);
+
+			$obj = new TestCache();
+			icache()->set('obj', $obj);
+			$ret = icache()->get('obj');
+			$this->assertSame(true, method_exists($ret, 'ok'));
+
+			icache()->set('obj', serialize($obj));
+			$ret = icache()->get('obj');
+			$this->assertSame(true, method_exists(unserialize($ret), 'ok'));
+
+			icache()->setMultiple([
+				'test' => [
+					'test1' => 1
+				],
+				'test1' => [
+					'test2' => 2
+				]
+			]);
+			$ret = icache()->getMultiple(['test', 'test1']);
+			$this->assertArrayHasKey('test', $ret);
+			$this->assertArrayHasKey('test1', $ret['test']);
+		});
 	}
 
 	public function hmsetAndHmget() {
@@ -70,10 +72,9 @@ class CacheTest extends TestCase {
 		$values = $this->redis->hMGet($key, ['NotExistKey', 'NotExistKey2']);
 		$this->assertEquals($data, $values);
 
-		$this->redis->delete($key);
 		$this->redis->set($key, 'xxxxx');
 		$result = $this->redis->hMGet($key, ['key']);
-		$this->assertFalse($result['key']);
+		$this->assertFalse($result);
 
 		$this->redis->delete($key);
 		$result = $this->redis->hMGet($key, ['key']);
@@ -98,10 +99,9 @@ class CacheTest extends TestCase {
 		$result = $this->redis->hGetAll($key);
 		$this->assertEquals(['key' => 'value', 'key2' => 'value2', 'key3' => 'value3'], $result);
 
-		$this->redis->delete($key);
 		$this->redis->set($key, 'xxxxx');
 		$result = $this->redis->hGetAll($key);
-		$this->assertFalse(!empty($result));
+		$this->assertFalse($result);
 
 		$this->redis->delete($key);
 		$result = $this->redis->hGetAll($key);
