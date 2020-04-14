@@ -3,6 +3,7 @@
 namespace W7\Tests;
 
 use Illuminate\Filesystem\Filesystem;
+use W7\App\Handler\View\TestHandler;
 use W7\Core\View\Handler\TwigHandler;
 use W7\Core\View\View;
 
@@ -52,6 +53,10 @@ class ViewTest extends TestCase {
 			'handler' => 'test'
 		];
 		iconfig()->setUserConfig('app', $config);
+
+		$handler = iconfig()->getUserConfig('handler');
+		$handler['view']['test'] = TestHandler::class;
+		iconfig()->setUserConfig('handler', $handler);
 
 		$view = new View();
 		$content = $view->render('index');
