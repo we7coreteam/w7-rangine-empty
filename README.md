@@ -19,11 +19,21 @@ composer install 前更改 composer 源，防止报错。
 
 ```
 composer config -g repo.packagist composer https://mirrors.aliyun.com/composer/
+```
 
-git clone https://github.com/we7coreteam/w7-rangine-empty.git ./rangine-test
+## 初始化骨架项目
 
-cd rangine-test
+```
+composer create-project w7/rangine-demo ./project-name
+```
 
+## 初始化示例项目
+
+示例项目中包含文档上的一些演示代码，仅供了解使用。
+
+```
+git clone https://github.com/we7coreteam/w7-rangine-empty.git ./rangine-demo-test
+cd rangine-demo-test
 sudo composer install
 ```
 
