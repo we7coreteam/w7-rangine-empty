@@ -6,7 +6,7 @@ use W7\Http\Message\Server\Request;
 use W7\Http\Message\Upload\UploadedFile;
 use W7\Tests\TestCase;
 
-class TestRequest extends TestCase {
+class RequestTest extends TestCase {
 	public function testUrl() {
 		$_SERVER['SCRIPT_FILENAME'] = '/index.php';
 		$_SERVER['REQUEST_URI'] = '/index.php/home/api-get';
@@ -152,10 +152,10 @@ class TestRequest extends TestCase {
 		$request = Request::loadFromFpmRequest();
 
 		$this->assertSame(__DIR__, $request->file('test_file')->getPath());
-		$this->assertSame('TestRequest.php', $request->file('test_file')->getBasename());
+		$this->assertSame('RequestTest.php', $request->file('test_file')->getBasename());
 
 		$this->assertSame(__DIR__, $request->file('test1_file')->getPath());
-		$this->assertSame('TestRequest.php', $request->file('test1_file')->getBasename());
+		$this->assertSame('RequestTest.php', $request->file('test1_file')->getBasename());
 	}
 
 	public function testGetClientIp() {

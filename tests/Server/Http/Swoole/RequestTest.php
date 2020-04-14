@@ -7,7 +7,7 @@ use W7\Http\Message\Server\Request;
 use W7\Http\Message\Upload\UploadedFile;
 use W7\Tests\Server\SwooleRequest;
 
-class TestRequest extends TestCase {
+class RequestTest extends TestCase {
 	public function testUrl() {
 		/**
 		 * @var Request $request
@@ -174,10 +174,10 @@ class TestRequest extends TestCase {
 		$request = Request::loadFromSwooleRequest($swooleRequest);
 
 		$this->assertSame(__DIR__, $request->file('test_file')->getPath());
-		$this->assertSame('TestRequest.php', $request->file('test_file')->getBasename());
+		$this->assertSame('RequestTest.php', $request->file('test_file')->getBasename());
 
 		$this->assertSame(__DIR__, $request->file('test1_file')->getPath());
-		$this->assertSame('TestRequest.php', $request->file('test1_file')->getBasename());
+		$this->assertSame('RequestTest.php', $request->file('test1_file')->getBasename());
 	}
 
 	public function testGetClientIp() {
