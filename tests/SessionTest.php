@@ -62,6 +62,9 @@ class SessionTest extends TestCase {
 		$config = iconfig()->getUserConfig('app');
 		$config['session']['handler'] = 'test';
 		iconfig()->setUserConfig('app', $config);
+		$handler = iconfig()->getUserConfig('handler');
+		$handler['session']['test'] = TestHandler::class;
+		iconfig()->setUserConfig('handler', $handler);
 
 		$session = new Session();
 		$sessionReflect = new \ReflectionClass($session);
@@ -78,6 +81,6 @@ class SessionTest extends TestCase {
 		$handler = $property->getValue($session);
 		$this->assertSame(true, $handler instanceof TestHandler);
 
-		$filesystem->deleteDirectory(APP_PATH . '/Handler/Session');
+		$filesystem->delete(APP_PATH . '/Handler/Session/TestHandler.php');
 	}
 }

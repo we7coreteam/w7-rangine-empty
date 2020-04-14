@@ -15,7 +15,7 @@ class TestHandler extends HandlerAbstract {
 		return $this->data[$session_id];
 	}
 
-	public function destroy($session_id) {
+	public function destroy($session_id, $flag = SESSION_DESTROY) {
 		unset($this->data[$session_id]);
 	}
 

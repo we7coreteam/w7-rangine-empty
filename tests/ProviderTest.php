@@ -69,12 +69,12 @@ class ProviderTest extends TestCase {
 		$command = $application->get('make:provider');
 		$command->run(new ArgvInput([
 			'input',
-			'--name=test'
+			'--name=test1'
 		]), ioutputer());
 
-		$this->assertSame(true, file_exists(APP_PATH . '/Provider/TestProvider.php'));
+		$this->assertSame(true, file_exists(APP_PATH . '/Provider/Test1Provider.php'));
 
-		unlink(APP_PATH . '/Provider/TestProvider.php');
+		unlink(APP_PATH . '/Provider/Test1Provider.php');
 	}
 
 	public function testRoute() {

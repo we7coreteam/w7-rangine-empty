@@ -21,16 +21,15 @@ class MakeTest extends TestCase {
 		foreach ($this->supportTypeWithName as $type) {
 			$command->run(new ArgvInput([
 				'input',
-				'--name=test',
+				'--name=testMake',
 				'--type=' . $type
 			]), ioutputer());
 
-			$file = APP_PATH . '/Handler/' . ucfirst($type) . '/TestHandler.php';
+			$file = APP_PATH . '/Handler/' . ucfirst($type) . '/TestMakeHandler.php';
 
 			$this->assertSame(true, file_exists($file));
 
 			unlink($file);
-			rmdir(pathinfo($file, PATHINFO_DIRNAME));
 		}
 	}
 

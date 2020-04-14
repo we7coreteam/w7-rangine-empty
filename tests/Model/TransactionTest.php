@@ -18,6 +18,7 @@ class Test1Model extends ModelAbstract {
 
 class TransactionTest extends ModelTestAbstract {
 	public function testSimple() {
+		idb()->connection()->getSchemaBuilder()->dropIfExists('test');
 		idb()->connection()->getSchemaBuilder()->create('test', function (Blueprint $table) {
 			$table->bigIncrements('id');
 			$table->timestamps();
@@ -94,6 +95,7 @@ class TransactionTest extends ModelTestAbstract {
 	}
 
 	public function testFacade() {
+		Schema::dropIfExists('test');
 		Schema::create('test', function (Blueprint $table) {
 			$table->bigIncrements('id');
 			$table->timestamps();
@@ -175,6 +177,7 @@ class TransactionTest extends ModelTestAbstract {
 	}
 
 	public function testMulti() {
+		Schema::dropIfExists('test');
 		Schema::create('test', function (Blueprint $table) {
 			$table->bigIncrements('id');
 			$table->timestamps();
@@ -243,6 +246,7 @@ class TransactionTest extends ModelTestAbstract {
 			$table->string('name');
 		});
 
+		Schema::dropIfExists('test1');
 		DB::beginTransaction('sqlite_test');
 		$model = new Test1Model();
 		$model->id = 4;

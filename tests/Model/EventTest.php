@@ -44,7 +44,7 @@ class EventTest extends ModelTestAbstract {
 		 */
 		$event = iloader()->get(EventDispatcher::class);
 		$event->listen(SavedEvent::class, SavedListener::class);
-
+		Schema::dropIfExists('user');
 		Schema::create('user', function (Blueprint $table) {
 			$table->bigIncrements('id');
 			$table->timestamps();

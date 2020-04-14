@@ -41,14 +41,14 @@ class ExceptionTest extends TestCase {
 		$command = $application->get('make:exception');
 		$command->run(new ArgvInput([
 			'input',
-			'--name=httpError',
+			'--name=httpErrorTest',
 			'--type=response'
 		]), ioutputer());
 
-		$this->assertSame(true, file_exists(APP_PATH . '/Exception/HttpErrorException.php'));
-		$this->assertStringContainsString('extends ResponseExceptionAbstract', file_get_contents(APP_PATH . '/Exception/HttpErrorException.php'));
+		$this->assertSame(true, file_exists(APP_PATH . '/Exception/HttpErrorTestException.php'));
+		$this->assertStringContainsString('extends ResponseExceptionAbstract', file_get_contents(APP_PATH . '/Exception/HttpErrorTestException.php'));
 
-		unlink(APP_PATH . '/Exception/HttpErrorException.php');
+		unlink(APP_PATH . '/Exception/HttpErrorTestException.php');
 	}
 
 	public function setUp(): void {
