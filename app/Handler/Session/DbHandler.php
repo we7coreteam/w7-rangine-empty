@@ -47,18 +47,22 @@ class DbHandler extends HandlerAbstract {
 		return $session->data;
 	}
 
-	public function destroy($session_id, $flag = SESSION_DESTROY) {
-		if ($flag & SESSION_WEBSOCKET_CLOSE) {
-			$userInfo = $this->unpack($this->read($session_id));
+	public function destroy($session_id) {
+		Session::query()->where('session_id', '=', $session_id)->delete();
+		return true;
+	}
+
+	public function close() {
+		if (isCli()) {
+			$sessionId = icontext()->getRequest()->session->getRealId();
+			$userInfo = $this->unpack($this->read($sessionId));
 			if (!empty($userInfo['user'])) {
 				Online::query()->where([
 					'user_id' => $userInfo['user']['uid']
 				])->delete();
 			}
-			return true;
 		}
 
-		Session::query()->where('session_id', '=', $session_id)->delete();
 		return true;
 	}
 
