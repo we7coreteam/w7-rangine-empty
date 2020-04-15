@@ -52,10 +52,9 @@ class DbHandler extends HandlerAbstract {
 		return true;
 	}
 
-	public function close() {
-		if (isCli()) {
-			$sessionId = icontext()->getRequest()->session->getRealId();
-			$userInfo = $this->unpack($this->read($sessionId));
+	public function close($session_id = '') {
+		if ($session_id) {
+			$userInfo = $this->unpack($this->read($session_id));
 			if (!empty($userInfo['user'])) {
 				Online::query()->where([
 					'user_id' => $userInfo['user']['uid']
