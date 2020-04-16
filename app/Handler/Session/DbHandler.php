@@ -53,7 +53,7 @@ class DbHandler extends HandlerAbstract {
 	}
 
 	public function close($session_id = '') {
-		if ($session_id) {
+		if (php_sapi_name() == 'cli' && $session_id) {
 			$userInfo = $this->unpack($this->read($session_id));
 			if (!empty($userInfo['user'])) {
 				Online::query()->where([
