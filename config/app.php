@@ -22,9 +22,6 @@ return [
 			'database' => ienv('CACHE_DEFAULT_DATABASE', '0')
 		]
 	],
-	'session' => [
-		'handler' => 'db'
-	],
 	'database' => [
 		'default' => [
 			'driver' => 'mysql',
