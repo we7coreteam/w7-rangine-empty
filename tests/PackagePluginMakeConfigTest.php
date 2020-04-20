@@ -1,10 +1,8 @@
 <?php
 
-namespace W7\Tests\Future;
+namespace W7\Tests;
 
-use W7\Tests\TestCase;
-
-class HandlerConfigTest extends TestCase {
+class PackagePluginMakeConfigTest extends TestCase {
 	public function setUp(): void {
 		$cmd = 'cd ' . dirname(__DIR__, 2) . ' && composer dump';
 		exec($cmd);

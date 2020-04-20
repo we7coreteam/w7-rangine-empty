@@ -1,13 +1,12 @@
 <?php
 
 
-namespace W7\Tests\Future;
+namespace W7\Tests;
 
 
 use Illuminate\Filesystem\Filesystem;
 use W7\App\Event\TestAutoEvent;
 use W7\Core\Dispatcher\EventDispatcher;
-use W7\Tests\TestCase;
 
 class EventAutoRegisterTest extends TestCase {
 	public function setUp(): void {

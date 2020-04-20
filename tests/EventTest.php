@@ -54,7 +54,7 @@ class EventTest extends TestCase {
 		$this->assertSame('test2', $event->dispatch('test')[2]);
 	}
 
-	public function testRunAll() {
+	public function testDispatcherAll() {
 		$event = new EventDispatcher();
 		$event->listen('test', function () {
 			return 'test';
@@ -63,12 +63,34 @@ class EventTest extends TestCase {
 		$this->assertSame('test', $event->dispatch('test')[0]);
 	}
 
-	public function testRunOne() {
+	public function testDispatcherOne() {
 		$event = new EventDispatcher();
 		$event->listen('test', function () {
 			return 'test';
 		});
 
 		$this->assertSame('test', $event->dispatch('test', [], true));
+	}
+
+	public function testMakeListenerAndEvent() {
+		/**
+		 * @var Application $application
+		 */
+		$application = iloader()->singleton(Application::class);
+		$command = $application->get('make:listener');
+
+		$command->run(new ArgvInput([
+			'input',
+			'--name=testEvent'
+		]), ioutputer());
+
+		$listenerFile = APP_PATH . '/Listener/TestEventListener.php';
+		$eventFile = APP_PATH . '/Event/TestEventEvent.php';
+
+		$this->assertSame(true, file_exists($listenerFile));
+		$this->assertSame(true, file_exists($eventFile));
+
+		unlink($listenerFile);
+		unlink($eventFile);
 	}
 }

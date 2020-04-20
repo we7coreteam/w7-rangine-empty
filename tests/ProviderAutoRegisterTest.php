@@ -1,10 +1,9 @@
 <?php
 
-namespace W7\Tests\Future;
+namespace W7\Tests;
 
 use Illuminate\Filesystem\Filesystem;
 use W7\Core\Provider\ProviderManager;
-use W7\Tests\TestCase;
 
 class ProviderAutoRegisterTest extends TestCase {
 	public function setUp(): void {

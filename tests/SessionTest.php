@@ -83,4 +83,34 @@ class SessionTest extends TestCase {
 
 		$filesystem->delete(APP_PATH . '/Handler/Session/TestHandler.php');
 	}
+
+	public function testHas() {
+		$session = new Session();
+		$session->start(new Request('GET', '/'));
+		$session->set('test', 1);
+
+		$this->assertSame(true, $session->has('test'));
+		$this->assertSame(false, $session->has('test1'));
+	}
+
+	public function testAll() {
+		$session = new Session();
+		$session->start(new Request('GET', '/'));
+		$session->set('test', 1);
+		$session->set('test1', 2);
+
+		$data = $session->all();
+
+		$this->assertSame(1, $data['test']);
+		$this->assertSame(2, $data['test1']);
+	}
+
+	public function testSetSessionId() {
+		$session = new Session();
+		$session->start(new Request('GET', '/'));
+		$id = 1234;
+		$session->setId($id);
+
+		$this->assertSame(1234, $session->getId());
+	}
 }
