@@ -7,7 +7,8 @@ use Illuminate\Filesystem\Filesystem;
 use W7\App;
 use W7\App\Middleware\Dispatcher1Middleware;
 use W7\App\Middleware\DispatcherMiddleware;
-use W7\Core\Helper\Storage\Context;
+use W7\Core\Controller\ControllerAbstract;
+use W7\Core\Dispatcher\RequestDispatcher;
 use W7\Core\Middleware\ControllerMiddleware;
 use W7\Core\Middleware\MiddlewareHandler;
 use W7\Core\Route\RouteMapping;
@@ -15,6 +16,12 @@ use W7\Http\Message\Server\Request;
 use W7\Http\Message\Server\Response;
 use W7\Http\Server\Dispatcher;
 use W7\Http\Server\Server;
+
+class TestController extends ControllerAbstract {
+	public function index(Request $request) {
+		return $this->responseJson('test');
+	}
+}
 
 class RequestDispatcherTest extends TestCase {
 	public function testDispatcher() {
@@ -59,6 +66,23 @@ class RequestDispatcherTest extends TestCase {
 			APP_PATH . '/Middleware/DispatcherMiddleware.php',
 			APP_PATH . '/Middleware/Dispatcher1Middleware.php'
 		]);
+	}
+
+	public function testResponseJson() {
+		App::$server = new Server();
+		$dispatcher = new Dispatcher();
+		irouter()->get('/json-response', ['\W7\Tests\TestController', 'index']);
+
+		$routeInfo = iloader()->get(RouteMapping::class)->getMapping();
+		$router = new GroupCountBased($routeInfo);
+		$dispatcher->setRouter($router);
+
+		$request = new Request('GET', '/json-response');
+		$response = new Response();
+		$dispatcher = new RequestDispatcher();
+		$dispatcher->setRouter($router);
+		$response = $dispatcher->dispatch($request, $response);
+		$this->assertSame('{"data":"test"}', $response->getBody()->getContents());
 	}
 
 	public function testIgnoreRoute() {
