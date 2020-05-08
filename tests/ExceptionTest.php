@@ -113,7 +113,7 @@ class ExceptionTest extends TestCase {
 		!defined('ENV') && define('ENV', RELEASE);
 		putenv('SETTING_ERROR_REPORTING=' . E_ALL);
 		parent::setUp();
-		iloader()->get(HandlerExceptions::class)->setUserHandler(new \W7\App\Handler\Exception\ExceptionHandler());
+		iloader()->get(HandlerExceptions::class)->setHandler(\W7\App\Handler\Exception\ExceptionHandler::class);
 		App::$server = new Server();
 		icontext()->setResponse(new Response());
 

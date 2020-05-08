@@ -4,7 +4,7 @@ namespace W7\Tests;
 
 class PackagePluginMakeConfigTest extends TestCase {
 	public function setUp(): void {
-		$cmd = 'cd ' . dirname(__DIR__, 2) . ' && composer dump';
+		$cmd = 'cd ' . BASE_PATH . ' && composer dump';
 		exec($cmd);
 		parent::setUp();
 	}
