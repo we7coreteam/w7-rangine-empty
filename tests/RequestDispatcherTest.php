@@ -8,9 +8,11 @@ use W7\App;
 use W7\App\Middleware\Dispatcher1Middleware;
 use W7\App\Middleware\DispatcherMiddleware;
 use W7\Core\Controller\ControllerAbstract;
+use W7\Core\Controller\FaviconController;
 use W7\Core\Dispatcher\RequestDispatcher;
 use W7\Core\Middleware\ControllerMiddleware;
 use W7\Core\Middleware\MiddlewareHandler;
+use W7\Core\Route\RouteDispatcher;
 use W7\Core\Route\RouteMapping;
 use W7\Http\Message\Server\Request;
 use W7\Http\Message\Server\Response;
@@ -38,8 +40,8 @@ class RequestDispatcherTest extends TestCase {
 		});
 
 		$routeInfo = iloader()->get(RouteMapping::class)->getMapping();
-		$router = new GroupCountBased($routeInfo);
-		$dispatcher->setRouter($router);
+		$router = new RouteDispatcher($routeInfo);
+		$dispatcher->setRouterDispatcher($router);
 
 		$request = new Request('GET', '/test_dispatcher');
 		$response = new Response();
@@ -74,22 +76,20 @@ class RequestDispatcherTest extends TestCase {
 		irouter()->get('/json-response', ['\W7\Tests\TestController', 'index']);
 
 		$routeInfo = iloader()->get(RouteMapping::class)->getMapping();
-		$router = new GroupCountBased($routeInfo);
-		$dispatcher->setRouter($router);
+		$router = new RouteDispatcher($routeInfo);
+		$dispatcher->setRouterDispatcher($router);
 
 		$request = new Request('GET', '/json-response');
 		$response = new Response();
-		$dispatcher = new RequestDispatcher();
-		$dispatcher->setRouter($router);
 		$response = $dispatcher->dispatch($request, $response);
 		$this->assertSame('{"data":"test"}', $response->getBody()->getContents());
 	}
 
 	public function testIgnoreRoute() {
 		$routeInfo = iloader()->get(RouteMapping::class)->getMapping();
-		$router = new GroupCountBased($routeInfo);
+		$router = new RouteDispatcher($routeInfo);
 		$dispatcher = new Dispatcher();
-		$dispatcher->setRouter($router);
+		$dispatcher->setRouterDispatcher($router);
 
 		App::$server = new Server();
 		$request = new Request('GET', '/favicon.ico');
@@ -101,9 +101,10 @@ class RequestDispatcherTest extends TestCase {
 		$method->setAccessible(true);
 
 		$route = $method->invoke($dispatcher, $request);
-		$this->assertSame(true, $route['controller'] instanceof \Closure);
+
+		$this->assertSame(true, $route['controller'] == 'W7\App\Controller\W7\Core\Controller\FaviconController');
 		$this->assertSame('system', $route['module']);
-		$this->assertSame('', $route['controller']()->getBody()->getContents());
+		$this->assertSame('', (new FaviconController())->index($request)->getBody()->getContents());
 	}
 
 	public function testUserIgnoreRoute() {
@@ -112,9 +113,9 @@ class RequestDispatcherTest extends TestCase {
 		});
 
 		$routeInfo = iloader()->get(RouteMapping::class)->getMapping();
-		$route = new GroupCountBased($routeInfo);
+		$route = new RouteDispatcher($routeInfo);
 		$dispatcher = new Dispatcher();
-		$dispatcher->setRouter($route);
+		$dispatcher->setRouterDispatcher($route);
 
 		App::$server = new Server();
 		$request = new Request('GET', '/favicon.ico');
