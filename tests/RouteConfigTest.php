@@ -12,9 +12,9 @@ use W7\App;
 use W7\App\Middleware\GatewayCheckSiteMiddleware;
 use W7\Core\Exception\RouteNotAllowException;
 use W7\Core\Exception\RouteNotFoundException;
-use W7\Core\Helper\Storage\Context;
 use W7\Core\Middleware\MiddlewareAbstract;
-use W7\Core\Route\Route;
+use W7\Core\Route\RouteDispatcher;
+use W7\Core\Route\Router;
 use W7\Core\Route\RouteMapping;
 use W7\Http\Message\Server\Request;
 use W7\Http\Message\Server\Response;
@@ -39,34 +39,34 @@ class RouteConfigTest extends TestCase {
 		irouter()->name('user1')->middleware('AppCheckMiddleware')->get('/user/{name}', function () {return '/user/{name}';});
 		irouter()->post('/user/get', function () {return '/user';});
 
-		irouter()->middleware('AppCheckMiddleware')->name('test2')->group('/module1', function (Route $route) {
+		irouter()->middleware('AppCheckMiddleware')->name('test2')->group('/module1', function (Router $route) {
 			$route->post('/info', function () {return '/module1/info';});
 			$route->name('test-colsure')->post('/build', function () {return '/module1/build';});
 		});
 
-		irouter()->name('test3')->group('/module3', function (Route $route) {
+		irouter()->name('test3')->group('/module3', function (Router $route) {
 			$route->post('/info', 'Module\BuildController@info');
 			$route->name('test-build')->post('/build', 'Module\BuildController@build');
 		});
 
-		irouter()->name('group-name')->middleware(['AppCheckMiddleware', 'GatewayCheckSiteMiddleware'])->group('/module2', function (Route $route) {
+		irouter()->name('group-name')->middleware(['AppCheckMiddleware', 'GatewayCheckSiteMiddleware'])->group('/module2', function (Router $route) {
 			$route->get('/info', function () {return '/module2/info';});
 			$route->get('/info1', 'Module\InfoController@build');
 			$route->name('test-info1')->get('/info2', 'Module\InfoController@build');
 			$route->options('/info', function () {return '/module2/build';});
-			$route->name('test4')->group('/module3', function (Route $route) {
+			$route->name('test4')->group('/module3', function (Router $route) {
 				$route->post('/info', 'Module\InfoController@info');
 				$route->name('test-build')->post('/build', 'Module\InfoController@build');
 				$route->name('test-handle')->post('/handle', function () {return 'Module\InfoController@build';});
 				$route->post('/handle1', function () {return 'Module\InfoController@build';});
 
-				$route->middleware('CheckAccessTokenMiddleware')->name('test5')->group('/module4', function (Route $route) {
+				$route->middleware('CheckAccessTokenMiddleware')->name('test5')->group('/module4', function (Router $route) {
 					$route->post('/info', 'Module\InfoController@info');
 					$route->name('test-build')->post('/build', 'Module\InfoController@build');
 					$route->name('test-handle')->post('/handle', function () {return 'Module\InfoController@build';});
 					$route->post('/handle1', function () {return 'Module\InfoController@build';});
 				});
-				$route->group('/module5', function (Route $route) {
+				$route->group('/module5', function (Router $route) {
 					$route->name('test-info')->post('/info/{info}', 'Module\InfoController@info');
 					$route->post('/info1/{info}', 'Module\InfoController@info');
 					$route->name('test-build')->post('/build', 'Module\InfoController@build');
@@ -164,15 +164,15 @@ class RouteConfigTest extends TestCase {
 	}
 
 	public function testGroup() {
-		irouter()->middleware('GatewayCheckSiteMiddleware')->group('/app', function (\W7\Core\Route\Route $route) {
-			$route->name('resource-test')->group('/module', function (\W7\Core\Route\Route $route) {
+		irouter()->middleware('GatewayCheckSiteMiddleware')->group('/app', function (\W7\Core\Route\Router $route) {
+			$route->name('resource-test')->group('/module', function (\W7\Core\Route\Router $route) {
 				$route->get('/info/index', 'Module\InfoController@index');
-				$route->middleware('CheckUrlIsBlackListMiddleware')->group('/info', function (\W7\Core\Route\Route $route) {
+				$route->middleware('CheckUrlIsBlackListMiddleware')->group('/info', function (\W7\Core\Route\Router $route) {
 					$route->get('/test1/index', 'Module\QueryController@index');
 					$route->apiResource('test', 'Module\SettingController');
 				});
 			});
-			$route->group('/module1', function (\W7\Core\Route\Route $route) {
+			$route->group('/module1', function (\W7\Core\Route\Router $route) {
 				$route->get('/info1/index1', 'Module\SettingController@index');
 			});
 		});
@@ -263,9 +263,9 @@ class RouteConfigTest extends TestCase {
 
 	public function testNotFound() {
 		$routeInfo = iloader()->get(RouteMapping::class)->getMapping();
-		$router = new GroupCountBased($routeInfo);
+		$router = new RouteDispatcher($routeInfo);
 		$dispatcher = new Dispatcher();
-		$dispatcher->setRouter($router);
+		$dispatcher->setRouterDispatcher($router);
 
 		App::$server = new Server();
 		$request = new Request('POST', '/post');
@@ -286,9 +286,9 @@ class RouteConfigTest extends TestCase {
 
 	public function testNotAllow() {
 		$routeInfo = iloader()->get(RouteMapping::class)->getMapping();
-		$router = new GroupCountBased($routeInfo);
+		$router = new RouteDispatcher($routeInfo);
 		$dispatcher = new Dispatcher();
-		$dispatcher->setRouter($router);
+		$dispatcher->setRouterDispatcher($router);
 
 		App::$server = new Server();
 		$request = new Request('POST', '/favicon.ico');
@@ -413,11 +413,11 @@ class RouteConfigTest extends TestCase {
 
 		irouter()->get('/static', 'index.html');
 
-		$routeInfo = iloader()->get(RouteMapping::class)->getMapping();
+		$routeInfo = (new RouteMapping())->getMapping();
 		$router = new GroupCountBased($routeInfo);
 		$route = $router->dispatch('GET', '/static');
 
-		$this->assertSame(true, $route[1]['handler'] instanceof \Closure);
+		$this->assertSame(true, $route[1]['handler'][0] == '\W7\Core\Controller\StaticResourceController');
 		$this->assertSame('/static', $route[1]['uri']);
 	}
 }
