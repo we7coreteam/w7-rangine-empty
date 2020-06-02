@@ -26,6 +26,22 @@ class DeferProvider extends ProviderAbstract {
 	}
 }
 
+class DeferProvider1 extends ProviderAbstract {
+	public function register() {
+		$this->container->set('test2', DeferService::class);
+	}
+
+	public function providers(): array {
+		return ['test2'];
+	}
+}
+
+class ParentDeferProvider extends ProviderAbstract {
+	public function providers(): array {
+		return [DeferProvider1::class];
+	}
+}
+
 class DeferProviderTest extends TestCase {
 	public function testRequestProvider() {
 		$providerManager = new ProviderManager();
@@ -87,5 +103,29 @@ class DeferProviderTest extends TestCase {
 		$this->assertSame(1, DeferProvider::$registerNum);
 
 		$this->assertSame(true, $providerManager->hasRegister(DeferProvider::class));
+	}
+
+	public function testTriggerMultiRegisterProvider() {
+		$providers = iconfig()->get('provider.providers', []);
+		$providers[DeferProvider1::class] = [DeferProvider1::class];
+		$providers[ParentDeferProvider::class] = [ParentDeferProvider::class];
+		iconfig()->set('provider.providers', $providers);
+		DeferProvider::$registerNum = 0;
+
+		$providerManager = new ProviderManager();
+		$providerManager->register();
+
+		$this->assertSame(false, $providerManager->hasRegister(DeferProvider1::class));
+		$this->assertSame(false, $providerManager->hasRegister(ParentDeferProvider::class));
+
+		icontainer()->get('test11');
+		$this->assertSame(false, $providerManager->hasRegister(DeferProvider1::class));
+		$this->assertSame(false, $providerManager->hasRegister(ParentDeferProvider::class));
+
+		$instance = icontainer()->get('test2');
+		$this->assertSame(true, $instance instanceof DeferService);
+
+		$this->assertSame(true, $providerManager->hasRegister(DeferProvider1::class));
+		$this->assertSame(true, $providerManager->hasRegister(ParentDeferProvider::class));
 	}
 }
