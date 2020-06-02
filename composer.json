@@ -37,11 +37,30 @@
 		{
 			"type": "path",
 			"url": "../swoole"
+		},
+		{
+			"type": "path",
+			"url": "../w7-rangine-command"
+		},
+		{
+			"type": "path",
+			"url": "../w7-rangine-package-plugin"
+		},
+		{
+			"type": "path",
+			"url": "../w7-rangine-crontab"
+		},
+		{
+			"type": "path",
+			"url": "../w7-rangine-database-tool"
 		}
 	],
 	"require": {
-		"w7/rangine": "*",
-		"w7/rangine-crontab": "*"
+		"w7/rangine": "dev-provider-defer",
+		"w7/rangine-command": "dev-provider-defer",
+		"w7/rangine-package-plugin": "dev-provider-defer",
+		"w7/rangine-crontab": "dev-provider-defer",
+		"w7/rangine-database-tool": "dev-provider-defer"
 	},
 	"require-dev": {
 		"w7/rangine-debugger": "*",
