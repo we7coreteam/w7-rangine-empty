@@ -9,6 +9,7 @@ return [
 			BASE_PATH . '/../w7-rangine',
 			BASE_PATH . '/../w7-rangine-http-message'
 		],
+		'file_ignore' => [],
 		'lang' => 'zh-CN',
 		'server' => ienv('SETTING_SERVERS', 'http'),
 	],
