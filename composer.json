@@ -56,11 +56,11 @@
 		}
 	],
 	"require": {
-		"w7/rangine": "dev-provider-defer",
-		"w7/rangine-command": "dev-provider-defer",
-		"w7/rangine-package-plugin": "dev-provider-defer",
-		"w7/rangine-crontab": "dev-provider-defer",
-		"w7/rangine-database-tool": "dev-provider-defer"
+		"w7/rangine": "dev-master",
+		"w7/rangine-command": "dev-master",
+		"w7/rangine-package-plugin": "dev-master",
+		"w7/rangine-crontab": "dev-master",
+		"w7/rangine-database-tool": "dev-master"
 	},
 	"require-dev": {
 		"w7/rangine-debugger": "*",
