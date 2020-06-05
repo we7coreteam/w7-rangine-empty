@@ -6,7 +6,8 @@
 
 namespace W7\Tests;
 
-use W7\Core\Config\Env;
+
+use W7\Core\Config\Env\Env;
 
 class ConfigTest extends TestCase {
 	public function testDefaultEnv() {
