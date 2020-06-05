@@ -280,7 +280,7 @@ class RouteConfigTest extends TestCase {
 			$method->invoke($dispatcher, $request);
 		} catch (\Throwable $e) {
 			$this->assertSame(true, $e instanceof RouteNotFoundException);
-			$this->assertSame('Route not found, /post', $e->getMessage());
+			$this->assertSame('{"error":"Route not found, \/post"}', $e->getMessage());
 		}
 	}
 
@@ -303,7 +303,7 @@ class RouteConfigTest extends TestCase {
 			$method->invoke($dispatcher, $request);
 		} catch (\Throwable $e) {
 			$this->assertSame(true, $e instanceof RouteNotAllowException);
-			$this->assertSame('Route not allowed, /favicon.ico', $e->getMessage());
+			$this->assertSame('{"error":"Route not allowed, \/favicon.ico"}', $e->getMessage());
 		}
 	}
 

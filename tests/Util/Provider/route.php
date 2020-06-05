@@ -4,7 +4,7 @@
  * @date 19-4-19 下午7:22
  */
 
-irouter()->group('/module1', function (\W7\Core\Route\Route $route) {
+irouter()->group('/module1', function (\W7\Core\Route\Router $route) {
 	$route->post('/setting/save1', 'Vendor\Test\Module\SettingController@save1');
 });
 

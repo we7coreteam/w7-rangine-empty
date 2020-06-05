@@ -21,7 +21,7 @@ class ProviderAutoRegisterTest extends TestCase {
 		$providerManager->register();
 
 		$reflect = new \ReflectionClass($providerManager);
-		$property = $reflect->getProperty('registerProviders');
+		$property = $reflect->getProperty('registeredProviders');
 		$property->setAccessible(true);
 		$providers = $property->getValue();
 

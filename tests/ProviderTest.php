@@ -89,7 +89,7 @@ class ProviderTest extends TestCase {
 		$routeMapping->getMapping();
 		$routeInfo = irouter()->getData();
 		$dispatch = new GroupCountBased($routeInfo);
-		$result = $dispatch->dispatch('POST', '/test/module1/setting/save1');
+		$result = $dispatch->dispatch('POST', '/module1/setting/save1');
 
 		$this->assertSame('test.save1', $result[1]['name']);
 		$this->assertStringContainsString("\\Vendor\\Test\\", $result[1]['handler'][0]);

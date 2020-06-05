@@ -5,8 +5,8 @@ namespace W7\Tests;
 
 use Illuminate\Filesystem\Filesystem;
 use W7\App\Handler\Log\TestHandler;
-use W7\Core\Log\Handler\BufferHandler;
 use W7\Core\Log\Handler\StreamHandler;
+use W7\Core\Log\LogBuffer;
 use W7\Core\Log\Logger;
 use W7\Core\Log\LogManager;
 
@@ -105,7 +105,7 @@ class LoggerTest extends TestCase {
 		$filesystem = new Filesystem();
 		$filesystem->copyDirectory(__DIR__ . '/Util/Handler/Log', APP_PATH . '/Handler/Log');
 
-		$handler = new BufferHandler(new TestHandler(), 1, Logger::DEBUG, true, true);
+		$handler = new LogBuffer(new TestHandler(), 1, Logger::DEBUG, true, true);
 		ilogger()->setHandlers([$handler]);
 		ob_start();
 		ilogger()->debug('test');

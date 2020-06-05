@@ -75,7 +75,7 @@ class ValidateTest extends TestCase {
 			]);
 		} catch (ValidatorException $e) {
 			$this->assertSame(403, $e->getCode());
-			$this->assertSame('test 不能为空。', $e->getMessage());
+			$this->assertSame('{"error":"test 不能为空。"}', $e->getMessage());
 		}
 	}
 
@@ -94,7 +94,7 @@ class ValidateTest extends TestCase {
 			]);
 		} catch (ValidatorException $e) {
 			$this->assertSame(403, $e->getCode());
-			$this->assertSame('test参数错误', $e->getMessage());
+			$this->assertSame('{"error":"test参数错误"}', $e->getMessage());
 		}
 	}
 
@@ -136,7 +136,7 @@ class ValidateTest extends TestCase {
 			]);
 		} catch (ValidatorException $e) {
 			$this->assertSame(403, $e->getCode());
-			$this->assertSame('自定义验证', $e->getMessage());
+			$this->assertSame('{"error":"自定义验证"}', $e->getMessage());
 		}
 
 		unlink(BASE_PATH . '/lang/zh-CN/validation.php');
@@ -153,7 +153,7 @@ class ValidateTest extends TestCase {
 				'name' => [new UserRule()]
 			]);
 		} catch (\Throwable $e) {
-			$this->assertSame('用户名不能少于6位', $e->getMessage());
+			$this->assertSame('{"error":"用户名不能少于6位"}', $e->getMessage());
 		}
 
 		$data = [
@@ -165,7 +165,7 @@ class ValidateTest extends TestCase {
 				'name' => [new UserRule()]
 			]);
 		} catch (\Throwable $e) {
-			$this->assertSame('用户名不能多余10位', $e->getMessage());
+			$this->assertSame('{"error":"用户名不能多余10位"}', $e->getMessage());
 		}
 
 		$data = [
