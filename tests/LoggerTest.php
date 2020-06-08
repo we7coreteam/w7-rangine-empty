@@ -120,7 +120,7 @@ class LoggerTest extends TestCase {
 		$this->clearLog();
 
 		$logger = new Logger('flush', [
-			new BufferHandler(StreamHandler::getHandler([
+			new LogBuffer(StreamHandler::getHandler([
 				'path' => RUNTIME_PATH . DS. 'logs'. DS. 'flush.log',
 				'level' => 'debug',
 			]), 2)

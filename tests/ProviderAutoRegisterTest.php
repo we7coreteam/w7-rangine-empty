@@ -23,9 +23,8 @@ class ProviderAutoRegisterTest extends TestCase {
 		$reflect = new \ReflectionClass($providerManager);
 		$property = $reflect->getProperty('registeredProviders');
 		$property->setAccessible(true);
-		$providers = $property->getValue();
+		$providers = $property->getValue($providerManager);
 
-		$this->assertArrayHasKey('W7\Command\ServiceProvider', $providers);
 		$this->assertArrayHasKey('W7\App\Provider\TestProvider', $providers);
 
 		$filesystem->delete(APP_PATH . '/Provider/TestProvider.php');
