@@ -35,10 +35,6 @@
 	},
 	"repositories": [
 		{
-			"type": "path",
-			"url": "../swoole"
-		},
-		{
 			"type": "git",
 			"url": "https://github.com/we7coreteam/w7-rangine-package-plugin.git"
 		}
