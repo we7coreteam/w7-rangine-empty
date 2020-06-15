@@ -33,12 +33,6 @@
 			"W7\\Tests\\" : "tests/"
 		}
 	},
-	"repositories": [
-		{
-			"type": "path",
-			"url": "../swoole"
-		}
-	],
 	"require": {
 		"w7/rangine": "*",
 		"w7/rangine-crontab": "*"
