@@ -77,7 +77,7 @@ class LoggerTest extends TestCase {
 	public function testBuffer() {
 		$this->clearLog();
 		/**
-		 * @var BufferHandler $handler
+		 * @var LogBuffer $handler
 		 */
 		ilogger()->bufferLimit = 5;
 		$handler = ilogger()->getHandlers()[0];
@@ -132,56 +132,6 @@ class LoggerTest extends TestCase {
 
 		unset($logger);
 		$this->assertSame(true, file_exists(RUNTIME_PATH . DS. 'logs'. DS. 'flush.log'));
-		$this->clearLog();
-	}
-
-	public function testAddChannelWithDebug() {
-		$this->clearLog();
-		/**
-		 * @var LogManager $logManager
-		 */
-		$logManager = iloader()->get(LogManager::class);
-
-		$this->assertSame(true, empty($logManager->getConfig()['channel']['debug']));
-
-		$logManager->addChannel('debug', 'stream', [
-			'path' => RUNTIME_PATH . '/logs/test.log',
-			'level' => 'debug'
-		]);
-
-		$this->assertSame(false, empty($logManager->getConfig()['channel']['debug']));
-
-		ilogger()->channel('debug')->debug('test');
-
-		$this->assertSame(true, file_exists(RUNTIME_PATH . '/logs/test.log'));
-
-		$this->clearLog();
-	}
-
-	public function testAddChannelWithInfo() {
-		$this->clearLog();
-		/**
-		 * @var LogManager $logManager
-		 */
-		$logManager = iloader()->get(LogManager::class);
-
-		$this->assertSame(true, empty($logManager->getConfig()['channel']['test']));
-
-		$logManager->addChannel('test', 'stream', [
-			'path' => RUNTIME_PATH . '/logs/test.log',
-			'level' => 'info'
-		]);
-
-		$this->assertSame(false, empty($logManager->getConfig()['channel']['test']));
-
-		ilogger()->channel('test')->debug('test');
-
-		$this->assertSame(false, file_exists(RUNTIME_PATH . '/logs/test.log'));
-
-		ilogger()->channel('test')->info('test');
-
-		$this->assertSame(true, file_exists(RUNTIME_PATH . '/logs/test.log'));
-
 		$this->clearLog();
 	}
 }

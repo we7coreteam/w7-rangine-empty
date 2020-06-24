@@ -5,6 +5,7 @@ namespace W7\Tests;
 use Symfony\Component\Console\Input\ArgvInput;
 use W7\Console\Application;
 use W7\Core\Dispatcher\EventDispatcher;
+use W7\Core\Events\Dispatcher;
 
 class EventTest extends TestCase {
 
@@ -29,7 +30,7 @@ class EventTest extends TestCase {
 	}
 
 	public function testSet() {
-		$event = new EventDispatcher();
+		$event = new Dispatcher();
 		$event->listen('test', function () {
 			return 'test';
 		});
@@ -38,7 +39,7 @@ class EventTest extends TestCase {
 	}
 
 	public function testMultiEvent() {
-		$event = new EventDispatcher();
+		$event = new Dispatcher();
 		$event->listen('test', function () {
 			return 'test';
 		});
@@ -55,7 +56,7 @@ class EventTest extends TestCase {
 	}
 
 	public function testDispatcherAll() {
-		$event = new EventDispatcher();
+		$event = new Dispatcher();
 		$event->listen('test', function () {
 			return 'test';
 		});
@@ -64,7 +65,7 @@ class EventTest extends TestCase {
 	}
 
 	public function testDispatcherOne() {
-		$event = new EventDispatcher();
+		$event = new Dispatcher();
 		$event->listen('test', function () {
 			return 'test';
 		});

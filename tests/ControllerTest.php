@@ -5,6 +5,8 @@ namespace W7\Tests;
 use FastRoute\Dispatcher\GroupCountBased;
 use Symfony\Component\Console\Input\ArgvInput;
 use W7\Console\Application;
+use W7\Core\Facades\Router;
+use W7\Core\Helper\FileLoader;
 use W7\Core\Route\RouteMapping;
 
 class ControllerTest extends TestCase {
@@ -22,7 +24,7 @@ class ControllerTest extends TestCase {
 		$this->assertSame(true, file_exists(APP_PATH . '/Controller/UserController.php'));
 		$this->assertSame(true, file_exists(BASE_PATH . '/route/common.php'));
 
-		$routeMapping = iloader()->singleton(RouteMapping::class);
+		$routeMapping = new RouteMapping(Router::getFacadeRoot(), new FileLoader());
 		$routeMapping->getMapping();
 		$routeInfo = irouter()->getData();
 		$dispatch = new GroupCountBased($routeInfo);
@@ -80,7 +82,7 @@ class ControllerTest extends TestCase {
 
 		$this->assertSame(true, file_exists(APP_PATH . '/Controller/Home/TestController.php'));
 
-		$routeMapping = iloader()->singleton(RouteMapping::class);
+		$routeMapping = new RouteMapping(Router::getFacadeRoot(), new FileLoader());
 		$routeMapping->getMapping();
 		$routeInfo = irouter()->getData();
 		$dispatch = new GroupCountBased($routeInfo);

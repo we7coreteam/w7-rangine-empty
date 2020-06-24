@@ -5,6 +5,8 @@ namespace W7\Tests\Future;
 use Symfony\Component\Console\Input\ArgvInput;
 use W7\App;
 use W7\Console\Application;
+use W7\Core\Facades\Router;
+use W7\Core\Helper\FileLoader;
 use W7\Core\Route\RouteDispatcher;
 use W7\Core\Route\RouteMapping;
 use W7\Tests\TestCase;
@@ -27,7 +29,7 @@ class RouteCacheTest extends TestCase {
 		$this->assertSame(false, file_exists(App::getApp()->getRouteCachePath()));
 
 		irouter()->get('/route-cache',  [RouteCacheController::class, 'index']);
-		$routeDispatcher = RouteDispatcher::getDispatcherWithRouteMapping(new RouteMapping());
+		$routeDispatcher = RouteDispatcher::getDispatcherWithRouteMapping(RouteMapping::class);
 		$result = $routeDispatcher->dispatch('GET', '/route-cache');
 		$this->assertSame(true, !empty($result[1]));
 
@@ -35,7 +37,7 @@ class RouteCacheTest extends TestCase {
 		$application->get('route:cache')->run(new ArgvInput([
 			'test'
 		]), ioutputer());
-		$routeDispatcher = RouteDispatcher::getDispatcherWithRouteMapping(new RouteMapping());
+		$routeDispatcher = RouteDispatcher::getDispatcherWithRouteMapping(RouteMapping::class);
 		irouter()->get('/route-cache1', [RouteCacheController::class, 'index']);
 
 		$result = $routeDispatcher->dispatch('GET', '/route-cache1');
@@ -48,7 +50,7 @@ class RouteCacheTest extends TestCase {
 			'test'
 		]), ioutputer());
 
-		$routeDispatcher = RouteDispatcher::getDispatcherWithRouteMapping(new RouteMapping());
+		$routeDispatcher = RouteDispatcher::getDispatcherWithRouteMapping(RouteMapping::class);
 		$result = $routeDispatcher->dispatch('GET', '/route-cache1');
 		$this->assertSame(true, !empty($result[1]));
 	}

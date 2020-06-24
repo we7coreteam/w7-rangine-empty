@@ -7,6 +7,7 @@ namespace W7\Tests;
 use Illuminate\Filesystem\Filesystem;
 use W7\App\Event\TestAutoEvent;
 use W7\Core\Dispatcher\EventDispatcher;
+use W7\Core\Events\Dispatcher;
 
 class EventAutoRegisterTest extends TestCase {
 	public function setUp(): void {
@@ -23,8 +24,7 @@ class EventAutoRegisterTest extends TestCase {
 
 		$this->initApp();
 
-		$eventDispatcher = new EventDispatcher();
-		$eventDispatcher->register();
+		$eventDispatcher = new Dispatcher();
 
 		$this->assertSame(true, $eventDispatcher->hasListeners(TestAutoEvent::class));
 		$this->assertSame(true, $eventDispatcher->hasListeners(\W7\App\Event\Test\TestAutoEvent::class));

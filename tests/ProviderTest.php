@@ -6,6 +6,8 @@ use FastRoute\Dispatcher\GroupCountBased;
 use Illuminate\Filesystem\Filesystem;
 use Symfony\Component\Console\Input\ArgvInput;
 use W7\Console\Application;
+use W7\Core\Facades\Router;
+use W7\Core\Helper\FileLoader;
 use W7\Core\Provider\ProviderAbstract;
 use W7\Core\Provider\ProviderManager;
 use W7\Core\Route\RouteMapping;
@@ -85,7 +87,7 @@ class ProviderTest extends TestCase {
 		$providerManager->registerProvider(RouteProvider::class, 'test');
 
 		//route
-		$routeMapping = iloader()->singleton(RouteMapping::class);
+		$routeMapping = new RouteMapping(Router::getFacadeRoot(), new FileLoader());
 		$routeMapping->getMapping();
 		$routeInfo = irouter()->getData();
 		$dispatch = new GroupCountBased($routeInfo);

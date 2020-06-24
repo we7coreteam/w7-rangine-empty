@@ -3,6 +3,7 @@
 namespace W7\Tests;
 
 use Illuminate\Filesystem\Filesystem;
+use W7\Core\Facades\Container;
 use W7\Core\Provider\ProviderManager;
 
 class ProviderAutoRegisterTest extends TestCase {
@@ -17,7 +18,10 @@ class ProviderAutoRegisterTest extends TestCase {
 		$cmd = 'cd ' . BASE_PATH . '/' . ' && composer dump-autoload';
 		exec($cmd);
 
-		$providerManager = new ProviderManager();
+		/**
+		 * @var ProviderManager $providerManager
+		 */
+		$providerManager = Container::get(ProviderManager::class);
 		$providerManager->register();
 
 		$reflect = new \ReflectionClass($providerManager);

@@ -10,6 +10,8 @@ use W7\App\Middleware\DispatcherMiddleware;
 use W7\Core\Controller\ControllerAbstract;
 use W7\Core\Controller\FaviconController;
 use W7\Core\Dispatcher\RequestDispatcher;
+use W7\Core\Facades\Router;
+use W7\Core\Helper\FileLoader;
 use W7\Core\Middleware\ControllerMiddleware;
 use W7\Core\Middleware\MiddlewareHandler;
 use W7\Core\Route\RouteDispatcher;
@@ -39,7 +41,7 @@ class RequestDispatcherTest extends TestCase {
 			return 1;
 		});
 
-		$routeInfo = iloader()->get(RouteMapping::class)->getMapping();
+		$routeInfo = (new RouteMapping(Router::getFacadeRoot(), new FileLoader()))->getMapping();
 		$router = new RouteDispatcher($routeInfo);
 		$dispatcher->setRouterDispatcher($router);
 
@@ -75,7 +77,7 @@ class RequestDispatcherTest extends TestCase {
 		$dispatcher = new Dispatcher();
 		irouter()->get('/json-response', ['\W7\Tests\TestController', 'index']);
 
-		$routeInfo = iloader()->get(RouteMapping::class)->getMapping();
+		$routeInfo = (new RouteMapping(Router::getFacadeRoot(), new FileLoader()))->getMapping();
 		$router = new RouteDispatcher($routeInfo);
 		$dispatcher->setRouterDispatcher($router);
 
@@ -86,7 +88,7 @@ class RequestDispatcherTest extends TestCase {
 	}
 
 	public function testIgnoreRoute() {
-		$routeInfo = iloader()->get(RouteMapping::class)->getMapping();
+		$routeInfo = (new RouteMapping(Router::getFacadeRoot(), new FileLoader()))->getMapping();
 		$router = new RouteDispatcher($routeInfo);
 		$dispatcher = new Dispatcher();
 		$dispatcher->setRouterDispatcher($router);
@@ -102,7 +104,7 @@ class RequestDispatcherTest extends TestCase {
 
 		$route = $method->invoke($dispatcher, $request);
 
-		$this->assertSame(true, $route['controller'] == 'W7\App\Controller\W7\Core\Controller\FaviconController');
+		$this->assertSame(true, $route['controller'] == '\W7\Core\Controller\FaviconController');
 		$this->assertSame('system', $route['module']);
 		$this->assertSame('', (new FaviconController())->index($request)->getBody()->getContents());
 	}
@@ -112,7 +114,7 @@ class RequestDispatcherTest extends TestCase {
 			return 'user favicon';
 		});
 
-		$routeInfo = iloader()->get(RouteMapping::class)->getMapping();
+		$routeInfo = (new RouteMapping(Router::getFacadeRoot(), new FileLoader()))->getMapping();
 		$route = new RouteDispatcher($routeInfo);
 		$dispatcher = new Dispatcher();
 		$dispatcher->setRouterDispatcher($route);

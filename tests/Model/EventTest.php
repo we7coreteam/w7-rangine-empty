@@ -6,6 +6,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 use W7\Core\Database\ModelAbstract;
 use W7\Core\Dispatcher\EventDispatcher;
+use W7\Core\Facades\Event;
 use W7\Core\Listener\ListenerAbstract;
 
 class User extends ModelAbstract {
@@ -42,7 +43,7 @@ class EventTest extends ModelTestAbstract {
 		/**
 		 * @var EventDispatcher $event
 		 */
-		$event = iloader()->get(EventDispatcher::class);
+		$event = Event::getFacadeRoot();
 		$event->listen(SavedEvent::class, SavedListener::class);
 		Schema::dropIfExists('user');
 		Schema::create('user', function (Blueprint $table) {
