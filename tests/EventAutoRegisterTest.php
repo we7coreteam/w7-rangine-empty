@@ -8,6 +8,7 @@ use Illuminate\Filesystem\Filesystem;
 use W7\App\Event\TestAutoEvent;
 use W7\Core\Dispatcher\EventDispatcher;
 use W7\Core\Events\Dispatcher;
+use W7\Core\Facades\Event;
 
 class EventAutoRegisterTest extends TestCase {
 	public function setUp(): void {
@@ -24,10 +25,8 @@ class EventAutoRegisterTest extends TestCase {
 
 		$this->initApp();
 
-		$eventDispatcher = new Dispatcher();
-
-		$this->assertSame(true, $eventDispatcher->hasListeners(TestAutoEvent::class));
-		$this->assertSame(true, $eventDispatcher->hasListeners(\W7\App\Event\Test\TestAutoEvent::class));
+		$this->assertSame(true, Event::hasListeners(TestAutoEvent::class));
+		$this->assertSame(true, Event::hasListeners(\W7\App\Event\Test\TestAutoEvent::class));
 
 		$filesystem->delete(APP_PATH . '/Event/Test/TestAutoEvent.php');
 		$filesystem->delete(APP_PATH . '/Listener/Test/TestAutoListener.php');
