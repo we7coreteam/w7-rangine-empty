@@ -11,7 +11,9 @@ class ViewTest extends TestCase {
 	public function testRender() {
 		copy(__DIR__ . '/Util/Provider/view/index.html', APP_PATH . '/View/test.html');
 
-		$content = (new View())->render('test');
+		$content = (new View([
+			'debug' => false
+		]))->render('test');
 
 		$this->assertSame('ok', $content);
 
@@ -19,25 +21,14 @@ class ViewTest extends TestCase {
 	}
 
 	public function testNamespace() {
-		$config = iconfig()->getUserConfig('app');
-		$config['view'] = [
+		$config = [
+			'debug' => false,
 			'template_path' => [
 				'test' => __DIR__ . '/Util/Provider/view'
 			]
 		];
-		iconfig()->setUserConfig('app', $config);
 
-		$view = new View();
-		$handler = new TwigHandler([
-			'debug' => false,
-			'provider_template_path' => [
-				'test' => [__DIR__ . '/Util/Provider/view']
-			]
-		]);
-		$handlerReflect = new \ReflectionClass($handler);
-		$property = $handlerReflect->getProperty('defaultTemplatePath');
-		$property->setAccessible(true);
-		$property->setValue($handler, null);
+		$view = new View($config);
 
 		$content = $view->render('@test/index');
 
@@ -47,18 +38,10 @@ class ViewTest extends TestCase {
 	public function testHandler() {
 		$filesystem = new Filesystem();
 		$filesystem->copyDirectory(__DIR__ . '/Util/Handler/View', APP_PATH . '/Handler/View');
-
-		$config = iconfig()->getUserConfig('app');
-		$config['view'] = [
-			'handler' => 'test'
-		];
-		iconfig()->setUserConfig('app', $config);
-
-		$handler = iconfig()->getUserConfig('handler');
-		$handler['view']['test'] = TestHandler::class;
-		iconfig()->setUserConfig('handler', $handler);
-
-		$view = new View();
+		$view = new View([
+			'debug' => false,
+			'handler' => TestHandler::class
+		]);
 		$content = $view->render('index');
 
 		$this->assertSame('a:2:{i:0;s:8:"__main__";i:1;s:10:"index.html";}', $content);

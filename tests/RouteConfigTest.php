@@ -12,6 +12,7 @@ use W7\App;
 use W7\App\Middleware\GatewayCheckSiteMiddleware;
 use W7\Core\Exception\RouteNotAllowException;
 use W7\Core\Exception\RouteNotFoundException;
+use W7\Core\Helper\FileLoader;
 use W7\Core\Middleware\MiddlewareAbstract;
 use W7\Core\Route\RouteDispatcher;
 use W7\Core\Route\Router;
@@ -31,7 +32,7 @@ class Test1Middleware extends MiddlewareAbstract {
 
 class RouteConfigTest extends TestCase {
 	public function testFuncAdd() {
-		$routeMapping = new RouteMapping();
+		$routeMapping = new RouteMapping(\W7\Core\Facades\Router::getFacadeRoot(), new FileLoader());
 		$routeMapping->setRouteConfig([$this->getConfig()]);
 		$routeMapping->getMapping();
 
@@ -262,7 +263,8 @@ class RouteConfigTest extends TestCase {
 	}
 
 	public function testNotFound() {
-		$routeInfo = iloader()->get(RouteMapping::class)->getMapping();
+		$routeMapping = new RouteMapping(\W7\Core\Facades\Router::getFacadeRoot(), new FileLoader());
+		$routeInfo = $routeMapping->getMapping();
 		$router = new RouteDispatcher($routeInfo);
 		$dispatcher = new Dispatcher();
 		$dispatcher->setRouterDispatcher($router);
@@ -285,8 +287,8 @@ class RouteConfigTest extends TestCase {
 	}
 
 	public function testNotAllow() {
-		$routeInfo = iloader()->get(RouteMapping::class)->getMapping();
-		$router = new RouteDispatcher($routeInfo);
+		$routeMapping = new RouteMapping(\W7\Core\Facades\Router::getFacadeRoot(), new FileLoader());
+		$router = new RouteDispatcher($routeMapping->getMapping());
 		$dispatcher = new Dispatcher();
 		$dispatcher->setRouterDispatcher($router);
 
@@ -308,11 +310,9 @@ class RouteConfigTest extends TestCase {
 	}
 
 	public function testFix() {
-		$routeMapping = new RouteMapping();
+		$routeMapping = new RouteMapping(new Router(), new FileLoader());
 		$routeMapping->setRouteConfig([$this->getFixConfig()]);
-		$routeMapping->getMapping();
-		$routeInfo = irouter()->getData();
-		$dispatch = new GroupCountBased($routeInfo);
+		$dispatch = new GroupCountBased($routeMapping->getMapping());
 
 		$this->assertSame('test-name', $dispatch->dispatch('GET', '/jsdata/app/hot')[1]['name']);
 		$this->assertSame('conf-test.large', $dispatch->dispatch('GET', '/jsdata/app/test-large')[1]['name']);
@@ -413,7 +413,7 @@ class RouteConfigTest extends TestCase {
 
 		irouter()->get('/static', 'index.html');
 
-		$routeInfo = (new RouteMapping())->getMapping();
+		$routeInfo = (new RouteMapping(\W7\Core\Facades\Router::getFacadeRoot(), new FileLoader()))->getMapping();
 		$router = new GroupCountBased($routeInfo);
 		$route = $router->dispatch('GET', '/static');
 

@@ -108,27 +108,4 @@ class RequestDispatcherTest extends TestCase {
 		$this->assertSame('system', $route['module']);
 		$this->assertSame('', (new FaviconController())->index($request)->getBody()->getContents());
 	}
-
-	public function testUserIgnoreRoute() {
-		irouter()->get('/favicon.ico', function () {
-			return 'user favicon';
-		});
-
-		$routeInfo = (new RouteMapping(Router::getFacadeRoot(), new FileLoader()))->getMapping();
-		$route = new RouteDispatcher($routeInfo);
-		$dispatcher = new Dispatcher();
-		$dispatcher->setRouterDispatcher($route);
-
-		App::$server = new Server();
-		$request = new Request('GET', '/favicon.ico');
-
-		$reflect = new \ReflectionClass($dispatcher);
-		$method = $reflect->getMethod('getRoute');
-		$method->setAccessible(true);
-
-		$route = $method->invoke($dispatcher, $request);
-		$this->assertSame(true, $route['controller'] instanceof \Closure);
-		$this->assertSame('system', $route['module']);
-		$this->assertSame('user favicon', $route['controller']());
-	}
 }
