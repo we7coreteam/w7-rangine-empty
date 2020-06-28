@@ -99,6 +99,7 @@ class ValidateTest extends TestCase {
 	}
 
 	public function testExtend() {
+		$this->initApp();
 		if (!file_exists(BASE_PATH . '/lang/zh-CN')) {
 			mkdir(BASE_PATH . '/lang/zh-CN', 0777, true);
 		}
