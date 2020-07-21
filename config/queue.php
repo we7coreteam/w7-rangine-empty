@@ -1,28 +1,16 @@
 <?php
 
 return [
-	'default' => ienv('QUEUE_CONNECTION', 'redis'),
-
+	'setting' => [],
+	'queue' => [
+		'default' => [
+			'class' => '',
+			'enable' => true,
+			'worker_num' => 1
+		]
+	],
 	'connections' => [
-		'database' => [
-			'driver' => 'database',
-			'table' => 'jobs',
-			'queue' => 'default',
-			'retry_after' => 90,
-			'enable' => false,
-			'worker_num' => 5
-		],
-		'redis' => [
-			'driver' => 'redis',
-			'connection' => 'default',
-			'queue' => ienv('REDIS_QUEUE', 'default'),
-			'retry_after' => 90,
-			'block_for' => null,
-			'worker_num' => 5
-		],
 		'rabbit_mq' => [
-			'enable' => false,
-
 			'driver' => 'rabbit_mq',
 			'queue' => ienv('RABBITMQ_QUEUE', 'default1212'),
 			'exchange' => 'test',
@@ -44,14 +32,7 @@ return [
 					'verify_peer' => ienv('RABBITMQ_SSL_VERIFY_PEER', true),
 					'passphrase' => ienv('RABBITMQ_SSL_PASSPHRASE', null),
 				],
-			],
-			'worker_num' => 5
+			]
 		]
-	],
-
-	'failed' => [
-		'driver' => ienv('QUEUE_FAILED_DRIVER', 'database'),
-		'database' => ienv('DB_CONNECTION', 'default'),
-		'table' => 'failed_jobs',
 	]
 ];
