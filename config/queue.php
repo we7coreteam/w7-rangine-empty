@@ -4,7 +4,7 @@ return [
 	'setting' => [],
 	'queue' => [
 		'default' => [
-			'class' => '',
+			'class' => \W7\App\Task\QueueDefaultTask::class,
 			'enable' => true,
 			'worker_num' => 1
 		]
@@ -12,8 +12,6 @@ return [
 	'connections' => [
 		'rabbit_mq' => [
 			'driver' => 'rabbit_mq',
-			'queue' => ienv('RABBITMQ_QUEUE', 'default1212'),
-			'exchange' => 'test',
 			'hosts' => [
 				[
 					'host' => ienv('RABBITMQ_HOST', '127.0.0.1'),
