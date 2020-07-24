@@ -2,8 +2,10 @@
 
 namespace W7\Tests\Future;
 
+use W7\App;
 use W7\Command\ServiceProvider;
 use W7\Console\Application;
+use W7\Core\Bootstrap\ProviderBootstrap;
 use W7\Core\Facades\Container;
 use W7\Core\Provider\ProviderAbstract;
 use W7\Core\Provider\ProviderManager;
@@ -49,7 +51,6 @@ class DeferProviderTest extends TestCase {
 		 * @var ProviderManager $providerManager
 		 */
 		$providerManager = Container::get(ProviderManager::class);
-		$providerManager->register();
 
 		$this->assertSame(false, $providerManager->hasRegister(ServiceProvider::class));
 		$this->assertSame(false, $providerManager->hasRegister(\W7\Crontab\ServiceProvider::class));
@@ -63,7 +64,6 @@ class DeferProviderTest extends TestCase {
 		 * @var ProviderManager $providerManager
 		 */
 		$providerManager = Container::get(ProviderManager::class);
-		$providerManager->register();
 
 		$this->assertSame(false, $providerManager->hasRegister(ServiceProvider::class));
 
@@ -75,13 +75,9 @@ class DeferProviderTest extends TestCase {
 	public function testRegisterProviders() {
 		$providers = iconfig()->get('provider', []);
 		$providers[DeferProvider::class] = [DeferProvider::class];
-		iconfig()->set('provider', $providers);
 
-		/**
-		 * @var ProviderManager $providerManager
-		 */
-		$providerManager = Container::get(ProviderManager::class);
-		$providerManager->register();
+		$providerManager = new ProviderManager(App::getApp()->getContainer());
+		$providerManager->register($providers);
 
 		$this->assertSame(false, $providerManager->hasRegister(DeferProvider::class));
 
@@ -97,14 +93,10 @@ class DeferProviderTest extends TestCase {
 	public function testTriggerRegisterProvider() {
 		$providers = iconfig()->get('provider', []);
 		$providers[DeferProvider::class] = [DeferProvider::class];
-		iconfig()->set('provider', $providers);
 		DeferProvider::$registerNum = 0;
 
-		/**
-		 * @var ProviderManager $providerManager
-		 */
-		$providerManager = Container::get(ProviderManager::class);
-		$providerManager->register();
+		$providerManager = new ProviderManager(App::getApp()->getContainer());
+		$providerManager->register($providers);
 
 		$this->assertSame(false, $providerManager->hasRegister(DeferProvider::class));
 
@@ -122,14 +114,10 @@ class DeferProviderTest extends TestCase {
 		$providers = iconfig()->get('provider', []);
 		$providers[DeferProvider1::class] = [DeferProvider1::class];
 		$providers[ParentDeferProvider::class] = [ParentDeferProvider::class];
-		iconfig()->set('provider', $providers);
 		DeferProvider::$registerNum = 0;
 
-		/**
-		 * @var ProviderManager $providerManager
-		 */
-		$providerManager = Container::get(ProviderManager::class);
-		$providerManager->register();
+		$providerManager = new ProviderManager(App::getApp()->getContainer());
+		$providerManager->register($providers);
 
 		$this->assertSame(false, $providerManager->hasRegister(DeferProvider1::class));
 		$this->assertSame(false, $providerManager->hasRegister(ParentDeferProvider::class));

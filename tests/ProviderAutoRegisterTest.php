@@ -3,8 +3,7 @@
 namespace W7\Tests;
 
 use Illuminate\Filesystem\Filesystem;
-use W7\Core\Facades\Container;
-use W7\Core\Provider\ProviderManager;
+use W7\Core\Bootstrap\LoadConfigBootstrap;
 
 class ProviderAutoRegisterTest extends TestCase {
 	public function setUp(): void {
@@ -18,16 +17,9 @@ class ProviderAutoRegisterTest extends TestCase {
 		$cmd = 'cd ' . BASE_PATH . '/' . ' && composer dump-autoload';
 		exec($cmd);
 
-		/**
-		 * @var ProviderManager $providerManager
-		 */
-		$providerManager = Container::get(ProviderManager::class);
-		$providerManager->register();
+		$path = (new LoadConfigBootstrap())->getBuiltInConfigPath() . '/provider.php';
 
-		$reflect = new \ReflectionClass($providerManager);
-		$property = $reflect->getProperty('registeredProviders');
-		$property->setAccessible(true);
-		$providers = $property->getValue($providerManager);
+		$providers = include_once $path;
 
 		$this->assertArrayHasKey('W7\App\Provider\TestProvider', $providers);
 

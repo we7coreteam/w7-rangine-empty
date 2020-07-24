@@ -79,22 +79,23 @@ class LoggerTest extends TestCase {
 		/**
 		 * @var LogBuffer $handler
 		 */
-		ilogger()->bufferLimit = 5;
-		$handler = ilogger()->getHandlers()[0];
+		$logger = \W7\Core\Facades\Logger::channel();
+		$logger->bufferLimit = 5;
+		$handler = $logger->getHandlers()[0];
 		$handlerReflect = new \ReflectionClass($handler);
 		$property = $handlerReflect->getProperty('bufferLimit');
 		$property->setAccessible(true);
 		$property->setValue($handler, 5);
 
-		ilogger()->debug('test');
-		ilogger()->debug('test');
-		ilogger()->debug('test');
-		ilogger()->debug('test');
-		ilogger()->debug('test');
+		$logger->debug('test');
+		$logger->debug('test');
+		$logger->debug('test');
+		$logger->debug('test');
+		$logger->debug('test');
 		$files = glob(RUNTIME_PATH . '/logs/w7-*.log');
 		$this->assertSame(false, count($files) > 0);
 
-		ilogger()->debug('test');
+		$logger->debug('test');
 		$files = glob(RUNTIME_PATH . '/logs/w7-*.log');
 		$this->assertSame(true, count($files) > 0);
 

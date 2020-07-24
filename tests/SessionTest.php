@@ -27,15 +27,13 @@ class SessionTest extends TestCase {
 
 	public function testGc() {
 		session_reset();
-		$config = iconfig()->getUserConfig('app');
-		$config['session'] = [
+		$config = [
 			'gc_divisor' => 1,
 			'gc_probability' => 1,
 			'expires' => 1
 		];
-		iconfig()->setUserConfig('app', $config);
 
-		$session = new Session();
+		$session = new Session($config);
 		$sessionReflect = new \ReflectionClass($session);
 		$property = $sessionReflect->getProperty('handler');
 		$property->setAccessible(true);
@@ -60,13 +58,9 @@ class SessionTest extends TestCase {
 		$filesystem->copyDirectory(__DIR__ . '/Util/Handler/Session', APP_PATH . '/Handler/Session');
 
 		$config = iconfig()->getUserConfig('app');
-		$config['session']['handler'] = 'test';
-		iconfig()->setUserConfig('app', $config);
-		$handler = iconfig()->getUserConfig('handler');
-		$handler['session']['test'] = TestHandler::class;
-		iconfig()->setUserConfig('handler', $handler);
+		$config['session']['handler'] = TestHandler::class;
 
-		$session = new Session();
+		$session = new Session($config['session']);
 		$sessionReflect = new \ReflectionClass($session);
 		$property = $sessionReflect->getProperty('handler');
 		$property->setAccessible(true);
