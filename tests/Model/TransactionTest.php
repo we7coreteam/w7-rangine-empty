@@ -259,22 +259,26 @@ class TransactionTest extends ModelTestAbstract {
 		$this->assertSame(4, $value->id);
 		$this->assertSame('test', $value->name);
 
-		DB::connection('sqlite_test')->beginTransaction();
+		idb()->setDefaultConnection('sqlite_test');
+		DB::beginTransaction();
 		$model = new Test1Model();
 		$model->id = 5;
 		$model->name = 'test';
 		$model->save();
-		DB::connection('sqlite_test')->rollBack();
+		DB::rollBack();
+		idb()->setDefaultConnection('');
 
 		$value = (new Test1Model())->where('id', '=', 5)->first();
 		$this->assertSame(null, $value);
 
-		DB::connection('sqlite_test')->beginTransaction();
+		idb()->setDefaultConnection('sqlite_test');
+		DB::beginTransaction();
 		$model = new Test1Model();
 		$model->id = 5;
 		$model->name = 'test';
 		$model->save();
-		DB::connection('sqlite_test')->commit();
+		DB::commit();
+		idb()->setDefaultConnection('');
 
 		$value = (new Test1Model())->where('id', '=', 5)->first();
 		$this->assertSame(5, $value->id);
