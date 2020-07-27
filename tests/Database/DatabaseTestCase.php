@@ -5,6 +5,7 @@ namespace W7\Tests\Database;
 use Illuminate\Database\Connection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\SQLiteConnection;
+use W7\Core\Facades\DB;
 use W7\Tests\TestCase;
 
 class SQLite3Connection extends SQLiteConnection {
@@ -59,6 +60,7 @@ class DatabaseTestCase extends TestCase {
 
 	public function setUp(): void {
 		parent::setUp();
+		DB::$resolvedInstance = [];
 		$this->registerSqlite();
 	}
 }
