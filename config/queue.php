@@ -2,15 +2,14 @@
 
 return [
 	'setting' => [],
+
+	'default' => 'rabbit_mq',
+
 	'queue' => [
-		'default' => [
-			'class' => \W7\App\Task\QueueDefaultTask::class,
-			'enable' => true,
-			'worker_num' => 1
-		]
-	],
-	'connections' => [
 		'rabbit_mq' => [
+			'enable' => true,
+			'worker_num' => 1,
+
 			'driver' => 'rabbit_mq',
 			'hosts' => [
 				[
