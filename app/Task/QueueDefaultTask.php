@@ -2,10 +2,10 @@
 
 namespace W7\App\Task;
 
-use W7\Mq\Task\QueueTaskAbstract;
+use W7\Core\Task\TaskAbstract;
 
-class QueueDefaultTask extends QueueTaskAbstract {
+class QueueDefaultTask extends TaskAbstract {
 	public function run($server, $taskId, $workId, $data) {
-		echo serialize($data);
+		var_dump($data);
 	}
 }
