@@ -10,6 +10,7 @@ return [
 			'enable' => true,
 			'worker_num' => 1,
 
+			'queue' => 'default',
 			'driver' => 'rabbit_mq',
 			'hosts' => [
 				[
