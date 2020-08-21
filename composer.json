@@ -34,9 +34,9 @@
 		}
 	},
 	"require": {
-		"w7/rangine": "dev-master",
-		"w7/rangine-mq": "dev-master",
-		"w7/rangine-crontab": "dev-master"
+		"w7/rangine": "*",
+		"w7/rangine-mq": "*",
+		"w7/rangine-crontab": "*"
 	},
 	"require-dev": {
 		"w7/rangine-debugger": "*",
