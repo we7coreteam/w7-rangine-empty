@@ -4,11 +4,27 @@ namespace W7\Tests;
 
 use Symfony\Component\Console\Input\ArgvInput;
 use W7\Console\Application;
-use W7\Core\Dispatcher\EventDispatcher;
 use W7\Core\Events\Dispatcher;
+use W7\Core\Listener\ListenerAbstract;
+
+
+
+class ArgsEvent {
+
+}
+
+class ArgsListener extends ListenerAbstract {
+	public function __construct(...$params) {
+		EventTest::$testArg = $params[0];
+	}
+
+	public function run(...$params) {
+
+	}
+}
 
 class EventTest extends TestCase {
-
+	public static $testArg = 0;
 	public function testMakeException() {
 		/**
 		 * @var Application $application
@@ -71,6 +87,17 @@ class EventTest extends TestCase {
 		});
 
 		$this->assertSame('test', $event->dispatch('test', [], true));
+	}
+
+	public function testArgEvent() {
+		$event = new Dispatcher();
+		$event->listen(ArgsEvent::class, ArgsListener::class);
+
+		$event->dispatch(new ArgsEvent());
+
+		$this->assertSame(true, static::$testArg instanceof ArgsEvent);
+
+		static::$testArg = 0;
 	}
 
 	public function testMakeListenerAndEvent() {
