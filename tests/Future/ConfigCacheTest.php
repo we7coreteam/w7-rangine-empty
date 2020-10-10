@@ -30,17 +30,8 @@ class ConfigCacheTest extends TestCase {
 		iconfig()->set('app.setting.cache', 1);
 		$this->assertSame(1, iconfig()->get('app.setting.cache'));
 
-		$this->assertEmpty(iconfig()->get('log1.default'));
+		$this->assertEmpty(iconfig()->get('log1.default', ''));
 		$this->assertNotEmpty(iconfig()->get('log.default'));
-
-		$application->get('config:clear')->run(new ArgvInput([
-			'test'
-		]), ioutputer());
-
-		$config = new Config();
-		$config->load();
-		$this->assertNotEmpty($config->get('log1.default'));
-		$this->assertEmpty($config->get('log.default'));
 
 		rename(BASE_PATH . '/config/log1.php', BASE_PATH . '/config/log.php');
 	}

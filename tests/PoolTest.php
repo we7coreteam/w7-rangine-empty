@@ -17,7 +17,6 @@ class Pool extends CoPoolAbstract {
 class PoolTest extends TestCase {
 	public function testMakePool() {
 		$pool = new Pool('test');
-		$pool->setConfig([]);
 		$pool->setMaxCount(10);
 
 		$this->assertSame(0, $pool->getIdleCount());
@@ -26,7 +25,6 @@ class PoolTest extends TestCase {
 
 	public function testMakeConnection() {
 		$pool = new Pool('test');
-		$pool->setConfig([]);
 		$pool->setMaxCount(10);
 
 		$connection = $pool->getConnection();
@@ -52,7 +50,6 @@ class PoolTest extends TestCase {
 	public function testSuspendAndResume() {
 		go(function () {
 			$pool = new Pool('test');
-			$pool->setConfig([]);
 			$pool->setMaxCount(1);
 
 			$connection = $pool->getConnection();

@@ -123,7 +123,7 @@ class LoggerTest extends TestCase {
 		$logger = new Logger('flush', [
 			new LogBuffer(StreamHandler::getHandler([
 				'path' => RUNTIME_PATH . DS. 'logs'. DS. 'flush.log',
-				'level' => 'debug',
+				'level' => Logger::DEBUG,
 			]), 2)
 		]);
 		$logger->bufferLimit = 2;
