@@ -118,21 +118,21 @@ class LoggerTest extends TestCase {
 	}
 
 	public function testDestructFlushLog() {
-		$this->clearLog();
+		@unlink(RUNTIME_PATH . '/flush.log');
 
 		$logger = new Logger('flush', [
 			new LogBuffer(StreamHandler::getHandler([
-				'path' => RUNTIME_PATH . DS. 'logs'. DS. 'flush.log',
+				'path' => RUNTIME_PATH . '/flush.log',
 				'level' => Logger::DEBUG,
 			]), 2)
 		]);
 		$logger->bufferLimit = 2;
 
 		$logger->debug('flush');
-		$this->assertSame(false, file_exists(RUNTIME_PATH . DS. 'logs'. DS. 'flush.log'));
+		$this->assertSame(false, file_exists(RUNTIME_PATH . '/flush.log'));
 
 		unset($logger);
-		$this->assertSame(true, file_exists(RUNTIME_PATH . DS. 'logs'. DS. 'flush.log'));
-		$this->clearLog();
+		$this->assertSame(true, file_exists(RUNTIME_PATH . '/flush.log'));
+		unlink(RUNTIME_PATH . '/flush.log');
 	}
 }
