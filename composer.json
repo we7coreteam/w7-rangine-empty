@@ -34,12 +34,55 @@
 		}
 	},
 	"require": {
-		"w7/rangine": "*",
-		"w7/rangine-mq": "*",
-		"w7/rangine-crontab": "*"
+		"w7/rangine": "dev-master",
+		"w7/rangine-compat": "dev-master",
+		"w7/rangine-command": "dev-master",
+		"w7/rangine-crontab": "dev-master",
+		"w7/rangine-database-tool": "dev-master",
+		"w7/rangine-mq": "dev-master",
+		"w7/rangine-facade": "dev-master",
+		"w7/rangine-contract": "dev-master"
 	},
+	"repositories": [
+		{
+			"type": "path",
+			"url": "../swoole"
+		},
+		{
+			"type": "path",
+			"url": "../w7-rangine-compat"
+		},
+		{
+			"type": "path",
+			"url": "../w7-rangine-command"
+		},
+		{
+			"type": "path",
+			"url": "../w7-rangine-crontab"
+		},
+		{
+			"type": "path",
+			"url": "../w7-rangine-database-tool"
+		},
+		{
+			"type": "path",
+			"url": "../w7-rangine-debugger"
+		},
+		{
+			"type": "path",
+			"url": "../w7-rangine-mq"
+		},
+		{
+			"type": "path",
+			"url": "../w7-rangine-facade"
+		},
+		{
+			"type": "path",
+			"url": "../w7-rangine-contract"
+		}
+	],
 	"require-dev": {
-		"w7/rangine-debugger": "*",
+		"w7/rangine-debugger": "dev-master",
 		"phpunit/phpunit": "^7.0"
 	}
 }
