@@ -5,9 +5,8 @@
 
 namespace W7\Tests;
 
-use Illuminate\Container\Container;
 use W7\App;
-use W7\Core\Facades\FacadeAbstract;
+use W7\Facade\FacadeAbstract;
 
 class TestCase extends \PHPUnit\Framework\TestCase {
 	public function setUp() :void {

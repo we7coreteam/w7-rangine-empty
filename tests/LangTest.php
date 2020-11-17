@@ -6,9 +6,9 @@ use Illuminate\Filesystem\Filesystem;
 
 class LangTest extends TestCase {
 	private function init() {
-		$config = iconfig()->getUserConfig('app');
+		$config = iconfig()->get('app');
 		$config['setting']['lang'] = 'zh-CN';
-		iconfig()->setUserConfig('app', $config);
+		iconfig()->set('app', $config);
 	}
 
 	public function testTrans() {

@@ -6,6 +6,7 @@ use FastRoute\Dispatcher\GroupCountBased;
 use Illuminate\Filesystem\Filesystem;
 use Symfony\Component\Console\Input\ArgvInput;
 use W7\Console\Application;
+use W7\Contract\View\ViewInterface;
 use W7\Core\Facades\Router;
 use W7\Core\Helper\FileLoader;
 use W7\Core\Provider\ProviderAbstract;
@@ -104,7 +105,7 @@ class ProviderTest extends TestCase {
 		$providerManager = iloader()->singleton(ProviderManager::class);
 		$providerManager->registerProvider(ConfigProvider::class, 'test');
 
-		$config = iconfig()->getUserConfig('test_server');
+		$config = iconfig()->get('test_server');
 		$this->assertArrayHasKey('host', $config['tcp']);
 	}
 
@@ -163,7 +164,7 @@ class ProviderTest extends TestCase {
 		$providerManager = iloader()->singleton(ProviderManager::class);
 		$providerManager->registerProvider(ViewProvider::class, 'test');
 
-		$content = iloader()->singleton(View::class)->render('@provider/index');
+		$content = iloader()->singleton(ViewInterface::class)->render('@provider/index');
 		$this->assertSame('ok', $content);
 	}
 }

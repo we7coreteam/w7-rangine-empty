@@ -27,28 +27,28 @@ class ConfigTest extends TestCase {
 	}
 
 	public function testLoadConfig() {
-		$log = iconfig()->getUserConfig('log');
+		$log = iconfig()->get('log');
 		$this->assertEquals('stack', $log['default']);
 	}
 
 	public function testSet() {
-		$config = iconfig()->getUserConfig('app');
+		$config = iconfig()->get('app');
 		$config['test'] = 1;
-		iconfig()->setUserConfig('app', $config);
+		iconfig()->set('app', $config);
 
-		$this->assertSame(1, iconfig()->getUserConfig('app')['test']);
+		$this->assertSame(1, iconfig()->get('app')['test']);
 	}
 
 	public function testServerConfig() {
-		$server = iconfig()->getServer();
+		$server = iconfig()->get('server');
 
 		$this->assertSame(10000, $server['common']['max_request']);
 
-		$config = iconfig()->getUserConfig('server');
+		$config = iconfig()->get('server');
 		$config['common']['max_request'] = 5000;
-		iconfig()->setUserConfig('server', $config);
+		iconfig()->set('server', $config);
 
-		$server = iconfig()->getServer();
+		$server = iconfig()->get('server');
 
 		$this->assertSame(5000, $server['common']['max_request']);
 	}

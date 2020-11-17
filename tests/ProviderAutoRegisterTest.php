@@ -21,7 +21,7 @@ class ProviderAutoRegisterTest extends TestCase {
 
 		$providers = include_once $path;
 
-		$this->assertArrayHasKey('W7\App\Provider\TestProvider', $providers);
+		$this->assertArrayHasKey('W7\App\Provider\TestProvider', $providers['providers']);
 
 		$filesystem->delete(APP_PATH . '/Provider/TestProvider.php');
 		exec($cmd);

@@ -108,7 +108,7 @@ class CommandTest extends TestCase {
 	}
 
 	public function testOverwriteConfig() {
-		$this->assertSame('', iconfig()->getUserConfig('app')['setting']['overwrite'] ?? '');
+		$this->assertSame('', iconfig()->get('app')['setting']['overwrite'] ?? '');
 		/**
 		 * @var Application $application
 		 */
@@ -122,7 +122,7 @@ class CommandTest extends TestCase {
 		]), ioutputer());
 
 		$this->assertSame('test', $command->name);
-		$this->assertSame('1', iconfig()->getUserConfig('app')['setting']['overwrite']);
+		$this->assertSame('1', iconfig()->get('app')['setting']['overwrite']);
 	}
 
 	public function testAuthFindCommand() {

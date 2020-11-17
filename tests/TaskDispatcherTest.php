@@ -4,13 +4,12 @@ namespace W7\Tests;
 
 use W7\App;
 use W7\App\Task\TestTask;
-use W7\Core\Task\TaskDispatcher;
-use W7\Crontab\Server\Server;
-use W7\Crontab\Task\Task;
+use W7\Crontab\Task\CronTask;
+use W7\Facade\Task;
 
 class TaskDispatcherTest extends TestCase {
 	public function testTaskCheck() {
-		$task = new Task('test', [
+		$task = new CronTask('test', [
 			'rule' => '*/2 * * * *',
 			'task' => ''
 		]);
@@ -21,7 +20,7 @@ class TaskDispatcherTest extends TestCase {
 		$time = strtotime('2019-10-10 12:13:1');
 		$this->assertSame(false, $task->getTrigger()->trigger($time));
 
-		$task = new Task('test', [
+		$task = new CronTask('test', [
 			'rule' => '*/2 */2 * * * *',
 			'task' => ''
 		]);
@@ -30,7 +29,7 @@ class TaskDispatcherTest extends TestCase {
 		$time = strtotime('2019-10-10 12:13:12');
 		$this->assertSame(false, $task->getTrigger()->trigger($time));
 
-		$task = new Task('test', [
+		$task = new CronTask('test', [
 			'rule' => '*/2 */2 12 * * *',
 			'task' => ''
 		]);
@@ -41,7 +40,7 @@ class TaskDispatcherTest extends TestCase {
 		$time = strtotime('2019-10-10 12:11:12');
 		$this->assertSame(false, $task->getTrigger()->trigger($time));
 
-		$task = new Task('test', [
+		$task = new CronTask('test', [
 			'rule' => '*/2 */2 12 10 10 *',
 			'task' => ''
 		]);
@@ -54,7 +53,7 @@ class TaskDispatcherTest extends TestCase {
 		$time = strtotime('2019-10-10 12:11:12');
 		$this->assertSame(false, $task->getTrigger()->trigger($time));
 
-		$task = new Task('test', [
+		$task = new CronTask('test', [
 			'rule' => '*/2 */2 12 10 10 4',
 			'task' => ''
 		]);
@@ -73,7 +72,7 @@ class TaskDispatcherTest extends TestCase {
 
 		ob_start();
 		App::$server = new \W7\Fpm\Server\Server();
-		\W7\Core\Facades\Task::dispatch(TestTask::class);
+		Task::dispatch(TestTask::class);
 		$echo = ob_get_clean();
 		$this->assertSame('run', $echo);
 

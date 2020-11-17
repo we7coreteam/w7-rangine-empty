@@ -15,9 +15,9 @@ class ServerTest extends TestCase {
 	}
 
 	public function testOverDefaultConfig() {
-		$config = iconfig()->getServer();
+		$config = iconfig()->get('server');
 		$config[ServerEnum::TYPE_HTTP]['mode'] = SWOOLE_BASE;
-		iconfig()->setUserConfig('server', $config);
+		iconfig()->set('server', $config);
 
 		$httpServer = new Server();
 
@@ -27,9 +27,9 @@ class ServerTest extends TestCase {
 	}
 
 	public function testErrorConfig() {
-		$config = iconfig()->getServer();
+		$config = iconfig()->get('server');
 		$config[ServerEnum::TYPE_HTTP]['host'] = null;
-		iconfig()->setUserConfig('server', $config);
+		iconfig()->set('server', $config);
 
 		try{
 			new Server();

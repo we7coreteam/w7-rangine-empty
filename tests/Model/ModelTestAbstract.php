@@ -13,7 +13,7 @@ abstract class ModelTestAbstract extends DatabaseTestCase {
 			return new SQLite3Connection($connection, $database, $prefix, $config);
 		});
 
-		$dbconfig = iconfig()->getUserConfig('app');
+		$dbconfig = iconfig()->get('app');
 		$dbconfig['database']['sqlite'] = [
 			'driver' => 'sqlite',
 			'database' => __DIR__ . '/Data/test.db',

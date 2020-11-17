@@ -21,21 +21,21 @@ class DeferProvider extends ProviderAbstract {
 
 	public function register() {
 		++self::$registerNum;
-		$this->container->set('test', DeferService::class);
+		$this->container->set('DeferProvider', DeferService::class);
 	}
 
 	public function providers(): array {
-		return ['test', 'test1'];
+		return ['DeferProvider', 'DeferProvider1'];
 	}
 }
 
 class DeferProvider1 extends ProviderAbstract {
 	public function register() {
-		$this->container->set('test2', DeferService::class);
+		$this->container->set('DeferProvider2', DeferService::class);
 	}
 
 	public function providers(): array {
-		return ['test2'];
+		return ['DeferProvider2'];
 	}
 }
 
@@ -73,10 +73,13 @@ class DeferProviderTest extends TestCase {
 	}
 
 	public function testRegisterProviders() {
-		$providers = iconfig()->get('provider', []);
 		$providers[DeferProvider::class] = [DeferProvider::class];
-
 		$providerManager = new ProviderManager(App::getApp()->getContainer());
+		$providerManager->setDeferredProviders([
+			'DeferProvider' => [
+				DeferProvider::class
+			]
+		]);
 		$providerManager->register($providers);
 
 		$this->assertSame(false, $providerManager->hasRegister(DeferProvider::class));
@@ -91,16 +94,21 @@ class DeferProviderTest extends TestCase {
 	}
 
 	public function testTriggerRegisterProvider() {
-		$providers = iconfig()->get('provider', []);
 		$providers[DeferProvider::class] = [DeferProvider::class];
 		DeferProvider::$registerNum = 0;
-
 		$providerManager = new ProviderManager(App::getApp()->getContainer());
+		$providerManager->setDeferredProviders([
+			'DeferProvider' => [
+				DeferProvider::class
+			]
+		]);
+		Container::registerDeferredService(['DeferProvider']);
+
 		$providerManager->register($providers);
 
 		$this->assertSame(false, $providerManager->hasRegister(DeferProvider::class));
 
-		$instance = icontainer()->get('test');
+		$instance = icontainer()->get('DeferProvider');
 		$this->assertSame(true, $instance instanceof DeferService);
 		$this->assertSame(1, DeferProvider::$registerNum);
 
@@ -111,12 +119,20 @@ class DeferProviderTest extends TestCase {
 	}
 
 	public function testTriggerMultiRegisterProvider() {
-		$providers = iconfig()->get('provider', []);
 		$providers[DeferProvider1::class] = [DeferProvider1::class];
 		$providers[ParentDeferProvider::class] = [ParentDeferProvider::class];
 		DeferProvider::$registerNum = 0;
-
 		$providerManager = new ProviderManager(App::getApp()->getContainer());
+		$providerManager->setDeferredProviders([
+			'DeferProvider2' => [
+				DeferProvider1::class
+			],
+			DeferProvider1::class => [
+				ParentDeferProvider::class
+			]
+		]);
+		Container::registerDeferredService(['DeferProvider2', DeferProvider1::class]);
+
 		$providerManager->register($providers);
 
 		$this->assertSame(false, $providerManager->hasRegister(DeferProvider1::class));
@@ -126,7 +142,7 @@ class DeferProviderTest extends TestCase {
 		$this->assertSame(false, $providerManager->hasRegister(DeferProvider1::class));
 		$this->assertSame(false, $providerManager->hasRegister(ParentDeferProvider::class));
 
-		$instance = icontainer()->get('test2');
+		$instance = icontainer()->get('DeferProvider2');
 		$this->assertSame(true, $instance instanceof DeferService);
 
 		$this->assertSame(true, $providerManager->hasRegister(DeferProvider1::class));

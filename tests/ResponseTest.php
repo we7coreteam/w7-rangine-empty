@@ -2,8 +2,8 @@
 
 namespace W7\Tests;
 
+use W7\Contract\Support\Arrayable;
 use W7\Http\Message\Base\Cookie;
-use W7\Http\Message\Contract\Arrayable;
 use W7\Http\Message\Server\Response;
 
 class ResponseTest extends TestCase {

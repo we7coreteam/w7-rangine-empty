@@ -35,7 +35,7 @@ class DatabaseTestCase extends TestCase {
 			return new SQLite3Connection($connection, $database, $prefix, $config);
 		});
 
-		$dbconfig = iconfig()->getUserConfig('app');
+		$dbconfig = iconfig()->get('app');
 		$dbconfig['database']['sqlite'] = [
 			'driver' => 'sqlite',
 			'database' => ':memory:',

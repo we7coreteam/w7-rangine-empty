@@ -43,8 +43,8 @@ class ProcessPoolTest extends TestCase {
 		$pool->registerProcess('test', TestProcess::class, 1);
 		$pool->registerProcess('test1', Test1Process::class, 1);
 
-		$pool->getProcessFactory()->make(0);
-		$pool->getProcessFactory()->make(1);
+		$pool->getProcessFactory()->makeById(0);
+		$pool->getProcessFactory()->makeById(1);
 
 		$this->assertSame(true, $pool->getProcessFactory()->getByName('test', 0) instanceof TestProcess);
 		$this->assertSame(true, $pool->getProcessFactory()->getByName('test1', 0) instanceof Test1Process);
@@ -79,8 +79,8 @@ class ProcessPoolTest extends TestCase {
 		$pool->registerProcess('test', TestProcess::class, 1);
 		$pool->registerProcess('test1', Test1Process::class, 1);
 
-		$pool->getProcessFactory()->make(0);
-		$pool->getProcessFactory()->make(1);
+		$pool->getProcessFactory()->makeById(0);
+		$pool->getProcessFactory()->makeById(1);
 
 		$this->assertSame(true, $pool->getProcessFactory()->getByName('test', 0) instanceof TestProcess);
 		$this->assertSame(true, $pool->getProcessFactory()->getByName('test1', 0) instanceof Test1Process);

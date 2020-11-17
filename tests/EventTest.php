@@ -4,7 +4,7 @@ namespace W7\Tests;
 
 use Symfony\Component\Console\Input\ArgvInput;
 use W7\Console\Application;
-use W7\Core\Events\Dispatcher;
+use W7\Core\Event\Dispatcher;
 use W7\Core\Listener\ListenerAbstract;
 
 

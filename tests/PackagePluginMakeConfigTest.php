@@ -10,7 +10,7 @@ class PackagePluginMakeConfigTest extends TestCase {
 	}
 
 	public function testConfig() {
-		$handlerConfig = iconfig()->getUserConfig('handler');
+		$handlerConfig = iconfig()->get('handler');
 		$this->assertArrayHasKey('session', $handlerConfig);
 		$this->assertArrayHasKey('view', $handlerConfig);
 		$this->assertArrayHasKey('cache', $handlerConfig);
