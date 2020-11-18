@@ -1,6 +1,6 @@
 <?php
 
-use W7\Core\Facades\Router;
+use W7\Facade\Router;
 
 Router::post('/user/login', [\W7\App\Controller\User\AuthController::class, 'login']);
 Router::post('/user/message/broadcast', [\W7\App\Controller\User\MessageController::class, 'broadcast']);

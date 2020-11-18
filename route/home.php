@@ -8,7 +8,7 @@
  *
  * visited https://www.rangine.com/ for more details
  */
-use W7\Core\Facades\Router;
+use W7\Facade\Router;
 
 Router::middleware('TestMiddleware')->get('/', 'Home\WelcomeController@index');
 
