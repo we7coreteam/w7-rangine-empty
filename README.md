@@ -47,7 +47,7 @@ https://wiki.w7.cc/chapter/1?id=1175#
 - 基于 Swoole 扩展
 - HTTP 服务器 (PSR-7消息)
 - RPC 服务器 *
-- WebSocket 服务器 *
+- WebSocket 服务器
 - MVC 分层设计
 - 中间件 (PSR-15)
 - URL路由 ([FastRoute](https://github.com/nikic/FastRoute))
