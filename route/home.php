@@ -8,11 +8,13 @@
  *
  * visited https://www.rangine.com/ for more details
  */
+
+use W7\App\Middleware\TestMiddleware;
 use W7\Facade\Router;
 
-Router::middleware('TestMiddleware')->get('/', 'Home\WelcomeController@index');
+Router::middleware(TestMiddleware::class)->get('/', 'Home\WelcomeController@index');
 
-Router::middleware(\W7\App\Middleware\TestMiddleware::class)->group('', function (\W7\Core\Route\Router $route) {
+Router::middleware(TestMiddleware::class)->group('', function (\W7\Core\Route\Router $route) {
 	$route->any('/home/api-get[/{id:\d+}]', [\W7\App\Controller\Home\WelcomeController::class, 'apiGet']);
 });
 
