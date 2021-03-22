@@ -20,7 +20,6 @@
 			"W7\\Tests\\": "tests/"
 		},
 		"files": [
-			"config/define.php",
 			"app/Helper/Functions.php"
 		],
 		"classmap": [
