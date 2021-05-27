@@ -34,8 +34,7 @@
 	},
 	"require": {
 		"w7/rangine": "~2.4.0",
-		"w7/rangine-crontab": "~1.1.0",
-		"w7/rangine-mq": "~1.1.0"
+		"w7/rangine-crontab": "~1.1.0"
 	},
 	"require-dev": {
 		"w7/rangine-debugger": "~1.1.0",
