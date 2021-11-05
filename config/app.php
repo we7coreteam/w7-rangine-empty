@@ -3,6 +3,7 @@ return [
 	'setting' => [
 		'env' => ienv('SETTING_DEVELOPMENT', RELEASE),
 		'error_reporting' => ienv('SETTING_ERROR_REPORTING', E_ALL),
+		'server' => ienv('SETTING_SERVERS', 'http'),
 		'basedir' => [
 			BASE_PATH, //在测试用例中需要，正式项目中删除
 			BASE_PATH . '/tests',
@@ -10,7 +11,19 @@ return [
 			BASE_PATH . '/../w7-rangine-http-message'
 		],
 		'file_ignore' => [],
-		'server' => ienv('SETTING_SERVERS', 'http'),
+		'lang' => ienv('APP_LOCAL', 'zh_CN')
+	],
+	'session' => [
+		'name' => ienv('SESSION_NAME', session_name()),
+		'expires' => ienv('SESSION_EXPIRES', 0),
+		'handler' => ienv('SESSION_HANDLER', 'file')
+	],
+	'cookie' => [
+		'path' => ienv('COOKIE_PATH', '/'),
+		'http_only' => ienv('COOKIE_HTTP_ONLY', false),
+		'domain' => ienv('COOKIE_DOMAIN', ''),
+		'secure' => ienv('COOKIE_SECURE', false),
+		'same_site' => ienv('COOKIE_SAME_SITE', ''),
 	],
 	'cache' => [
 		'default' => [
@@ -21,9 +34,6 @@ return [
 			'timeout' => ienv('CACHE_DEFAULT_TIMEOUT', '30'),
 			'database' => ienv('CACHE_DEFAULT_DATABASE', '0')
 		]
-	],
-	'session' => [
-		'handler' => 'db'
 	],
 	'database' => [
 		'default' => [
