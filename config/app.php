@@ -1,4 +1,15 @@
 <?php
+
+/**
+ * WeEngine Api System
+ *
+ * (c) We7Team 2019 <https://www.w7.cc>
+ *
+ * This is not a free software
+ * Using it under the license terms
+ * visited https://www.w7.cc for more details
+ */
+
 return [
 	'setting' => [
 		'env' => ienv('SETTING_DEVELOPMENT', RELEASE),
@@ -16,7 +27,8 @@ return [
 	'session' => [
 		'name' => ienv('SESSION_NAME', session_name()),
 		'expires' => ienv('SESSION_EXPIRES', 0),
-		'handler' => ienv('SESSION_HANDLER', 'file')
+		'handler' => ienv('SESSION_HANDLER', 'file'),
+		'save_path' => ienv('SESSION_FILE_HANDLER_SAVE_PATH', '/tmp/session')
 	],
 	'cookie' => [
 		'path' => ienv('COOKIE_PATH', '/'),
