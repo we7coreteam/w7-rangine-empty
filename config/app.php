@@ -28,7 +28,8 @@ return [
 		'name' => ienv('SESSION_NAME', session_name()),
 		'expires' => ienv('SESSION_EXPIRES', 0),
 		'handler' => ienv('SESSION_HANDLER', 'file'),
-		'save_path' => ienv('SESSION_FILE_HANDLER_SAVE_PATH', '/tmp/session')
+		'save_path' => ienv('SESSION_FILE_HANDLER_SAVE_PATH', '/tmp/session'),
+		'auto_start' => ienv('SESSION_AUTO_START', 1)
 	],
 	'cookie' => [
 		'path' => ienv('COOKIE_PATH', '/'),
