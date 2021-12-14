@@ -12,6 +12,11 @@ return [
 		'lang' => 'zh-CN',
 		'server' => ienv('SETTING_SERVERS', 'http'),
 	],
+	'view' => [
+		'template_path' => [
+			
+		]
+	],
 	'cache' => [
 		'default' => [
 			'driver' => ienv('CACHE_DEFAULT_DRIVER', 'redis'),
