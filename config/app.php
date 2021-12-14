@@ -6,10 +6,7 @@ return [
 		'basedir' => [
 			BASE_PATH, //在测试用例中需要，正式项目中删除
 			BASE_PATH . '/tests',
-			BASE_PATH . '/../w7-rangine',
-			BASE_PATH . '/../w7-rangine-http-message'
 		],
-		'lang' => 'zh-CN',
 		'server' => ienv('SETTING_SERVERS', 'http'),
 	],
 	'view' => [
