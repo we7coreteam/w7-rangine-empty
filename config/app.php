@@ -19,7 +19,10 @@ return [
 			BASE_PATH,
 		],
 		'file_ignore' => [],
-		'lang' => ienv('APP_LOCAL', 'zh_CN')
+		'lang' => ienv('APP_LOCAL', '')
+	],
+	'view' => [
+		'template_path' => []
 	],
 	'session' => [
 		'name' => ienv('SESSION_NAME', session_name()),
