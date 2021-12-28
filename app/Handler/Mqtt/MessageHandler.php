@@ -1,10 +1,22 @@
 <?php
 
+/**
+ * WeEngine Api System
+ *
+ * (c) We7Team 2019 <https://www.w7.cc>
+ *
+ * This is not a free software
+ * Using it under the license terms
+ * visited https://www.w7.cc for more details
+ */
+
 namespace W7\App\Handler\Mqtt;
 
+use Simps\MQTT\Message\AbstractMessage;
 use W7\App;
 use W7\Http\Message\Server\Request;
 use W7\Mqtt\Handler\HandlerInterface;
+use W7\Mqtt\Message\AuthMessage;
 use W7\Mqtt\Message\ConnAckMessage;
 use W7\Mqtt\Message\PubAckMessage;
 use W7\Mqtt\Message\PubCompMessage;
@@ -15,9 +27,13 @@ use W7\Mqtt\Message\SubAckMessage;
 use W7\Mqtt\Message\UnSubAckMessage;
 
 class MessageHandler implements HandlerInterface {
-	public function onMqConnect(Request $request): ConnAckMessage {
+	public function onMqConnect(Request $request): AbstractMessage {
 		return (new ConnAckMessage())->setCode(0)
 			->setSessionPresent(0);
+	}
+
+	public function onAuth(Request $request): AuthMessage {
+		// TODO: Implement onAuth() method.
 	}
 
 	public function onMqDisconnect(Request $request): bool {
