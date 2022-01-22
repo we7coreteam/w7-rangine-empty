@@ -41,6 +41,12 @@ return [
 	'cache' => [
 		'default' => [
 			'driver' => ienv('CACHE_DEFAULT_DRIVER', 'redis'),
+			'name' =>'default'
+		]
+	],
+	'redis' => [
+		'default' => [
+			'driver' => ienv('CACHE_DEFAULT_DRIVER', 'redis'),
 			'host' => ienv('CACHE_DEFAULT_HOST', '127.0.0.1'),
 			'port' => ienv('CACHE_DEFAULT_PORT', '6379'),
 			'password' => ienv('CACHE_DEFAULT_PASSWORD', ''),
@@ -69,10 +75,10 @@ return [
 				'max' => ienv('POOL_DATABASE_DEFAULT_MAX', 20)
 			]
 		],
-		'cache' => [
+		'redis' => [
 			'default' => [
-				'enable' => ienv('POOL_CACHE_DEFAULT_ENABLE', false),
-				'max' => ienv('POOL_CACHE_DEFAULT_MAX', 20)
+				'enable' => 1,
+				'max' => 20
 			]
 		]
 	]
