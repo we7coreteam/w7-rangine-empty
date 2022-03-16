@@ -40,5 +40,12 @@
 		"w7/rangine-debugger": "~2.5.0",
 		"phpunit/phpunit": "^7.0",
 		"w7/php-cs-fixer": "*"
+	},
+	"config": {
+		"allow-plugins": {
+			"w7/php-cs-fixer": true,
+			"funkjedi/composer-include-files": true,
+			"w7/rangine-package-plugin": true
+		}
 	}
 }
